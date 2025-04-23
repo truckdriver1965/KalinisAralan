@@ -137,20 +137,24 @@ function AboutPage() {
           all united by a common passion for improving educational environments in the Philippines.
         </Typography>
         
-        <Grid container spacing={4}>
-          {[1, 2, 3, 4].map((item) => (
-            <Grid item xs={12} sm={6} md={3} key={item}>
+        <Grid container spacing={4} justifyContent="center">
+          {[
+            { name: 'Jade Lloyd de Lara', position: 'Full-Stack Developer', image: '/images/jade.jpg' },
+            { name: 'Sean Kelly Jordan', position: 'Front-End Developer', image: '/images/sean.png' },
+            { name: 'John Rafael Villacorte', position: 'Back-End Developer', image: '/images/john.jpg' }
+          ].map((member, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
                 <Avatar 
                   sx={{ width: 120, height: 120, mb: 2 }}
-                  alt={`Team Member ${item}`}
-                  src={`/placeholder-avatar.jpg`}
+                  alt={member.name}
+                  src={member.image}
                 />
                 <Typography variant="h6" component="h3" align="center">
-                  Team Member {item}
+                  {member.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" align="center">
-                  Position Title
+                  {member.position}
                 </Typography>
               </Card>
             </Grid>
@@ -158,7 +162,7 @@ function AboutPage() {
         </Grid>
       </Box>
 
-      {/* Partners Section */}
+      {/* Our Partners Section */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h4" component="h2" color="primary" gutterBottom>
           Our Partners
