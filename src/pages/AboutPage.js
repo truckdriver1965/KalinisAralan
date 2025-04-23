@@ -30,9 +30,8 @@ function AboutPage() {
                   Our Mission
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  KalinisAralan aims to improve the health and educational outcomes of Filipino students 
-                  by providing clean, accessible, and sustainable sanitation facilities in schools 
-                  across the Philippines.
+                  KalinisAralan exists to boost Filipino students' health and learning by delivering clean, 
+                  accessible, and sustainable sanitation facilities in schools nationwide.
                 </Typography>
               </CardContent>
             </Card>
@@ -44,9 +43,8 @@ function AboutPage() {
                   Our Vision
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  We envision a Philippines where every student has access to clean, safe, and 
-                  dignified sanitation facilities, contributing to improved health, increased 
-                  school attendance, and better learning outcomes.
+                  We imagine a Philippines where every child learns in dignity and safety with clean 
+                  toilets and handwashing stations that are as essential as classrooms themselves.
                 </Typography>
               </CardContent>
             </Card>
@@ -60,19 +58,19 @@ function AboutPage() {
           Our Story
         </Typography>
         <Typography variant="body1" paragraph>
-          KalinisAralan was founded in 2020 by a group of educators, public health professionals, 
-          and community development workers who recognized the critical link between proper 
-          sanitation facilities and educational outcomes in Philippine schools.
+          In 2025, KalinisAralan was launched by our team in collaboration with professors 
+          whose firsthand observations of school facilities revealed the vital connection 
+          between clean sanitation and improved student health and learning outcomes across the Philippines.
         </Typography>
         <Typography variant="body1" paragraph>
-          After visiting numerous schools across the country and witnessing firsthand the 
-          inadequate toilet facilities and handwashing stations, our founders committed to 
-          addressing this often-overlooked aspect of educational infrastructure.
+          In collaboration with our professor partners, we visited our client school and 
+          witnessed firsthand its inadequate toilet facilities and handwashing stations. This experience
+          motivated our team to address this often-overlooked facet of educational infrastructure.
         </Typography>
         <Typography variant="body1" paragraph>
-          Starting with just three pilot schools in Metro Manila, our initiative has now 
-          expanded to multiple regions, impacting thousands of students through improved 
-          sanitation facilities and hygiene education programs.
+          Starting with our pilot project at Baliwag North Central School, our initiative 
+          has now expanded to multiple regions, impacting thousands of students through 
+          improved sanitation facilities and hygiene education programs.
         </Typography>
       </Box>
 
@@ -133,8 +131,8 @@ function AboutPage() {
           Our Team
         </Typography>
         <Typography variant="body1" paragraph sx={{ mb: 4 }}>
-          KalinisAralan is powered by a dedicated team of professionals from diverse backgrounds, 
-          all united by a common passion for improving educational environments in the Philippines.
+          Meet the KalinisAralan crew: developers, designers, and advocates united by a single 
+          purpose to make school sanitation safe, reliable, and sustainable.
         </Typography>
         
         <Grid container spacing={4} justifyContent="center">
