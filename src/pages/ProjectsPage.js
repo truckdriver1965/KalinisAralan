@@ -22,9 +22,9 @@ import PeopleIcon from '@mui/icons-material/People';
 const projects = [
   {
     id: 1,
-    title: "Handwashing Stations in Quezon Province",
-    location: "Quezon Province",
-    date: "January 2023",
+    title: "Handwashing Stations",
+    location: "Outside the gymnasium",
+    date: "January 2025",
     status: "Completed",
     beneficiaries: 2000,
     description: "Installation of 15 multi-faucet handwashing stations across 5 schools, benefiting over 2,000 students.",
@@ -33,9 +33,9 @@ const projects = [
   },
   {
     id: 2,
-    title: "Toilet Renovation in Cebu Schools",
-    location: "Cebu",
-    date: "March 2023",
+    title: "Toilet Renovation",
+    location: "Every floor",
+    date: "March 2025",
     status: "Completed",
     beneficiaries: 1500,
     description: "Complete renovation of toilet facilities in 3 schools, including improved plumbing, privacy features, and accessibility.",
@@ -44,49 +44,15 @@ const projects = [
   },
   {
     id: 3,
-    title: "Water System Upgrade in Davao",
-    location: "Davao",
-    date: "May 2023",
+    title: "Water System Upgrade",
+    location: "Water fountain stations",
+    date: "May 2025",
     status: "In Progress",
     progress: 75,
     beneficiaries: 3000,
     description: "Upgrading water supply systems in 4 schools to ensure consistent access to clean water for sanitation.",
     image: "/placeholder.jpg",
     category: "Water Systems"
-  },
-  {
-    id: 4,
-    title: "Hygiene Education Program in Iloilo",
-    location: "Iloilo",
-    date: "June 2023",
-    status: "In Progress",
-    progress: 50,
-    beneficiaries: 5000,
-    description: "Comprehensive hygiene education program reaching 10 schools, teaching proper handwashing techniques and sanitation practices.",
-    image: "/placeholder.jpg",
-    category: "Education"
-  },
-  {
-    id: 5,
-    title: "Sustainable Toilets in Batangas",
-    location: "Batangas",
-    date: "August 2023",
-    status: "Planned",
-    beneficiaries: 1200,
-    description: "Installation of environmentally sustainable toilet facilities in 2 rural schools with limited water access.",
-    image: "/placeholder.jpg",
-    category: "Toilets"
-  },
-  {
-    id: 6,
-    title: "School Sanitation Assessment in Pampanga",
-    location: "Pampanga",
-    date: "September 2023",
-    status: "Planned",
-    beneficiaries: 4000,
-    description: "Comprehensive assessment of sanitation needs in 15 schools to prioritize future interventions.",
-    image: "/placeholder.jpg",
-    category: "Assessment"
   }
 ];
 
@@ -112,7 +78,7 @@ function ProjectsPage() {
         Our Projects
       </Typography>
       <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
-        Transforming sanitation facilities in schools across the Philippines
+        Transforming sanitation facilities in Baliwag North Central School
       </Typography>
       
       {/* Project Filters */}
