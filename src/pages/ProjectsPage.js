@@ -12,7 +12,51 @@ import {
   Alert,
   useTheme,
 } from '@mui/material';
+<<<<<<< HEAD
 import { projectsApi } from '../services/api';
+=======
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import PeopleIcon from '@mui/icons-material/People';
+
+// Sample project data
+const projects = [
+  {
+    id: 1,
+    title: "Handwashing Stations",
+    location: "Outside the gymnasium",
+    date: "January 2025",
+    status: "Completed",
+    beneficiaries: 2000,
+    description: "Installation of 15 multi-faucet handwashing stations across 5 schools, benefiting over 2,000 students.",
+    image: "/placeholder.jpg",
+    category: "Handwashing"
+  },
+  {
+    id: 2,
+    title: "Toilet Renovation",
+    location: "Every floor",
+    date: "March 2025",
+    status: "Completed",
+    beneficiaries: 1500,
+    description: "Complete renovation of toilet facilities in 3 schools, including improved plumbing, privacy features, and accessibility.",
+    image: "/placeholder.jpg",
+    category: "Toilets"
+  },
+  {
+    id: 3,
+    title: "Water System Upgrade",
+    location: "Water fountain stations",
+    date: "May 2025",
+    status: "In Progress",
+    progress: 75,
+    beneficiaries: 3000,
+    description: "Upgrading water supply systems in 4 schools to ensure consistent access to clean water for sanitation.",
+    image: "/placeholder.jpg",
+    category: "Water Systems"
+  }
+];
+>>>>>>> 8a0e5a6adc90771ae0ce537ebec74ef782c3a08e
 
 function ProjectsPage() {
   const theme = useTheme();
@@ -101,6 +145,7 @@ function ProjectsPage() {
   }
 
   return (
+<<<<<<< HEAD
     <Box>
       {/* Hero Section */}
       <Box
@@ -129,6 +174,29 @@ function ProjectsPage() {
             Explore our ongoing and completed initiatives to improve water and sanitation facilities in schools across the Philippines.
           </Typography>
         </Container>
+=======
+    <Container>
+      <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
+        Our Projects
+      </Typography>
+      <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
+        Transforming sanitation facilities in Baliwag North Central School
+      </Typography>
+      
+      {/* Project Filters */}
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 4 }}>
+        <Tabs 
+          value={tabValue} 
+          onChange={handleTabChange} 
+          centered
+          variant="fullWidth"
+        >
+          <Tab label="All Projects" />
+          <Tab label="Completed" />
+          <Tab label="In Progress" />
+          <Tab label="Planned" />
+        </Tabs>
+>>>>>>> 8a0e5a6adc90771ae0ce537ebec74ef782c3a08e
       </Box>
 
       {/* Projects List */}
