@@ -1,238 +1,210 @@
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Container, 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent, 
-  CardMedia, 
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
   Button,
-  Tabs,
-  Tab,
-  Chip,
-  LinearProgress,
-  Divider
+  CircularProgress,
+  Alert,
+  useTheme,
 } from '@mui/material';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PeopleIcon from '@mui/icons-material/People';
-
-// Sample project data
-const projects = [
-  {
-    id: 1,
-    title: "Handwashing Stations in Quezon Province",
-    location: "Quezon Province",
-    date: "January 2023",
-    status: "Completed",
-    beneficiaries: 2000,
-    description: "Installation of 15 multi-faucet handwashing stations across 5 schools, benefiting over 2,000 students.",
-    image: "/placeholder.jpg",
-    category: "Handwashing"
-  },
-  {
-    id: 2,
-    title: "Toilet Renovation in Cebu Schools",
-    location: "Cebu",
-    date: "March 2023",
-    status: "Completed",
-    beneficiaries: 1500,
-    description: "Complete renovation of toilet facilities in 3 schools, including improved plumbing, privacy features, and accessibility.",
-    image: "/placeholder.jpg",
-    category: "Toilets"
-  },
-  {
-    id: 3,
-    title: "Water System Upgrade in Davao",
-    location: "Davao",
-    date: "May 2023",
-    status: "In Progress",
-    progress: 75,
-    beneficiaries: 3000,
-    description: "Upgrading water supply systems in 4 schools to ensure consistent access to clean water for sanitation.",
-    image: "/placeholder.jpg",
-    category: "Water Systems"
-  },
-  {
-    id: 4,
-    title: "Hygiene Education Program in Iloilo",
-    location: "Iloilo",
-    date: "June 2023",
-    status: "In Progress",
-    progress: 50,
-    beneficiaries: 5000,
-    description: "Comprehensive hygiene education program reaching 10 schools, teaching proper handwashing techniques and sanitation practices.",
-    image: "/placeholder.jpg",
-    category: "Education"
-  },
-  {
-    id: 5,
-    title: "Sustainable Toilets in Batangas",
-    location: "Batangas",
-    date: "August 2023",
-    status: "Planned",
-    beneficiaries: 1200,
-    description: "Installation of environmentally sustainable toilet facilities in 2 rural schools with limited water access.",
-    image: "/placeholder.jpg",
-    category: "Toilets"
-  },
-  {
-    id: 6,
-    title: "School Sanitation Assessment in Pampanga",
-    location: "Pampanga",
-    date: "September 2023",
-    status: "Planned",
-    beneficiaries: 4000,
-    description: "Comprehensive assessment of sanitation needs in 15 schools to prioritize future interventions.",
-    image: "/placeholder.jpg",
-    category: "Assessment"
-  }
-];
+import { projectsApi } from '../services/api';
 
 function ProjectsPage() {
-  const [tabValue, setTabValue] = useState(0);
-  
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
+  const theme = useTheme();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
+    // Fetch projects data
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      setLoading(true);
+      // For development/testing, you can use this mock data if your API isn't ready
+      // Comment this out when your real API is ready
+      const mockData = [
+        {
+          id: 1,
+          title: 'Clean Water for Mindanao Schools',
+          description: 'Providing clean water systems to 15 schools in rural Mindanao, benefiting over 5,000 students.',
+          fullDescription: 'This project aims to install water filtration systems in schools across rural Mindanao, where access to clean water is limited. Each system can provide safe drinking water for hundreds of students daily, reducing waterborne illnesses and improving attendance rates.',
+          image: '/images/project1.jpg',
+          progress: 85,
+          goal: 1500000,
+          raised: 1275000,
+          location: 'Mindanao',
+        },
+        {
+          id: 2,
+          title: 'Sanitation Facilities in Visayas',
+          description: 'Building modern toilet facilities in 10 schools across the Visayas region to improve hygiene.',
+          fullDescription: 'Many schools in the Visayas region lack proper sanitation facilities, forcing students to use inadequate or unhygienic facilities. This project will construct modern toilet blocks with handwashing stations in 10 schools, directly benefiting over 3,000 students.',
+          image: '/images/project2.jpg',
+          progress: 65,
+          goal: 2000000,
+          raised: 1300000,
+          location: 'Visayas',
+        },
+        {
+          id: 3,
+          title: 'Hygiene Education Program',
+          description: 'Teaching proper hygiene practices to students and teachers in 25 schools throughout Luzon.',
+          fullDescription: 'This comprehensive education program focuses on teaching proper handwashing techniques, personal hygiene, and sanitation practices to both students and teachers. The program includes workshops, educational materials, and follow-up assessments to ensure lasting behavioral change.',
+          image: '/images/project3.jpg',
+          progress: 100,
+          goal: 800000,
+          raised: 800000,
+          location: 'Luzon',
+        },
+      ];
+      
+      setProjects(mockData);
+      
+      // Uncomment this when your API is ready
+      // const data = await projectsApi.getAll();
+      // setProjects(data);
+      
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching projects:', err);
+      setError('Failed to load projects. Please try again later.');
+      setLoading(false);
+    }
   };
-  
-  // Filter projects based on selected tab
-  const filteredProjects = tabValue === 0 
-    ? projects 
-    : tabValue === 1 
-      ? projects.filter(project => project.status === "Completed") 
-      : tabValue === 2 
-        ? projects.filter(project => project.status === "In Progress")
-        : projects.filter(project => project.status === "Planned");
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container maxWidth="lg" sx={{ my: 8 }}>
+        <Alert severity="error" sx={{ mb: 4 }}>{error}</Alert>
+        <Button variant="contained" onClick={fetchProjects}>Try Again</Button>
+      </Container>
+    );
+  }
 
   return (
-    <Container>
-      <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
-        Our Projects
-      </Typography>
-      <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
-        Transforming sanitation facilities in schools across the Philippines
-      </Typography>
-      
-      {/* Project Filters */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 4 }}>
-        <Tabs 
-          value={tabValue} 
-          onChange={handleTabChange} 
-          centered
-          variant="fullWidth"
-        >
-          <Tab label="All Projects" />
-          <Tab label="Completed" />
-          <Tab label="In Progress" />
-          <Tab label="Planned" />
-        </Tabs>
+    <Box>
+      {/* Hero Section */}
+      <Box
+        sx={{
+          bgcolor: 'primary.main',
+          color: 'white',
+          py: 8,
+          mb: 6
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{ 
+              fontWeight: 'bold',
+              mb: 2
+            }}
+          >
+            Our Projects
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{ maxWidth: '800px' }}
+          >
+            Explore our ongoing and completed initiatives to improve water and sanitation facilities in schools across the Philippines.
+          </Typography>
+        </Container>
       </Box>
-      
-      {/* Project Cards */}
-      <Grid container spacing={4}>
-        {filteredProjects.map((project) => (
-          <Grid item xs={12} md={6} key={project.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={project.image}
-                alt={project.title}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
+
+      {/* Projects List */}
+      <Container maxWidth="lg" sx={{ mb: 8 }}>
+        <Grid container spacing={4}>
+          {projects.map((project) => (
+            <Grid item xs={12} md={6} lg={4} key={project.id}>
+              <Card 
+                sx={{ 
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                  transition: 'transform 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-10px)'
+                  }
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={project.image}
+                  alt={project.title}
+                />
+                <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                  <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
                     {project.title}
                   </Typography>
-                  <Chip 
-                    label={project.status} 
-                    color={
-                      project.status === "Completed" ? "success" : 
-                      project.status === "In Progress" ? "primary" : 
-                      "default"
-                    }
-                    size="small"
-                  />
-                </Box>
-                
-                {project.status === "In Progress" && (
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                  <Typography variant="body1" paragraph>
+                    {project.description}
+                  </Typography>
+                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="body2" color="text.secondary">
                       Progress: {project.progress}%
                     </Typography>
-                    <LinearProgress 
-                      variant="determinate" 
-                      value={project.progress} 
-                      sx={{ height: 8, borderRadius: 5 }}
+                    <Typography variant="body2" color="primary">
+                      Location: {project.location}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mt: 1, width: '100%', bgcolor: 'background.paper', borderRadius: 1, height: 8 }}>
+                    <Box
+                      sx={{
+                        width: `${project.progress}%`,
+                        bgcolor: 'primary.main',
+                        height: '100%',
+                        borderRadius: 1,
+                      }}
                     />
                   </Box>
-                )}
-                
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  {project.description}
-                </Typography>
-                
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LocationOnIcon fontSize="small" color="action" sx={{ mr: 0.5 }} />
+                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="body2" color="text.secondary">
-                      {project.location}
+                      ₱{project.raised.toLocaleString()}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      ₱{project.goal.toLocaleString()}
                     </Typography>
                   </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <CalendarTodayIcon fontSize="small" color="action" sx={{ mr: 0.5 }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {project.date}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <PeopleIcon fontSize="small" color="action" sx={{ mr: 0.5 }} />
-                    <Typography variant="body2" color="text.secondary">
-                      {project.beneficiaries.toLocaleString()} beneficiaries
-                    </Typography>
-                  </Box>
-                </Box>
-                
-                <Divider sx={{ my: 2 }} />
-                
-                <Button size="small" color="primary">
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      
-      {/* No Projects Message */}
-      {filteredProjects.length === 0 && (
-        <Box sx={{ textAlign: 'center', py: 4 }}>
-          <Typography variant="h6" color="text.secondary">
-            No projects found in this category.
-          </Typography>
-        </Box>
-      )}
-      
-      {/* Get Involved Section */}
-      <Box sx={{ bgcolor: 'primary.light', p: 4, borderRadius: 2, mt: 6 }}>
-        <Typography variant="h5" gutterBottom align="center">
-          Want to support our projects?
-        </Typography>
-        <Typography variant="body1" paragraph align="center">
-          We welcome donations, partnerships, and volunteer support to help us reach more schools.
-        </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-          <Button variant="contained" color="primary" href="/donate">
-            Donate Now
-          </Button>
-          <Button variant="outlined" color="primary" href="/contact">
-            Contact Us
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+                  <Button 
+                    variant="contained" 
+                    fullWidth 
+                    sx={{ mt: 3 }}
+                    component="a"
+                    href={`/donate?project=${project.id}`}
+                  >
+                    Support This Project
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }
 

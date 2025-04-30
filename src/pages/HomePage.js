@@ -10,14 +10,9 @@ import {
   Typography,
   Stack,
   Fade,
-  // Remove unused imports
-  // Grow,
   Zoom,
   useTheme,
   useMediaQuery,
-  // Paper,
-  // Divider,
-  // IconButton
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
@@ -25,27 +20,19 @@ import WaterIcon from '@mui/icons-material/Water';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PeopleIcon from '@mui/icons-material/People';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// Remove unused icon imports
-// import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
-// import SanitizerIcon from '@mui/icons-material/Sanitizer';
-// import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 function HomePage() {
   const theme = useTheme();
-  // Keep isMobile since it might be used elsewhere in the component
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [animateElements, setAnimateElements] = React.useState(false);
   
   useEffect(() => {
     setAnimateElements(true);
     
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
 
-  // Impact statistics
   const stats = [
     { number: '50+', label: 'Schools Served', icon: <SchoolIcon fontSize="large" /> },
     { number: '25,000+', label: 'Students Impacted', icon: <PeopleIcon fontSize="large" /> },
@@ -53,7 +40,6 @@ function HomePage() {
     { number: '₱5M+', label: 'Funds Raised', icon: <VolunteerActivismIcon fontSize="large" /> },
   ];
 
-  // Featured projects
   const featuredProjects = [
     {
       title: 'Clean Water for Mindanao Schools',
@@ -75,7 +61,6 @@ function HomePage() {
     },
   ];
 
-  // Testimonials
   const testimonials = [
     {
       quote: "The new facilities have made a huge difference in our school. Students are healthier and attendance has improved significantly.",
@@ -99,7 +84,6 @@ function HomePage() {
 
   return (
     <Box>
-      {/* Hero Section */}
       <Box
         sx={{
           position: 'relative',
@@ -110,7 +94,6 @@ function HomePage() {
           bgcolor: 'black',
         }}
       >
-        {/* Background Image with Overlay */}
         <Box
           sx={{
             position: 'absolute',
@@ -246,7 +229,6 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Stats Section */}
       <Box sx={{ py: 8, bgcolor: 'background.paper' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
@@ -307,7 +289,6 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Mission Section */}
       <Box sx={{ py: 10, bgcolor: '#f8f9fa' }}>
         <Container maxWidth="lg">
           <Grid container spacing={6} alignItems="center">
@@ -430,7 +411,6 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Featured Projects Section */}
       <Box sx={{ py: 10, bgcolor: 'white' }}>
         <Container maxWidth="lg">
           <Fade in={animateElements} timeout={1000}>
@@ -509,7 +489,6 @@ function HomePage() {
         </Container>
       </Box>
 
-      {/* Testimonials Section */}
       <Box sx={{ py: 8, bgcolor: 'background.paper' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
