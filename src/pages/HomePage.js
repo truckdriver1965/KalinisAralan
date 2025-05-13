@@ -15,12 +15,13 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import WaterIcon from '@mui/icons-material/Water';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import PeopleIcon from '@mui/icons-material/People';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 
 function HomePage() {
   const theme = useTheme();
@@ -33,29 +34,22 @@ function HomePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const stats = [
-    { number: '50+', label: 'Schools Served', icon: <SchoolIcon fontSize="large" /> },
-    { number: '25,000+', label: 'Students Impacted', icon: <PeopleIcon fontSize="large" /> },
-    { number: '200+', label: 'Sanitation Facilities', icon: <WaterIcon fontSize="large" /> },
-    { number: '₱5M+', label: 'Funds Raised', icon: <VolunteerActivismIcon fontSize="large" /> },
-  ];
-
   const featuredProjects = [
     {
-      title: 'Clean Water for Mindanao Schools',
-      description: 'Providing clean water systems to 15 schools in rural Mindanao, benefiting over 5,000 students.',
+      title: 'Effective Sanitation Practices',
+      description: 'Documenting and sharing successful sanitation practices while enabling support for facility improvements.',
       image: '/images/project1.jpg',
       progress: 85,
     },
     {
-      title: 'Sanitation Facilities in Visayas',
-      description: 'Building modern toilet facilities in 10 schools across the Visayas region to improve hygiene.',
+      title: 'Hygiene Education Program',
+      description: 'Comprehensive hygiene education initiatives combined with facility enhancement support.',
       image: '/images/project2.jpg',
       progress: 65,
     },
     {
-      title: 'Hygiene Education Program',
-      description: 'Teaching proper hygiene practices to students and teachers in 25 schools throughout Luzon.',
+      title: 'Maintenance Best Practices',
+      description: 'Sharing maintenance strategies while facilitating partnerships for sustainable facility management.',
       image: '/images/project3.jpg',
       progress: 100,
     },
@@ -63,22 +57,43 @@ function HomePage() {
 
   const testimonials = [
     {
-      quote: "The new facilities have made a huge difference in our school. Students are healthier and attendance has improved significantly.",
+      quote: "With KalinisAralan's help, we've installed proper toilets and handwashing stations. Absenteeism has dropped by 30% since the facilities were completed.",
       author: "Maria Santos",
-      role: "School Principal, Cebu City",
+      role: "School Principal, Partner School",
       image: "/images/testimonial1.jpg"
     },
     {
-      quote: "KalinisAralan's work has transformed our learning environment. Our students now have access to clean water throughout the school day.",
+      quote: "The sanitation project has transformed our school environment. Our students now have dignity and privacy when using school facilities.",
       author: "Juan Reyes",
-      role: "Teacher, Davao Elementary School",
+      role: "Teacher, Partner School",
       image: "/images/testimonial2.jpg"
     },
     {
-      quote: "As a parent, I'm grateful for the improved facilities. My children are healthier and more eager to attend school.",
+      quote: "As a student, I'm happy that we now have clean toilets and places to wash our hands. I don't worry about getting sick anymore.",
       author: "Elena Magsaysay",
-      role: "Parent, Manila",
+      role: "Student, Partner School",
       image: "/images/testimonial3.jpg"
+    }
+  ];
+
+  const sdgGoals = [
+    {
+      title: "Clean Water & Sanitation",
+      description: "SDG 6: Ensuring availability and sustainable management of water and sanitation for all",
+      icon: <WaterIcon fontSize="large" />,
+      color: "#26bde2"
+    },
+    {
+      title: "Good Health & Well-being",
+      description: "SDG 3: Ensuring healthy lives and promoting well-being for all at all ages",
+      icon: <MedicalServicesIcon fontSize="large" />,
+      color: "#4c9f38"
+    },
+    {
+      title: "Quality Education",
+      description: "SDG 4: Ensuring inclusive and equitable quality education for all",
+      icon: <MenuBookIcon fontSize="large" />,
+      color: "#c5192d"
     }
   ];
 
@@ -128,7 +143,7 @@ function HomePage() {
                       display: 'block'
                     }}
                   >
-                    TRANSFORMING SCHOOL SANITATION
+                    IMPROVING SCHOOL SANITATION
                   </Typography>
                   <Typography
                     component="h1"
@@ -141,7 +156,7 @@ function HomePage() {
                       lineHeight: 1.2
                     }}
                   >
-                    Clean Water & Sanitation for Philippine Schools
+                    Transforming School Sanitation in the Philippines
                   </Typography>
                   <Typography
                     variant="h6"
@@ -152,7 +167,7 @@ function HomePage() {
                       lineHeight: 1.6
                     }}
                   >
-                    We're on a mission to provide clean water and improved sanitation facilities to schools across the Philippines, creating healthier learning environments for students.
+                    KalinisAralan documents and shares our partner school's successful sanitation practices while enabling support for more schools to implement better facilities for their students.
                   </Typography>
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
@@ -168,14 +183,9 @@ function HomePage() {
                         py: 1.5,
                         px: 4,
                         fontWeight: 'bold',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 10px 20px rgba(242, 169, 0, 0.4)',
-                        }
                       }}
                     >
-                      Donate Now
+                      Support Our Cause
                     </Button>
                     <Button
                       variant="outlined"
@@ -193,7 +203,7 @@ function HomePage() {
                         }
                       }}
                     >
-                      Our Projects
+                      View Best Practices
                     </Button>
                   </Stack>
                 </Box>
@@ -215,7 +225,7 @@ function HomePage() {
                   <Box
                     component="img"
                     src="/images/children-water.jpg"
-                    alt="Happy children with clean water"
+                    alt="Students using new handwashing facilities"
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -229,59 +239,87 @@ function HomePage() {
         </Container>
       </Box>
 
-      <Box sx={{ py: 8, bgcolor: 'background.paper' }}>
+      {/* SDG Goals Section */}
+      <Box sx={{ py: 8, bgcolor: '#f8f9fa' }}>
         <Container maxWidth="lg">
+          <Fade in={animateElements} timeout={1000}>
+            <Box sx={{ textAlign: 'center', mb: 6 }}>
+              <Typography
+                variant="overline"
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontWeight: 'bold',
+                  letterSpacing: 2,
+                  mb: 1,
+                  display: 'block'
+                }}
+              >
+                SUSTAINABLE DEVELOPMENT GOALS
+              </Typography>
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{ 
+                  fontWeight: 'bold',
+                  mb: 2,
+                }}
+              >
+                Contributing to Global Goals
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ 
+                  maxWidth: '800px',
+                  mx: 'auto',
+                  color: 'text.secondary',
+                  fontSize: '1.1rem',
+                }}
+              >
+                Our work directly supports these UN Sustainable Development Goals
+              </Typography>
+            </Box>
+          </Fade>
+
           <Grid container spacing={4}>
-            {stats.map((stat, index) => (
-              <Grid item xs={6} md={3} key={index}>
-                <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${index * 200}ms` }}>
-                  <Box
-                    sx={{
-                      textAlign: 'center',
-                      p: 3,
+            {sdgGoals.map((goal, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
+                  <Card 
+                    sx={{ 
                       height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
                       borderRadius: 4,
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      overflow: 'hidden',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                      transition: 'transform 0.3s ease',
                       '&:hover': {
                         transform: 'translateY(-10px)',
-                        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
                       }
                     }}
                   >
-                    <Box
-                      sx={{
+                    <Box 
+                      sx={{ 
+                        bgcolor: goal.color, 
+                        color: 'white', 
+                        p: 3, 
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        width: 70,
-                        height: 70,
-                        borderRadius: '50%',
-                        bgcolor: 'primary.main',
-                        color: 'primary.contrastText',
-                        mx: 'auto',
-                        mb: 2,
+                        flexDirection: 'column'
                       }}
                     >
-                      {stat.icon}
+                      {goal.icon}
+                      <Typography variant="h5" component="h3" sx={{ mt: 2, fontWeight: 'bold' }}>
+                        {goal.title}
+                      </Typography>
                     </Box>
-                    <Typography
-                      variant="h3"
-                      component="div"
-                      sx={{
-                        fontWeight: 'bold',
-                        color: 'primary.main',
-                        mb: 1,
-                      }}
-                    >
-                      {stat.number}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      color="text.secondary"
-                    >
-                      {stat.label}
-                    </Typography>
-                  </Box>
+                    <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                      <Typography variant="body1">
+                        {goal.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 </Fade>
               </Grid>
             ))}
@@ -305,7 +343,7 @@ function HomePage() {
                       display: 'block'
                     }}
                   >
-                    OUR MISSION
+                    OUR APPROACH
                   </Typography>
                   <Typography
                     variant="h3"
@@ -326,7 +364,7 @@ function HomePage() {
                       }
                     }}
                   >
-                    Creating Healthier Learning Environments
+                    Creating Model School Sanitation
                   </Typography>
                   <Typography
                     variant="body1"
@@ -337,15 +375,16 @@ function HomePage() {
                       color: 'text.secondary'
                     }}
                   >
-                    At KalinisAralan, we believe that every student deserves access to clean water and proper sanitation facilities. Our mission is to transform school environments across the Philippines, particularly in underserved communities, by providing sustainable water and sanitation solutions.
+                    KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools.
                   </Typography>
-                  
+                
                   <Box sx={{ mb: 4 }}>
                     {[
-                      'Improving access to clean water in schools',
-                      'Building and renovating sanitation facilities',
-                      'Providing hygiene education to students and teachers',
-                      'Creating sustainable maintenance programs'
+                      'Documenting and sharing effective sanitation practices',
+                      'Facilitating support for facility improvements',
+                      'Creating comprehensive maintenance guides',
+                      'Building partnerships for sustainable development',
+                      'Enabling knowledge and resource sharing between schools'
                     ].map((item, index) => (
                       <Box 
                         key={index} 
@@ -365,7 +404,7 @@ function HomePage() {
                     variant="contained"
                     color="primary"
                     component="a"
-                    href="/about"
+                    href="/our-approach"
                     endIcon={<ArrowForwardIcon />}
                     sx={{
                       py: 1.5,
@@ -377,7 +416,7 @@ function HomePage() {
                       }
                     }}
                   >
-                    Learn More About Us
+                    Learn More About Our Approach
                   </Button>
                 </Box>
               </Fade>
@@ -397,7 +436,7 @@ function HomePage() {
                   <Box
                     component="img"
                     src="/images/mission-image.jpg"
-                    alt="Students using clean water facilities"
+                    alt="Students using upgraded sanitation facilities"
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -407,6 +446,129 @@ function HomePage() {
                 </Box>
               </Zoom>
             </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* How It Works - Three-Step Process */}
+      <Box sx={{ py: 10, bgcolor: 'white' }}>
+        <Container maxWidth="lg">
+          <Fade in={animateElements} timeout={1000}>
+            <Box sx={{ textAlign: 'center', mb: 6 }}>
+              <Typography
+                variant="overline"
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontWeight: 'bold',
+                  letterSpacing: 2,
+                  mb: 1,
+                  display: 'block'
+                }}
+              >
+                THE PROCESS
+              </Typography>
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{ 
+                  fontWeight: 'bold',
+                  mb: 2,
+                }}
+              >
+                How KalinisAralan Works
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ 
+                  maxWidth: '800px',
+                  mx: 'auto',
+                  color: 'text.secondary',
+                  fontSize: '1.1rem',
+                }}
+              >
+                Our initiative improves school sanitation in three simple steps
+              </Typography>
+            </Box>
+          </Fade>
+
+          <Grid container spacing={6}>
+            {[
+              {
+                title: "Document",
+                description: "We document successful sanitation practices while identifying areas for improvement and support.",
+                icon: <HandshakeIcon fontSize="large" />
+              },
+              {
+                title: "Connect",
+                description: "We connect schools with resources and support to enhance their sanitation facilities.",
+                icon: <WaterIcon fontSize="large" />
+              },
+              {
+                title: "Share",
+                description: "We share best practices and success stories to inspire and guide other public schools.",
+                icon: <CheckCircleIcon fontSize="large" />
+              }
+            ].map((step, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
+                  <Box
+                    sx={{
+                      textAlign: 'center',
+                      p: 4,
+                      borderRadius: 4,
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transition: 'transform 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-10px)',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 80,
+                        height: 80,
+                        borderRadius: '50%',
+                        bgcolor: 'primary.main',
+                        color: 'white',
+                        mb: 3,
+                        position: 'relative',
+                        '&::before': {
+                          content: `"${index + 1}"`,
+                          position: 'absolute',
+                          top: -10,
+                          right: -10,
+                          width: 30,
+                          height: 30,
+                          borderRadius: '50%',
+                          bgcolor: 'secondary.main',
+                          color: 'white',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 'bold',
+                          fontSize: '1.2rem',
+                        }
+                      }}
+                    >
+                      {step.icon}
+                    </Box>
+                    <Typography variant="h4" component="h3" sx={{ mb: 2 }}>
+                      {step.title}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {step.description}
+                    </Typography>
+                  </Box>
+                </Fade>
+              </Grid>
+            ))}
           </Grid>
         </Container>
       </Box>
@@ -446,7 +608,7 @@ function HomePage() {
                   fontSize: '1.1rem',
                 }}
               >
-                Explore some of our ongoing and completed projects across the Philippines
+                Explore our ongoing and completed sanitation projects at our partner school
               </Typography>
             </Box>
           </Fade>
@@ -547,6 +709,90 @@ function HomePage() {
                 </Fade>
               </Grid>
             ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Call to Action */}
+      <Box 
+        sx={{ 
+          py: 10, 
+          bgcolor: 'primary.main',
+          color: 'white',
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/images/cta-bg.jpg")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            zIndex: 0,
+          }}
+        />
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          <Grid container spacing={4} alignItems="center" justifyContent="center">
+            <Grid item xs={12} md={8} sx={{ textAlign: 'center' }}>
+              <Fade in={animateElements} timeout={1000}>
+                <Box>
+                  <Typography variant="h3" component="h2" sx={{ fontWeight: 'bold', mb: 3 }}>
+                    Join Us in Transforming School Sanitation
+                  </Typography>
+                  <Typography variant="h6" sx={{ mb: 4, maxWidth: '800px', mx: 'auto' }}>
+                    Be part of our mission to improve health and education outcomes in Philippine public schools through better sanitation facilities.
+                  </Typography>
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={3}
+                    justifyContent="center"
+                  >
+                    <Button
+                      variant="contained"
+                      size="large"
+                      component="a"
+                      href="/get-involved"
+                      sx={{
+                        py: 1.5,
+                        px: 4,
+                        bgcolor: 'white',
+                        color: 'primary.main',
+                        fontWeight: 'bold',
+                        '&:hover': {
+                          bgcolor: 'rgba(255, 255, 255, 0.9)',
+                        }
+                      }}
+                    >
+                      Get Involved
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      component="a"
+                      href="/contact"
+                      sx={{
+                        py: 1.5,
+                        px: 4,
+                        color: 'white',
+                        borderColor: 'white',
+                        fontWeight: 'bold',
+                        '&:hover': {
+                          borderColor: 'white',
+                          bgcolor: 'rgba(255, 255, 255, 0.1)',
+                        }
+                      }}
+                    >
+                      Contact Us
+                    </Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Grid>
           </Grid>
         </Container>
       </Box>

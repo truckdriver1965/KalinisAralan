@@ -11,141 +11,175 @@ import {
   CircularProgress,
   Alert,
   useTheme,
+  IconButton,
 } from '@mui/material';
-<<<<<<< HEAD
-import { projectsApi } from '../services/api';
-=======
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import PeopleIcon from '@mui/icons-material/People';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
-// Sample project data
-const projects = [
-  {
-    id: 1,
-    title: "Handwashing Stations",
-    location: "Outside the gymnasium",
-    date: "January 2025",
-    status: "Completed",
-    beneficiaries: 2000,
-    description: "Installation of 15 multi-faucet handwashing stations across 5 schools, benefiting over 2,000 students.",
-    image: "/placeholder.jpg",
-    category: "Handwashing"
-  },
-  {
-    id: 2,
-    title: "Toilet Renovation",
-    location: "Every floor",
-    date: "March 2025",
-    status: "Completed",
-    beneficiaries: 1500,
-    description: "Complete renovation of toilet facilities in 3 schools, including improved plumbing, privacy features, and accessibility.",
-    image: "/placeholder.jpg",
-    category: "Toilets"
-  },
-  {
-    id: 3,
-    title: "Water System Upgrade",
-    location: "Water fountain stations",
-    date: "May 2025",
-    status: "In Progress",
-    progress: 75,
-    beneficiaries: 3000,
-    description: "Upgrading water supply systems in 4 schools to ensure consistent access to clean water for sanitation.",
-    image: "/placeholder.jpg",
-    category: "Water Systems"
-  }
+const categories = [
+  'Maintenance',
+  'Education',
+  'Management',
+  'Community'
 ];
->>>>>>> 8a0e5a6adc90771ae0ce537ebec74ef782c3a08e
 
 function ProjectsPage() {
   const theme = useTheme();
-  const [projects, setProjects] = useState([]);
+  const [practices, setPractices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
-    
-    // Fetch projects data
-    fetchProjects();
+    fetchPractices();
   }, []);
 
-  const fetchProjects = async () => {
+  const fetchPractices = async () => {
     try {
       setLoading(true);
-      // For development/testing, you can use this mock data if your API isn't ready
-      // Comment this out when your real API is ready
+
+      // Mock data (for development)
       const mockData = [
         {
           id: 1,
-          title: 'Clean Water for Mindanao Schools',
-          description: 'Providing clean water systems to 15 schools in rural Mindanao, benefiting over 5,000 students.',
-          fullDescription: 'This project aims to install water filtration systems in schools across rural Mindanao, where access to clean water is limited. Each system can provide safe drinking water for hundreds of students daily, reducing waterborne illnesses and improving attendance rates.',
-          image: '/images/project1.jpg',
-          progress: 85,
-          goal: 1500000,
-          raised: 1275000,
-          location: 'Mindanao',
+          title: 'Regular Cleaning Schedule',
+          description: 'Daily cleaning schedule implemented by the school maintenance staff',
+          fullDescription: 'The school maintains cleanliness through a structured daily schedule: Morning inspection (6:30 AM), After-recess cleanup (10:00 AM), Post-lunch maintenance (1:30 PM), and End-day thorough cleaning (4:30 PM). This systematic approach ensures facilities remain clean throughout the school day.',
+          image: '/images/practice1.jpg',
+          category: 'Maintenance',
         },
         {
           id: 2,
-          title: 'Sanitation Facilities in Visayas',
-          description: 'Building modern toilet facilities in 10 schools across the Visayas region to improve hygiene.',
-          fullDescription: 'Many schools in the Visayas region lack proper sanitation facilities, forcing students to use inadequate or unhygienic facilities. This project will construct modern toilet blocks with handwashing stations in 10 schools, directly benefiting over 3,000 students.',
-          image: '/images/project2.jpg',
-          progress: 65,
-          goal: 2000000,
-          raised: 1300000,
-          location: 'Visayas',
+          title: 'Student Cleanliness Program',
+          description: 'Weekly student assignments for basic facility maintenance',
+          fullDescription: 'Each section has assigned cleaning duties on rotation. Students handle basic tasks like keeping the sink areas dry, ensuring proper tissue disposal, and reporting any maintenance issues to teachers. This program builds student responsibility while maintaining facility cleanliness.',
+          image: '/images/practice2.jpg',
+          category: 'Education',
         },
         {
           id: 3,
-          title: 'Hygiene Education Program',
-          description: 'Teaching proper hygiene practices to students and teachers in 25 schools throughout Luzon.',
-          fullDescription: 'This comprehensive education program focuses on teaching proper handwashing techniques, personal hygiene, and sanitation practices to both students and teachers. The program includes workshops, educational materials, and follow-up assessments to ensure lasting behavioral change.',
-          image: '/images/project3.jpg',
-          progress: 100,
-          goal: 800000,
-          raised: 800000,
-          location: 'Luzon',
+          title: 'Supply Management',
+          description: 'Monthly inventory system for cleaning materials',
+          fullDescription: 'The school maintains a monthly inventory of cleaning supplies including tissue paper, hand soap, and cleaning agents. The admin staff tracks usage patterns and ensures timely restocking. This prevents shortages and maintains consistent facility cleanliness.',
+          image: '/images/practice3.jpg',
+          category: 'Management',
         },
+        {
+          id: 4,
+          title: 'Facility Maintenance Checklist',
+          description: 'Daily inspection and maintenance verification system',
+          fullDescription: 'Maintenance staff uses a detailed checklist covering all facility areas: functioning water supply, clean toilet bowls, adequate lighting, proper drainage, and ventilation. Issues are immediately reported to the administration for quick resolution.',
+          image: '/images/practice4.jpg',
+          category: 'Maintenance',
+        },
+        {
+          id: 5,
+          title: 'Parent-Teacher Collaboration',
+          description: 'Monthly meetings for facility maintenance planning',
+          fullDescription: 'The PTA actively participates in facility maintenance through monthly meetings where they discuss maintenance needs, contribute to supply procurement, and organize quarterly general cleaning activities involving parents and teachers.',
+          image: '/images/practice5.jpg',
+          category: 'Community',
+        },
+        {
+          id: 6,
+          title: 'Basic Repairs System',
+          description: 'Immediate response protocol for minor facility issues',
+          fullDescription: 'The school has a designated maintenance team that handles basic repairs like fixing leaky faucets, unclogging drains, and replacing broken fixtures. This quick-response system prevents small issues from becoming major problems.',
+          image: '/images/practice6.jpg',
+          category: 'Management',
+        }
       ];
-      
-      setProjects(mockData);
-      
-      // Uncomment this when your API is ready
-      // const data = await projectsApi.getAll();
-      // setProjects(data);
-      
+
+      setPractices(mockData);
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching projects:', err);
-      setError('Failed to load projects. Please try again later.');
+      console.error('Error fetching best practices:', err);
+      setError('Failed to load best practices. Please try again later.');
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  // Filter function
+  const filteredPractices = practices.filter(practice => 
+    selectedCategory === 'all' ? true : practice.category === selectedCategory
+  );
 
-  if (error) {
-    return (
-      <Container maxWidth="lg" sx={{ my: 8 }}>
-        <Alert severity="error" sx={{ mb: 4 }}>{error}</Alert>
-        <Button variant="contained" onClick={fetchProjects}>Try Again</Button>
-      </Container>
+  const videos = [ 
+    { 
+      id: 1, 
+      title: 'Tamang Paggamit ng Tubig sa Paaralan', 
+      description: 'Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-1', 
+      thumbnail: '/images/video-thumb-1.jpg' 
+    }, 
+    { 
+      id: 2, 
+      title: 'Wastong Pangangalaga ng Palikuran', 
+      description: 'Mga tips para sa tamang pag-maintain ng school restrooms.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-2', 
+      thumbnail: '/images/video-thumb-2.jpg' 
+    }, 
+    { 
+      id: 3, 
+      title: 'Proper Handwashing Campaign', 
+      description: 'Paano ituro sa mga estudyante ang tamang paghuhugas ng kamay.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-3', 
+      thumbnail: '/images/video-thumb-3.jpg' 
+    },
+    { 
+      id: 4, 
+      title: 'Paglilinis ng Water Tank', 
+      description: 'Step-by-step guide sa tamang paglilinis ng water tank sa paaralan.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-4', 
+      thumbnail: '/images/video-thumb-4.jpg' 
+    },
+    { 
+      id: 5, 
+      title: 'Water Conservation Tips', 
+      description: 'Mga paraan para makatipid ng tubig sa paaralan at bahay.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-5', 
+      thumbnail: '/images/video-thumb-5.jpg' 
+    },
+    { 
+      id: 6, 
+      title: 'Proper Waste Segregation', 
+      description: 'Tamang paghihiwalay ng basura para sa malinis na kapaligiran.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-6', 
+      thumbnail: '/images/video-thumb-6.jpg' 
+    },
+    { 
+      id: 7, 
+      title: 'School Plumbing Maintenance', 
+      description: 'Basic plumbing maintenance para sa mga paaralan.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-7', 
+      thumbnail: '/images/video-thumb-7.jpg' 
+    },
+    { 
+      id: 8, 
+      title: 'Eco-Friendly School Practices', 
+      description: 'Mga environment-friendly na gawain sa paaralan.', 
+      embedUrl: 'https://www.youtube.com/embed/your-video-id-8', 
+      thumbnail: '/images/video-thumb-8.jpg' 
+    }
+  ];
+
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
+  const handleNextVideo = () => {
+    setCurrentVideoIndex((prevIndex) => 
+      prevIndex === videos.length - 1 ? 0 : prevIndex + 1
     );
-  }
+  };
+
+  const handlePrevVideo = () => {
+    setCurrentVideoIndex((prevIndex) => 
+      prevIndex === 0 ? videos.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-<<<<<<< HEAD
     <Box>
       {/* Hero Section */}
       <Box
@@ -157,121 +191,245 @@ function ProjectsPage() {
         }}
       >
         <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            component="h1"
-            sx={{ 
-              fontWeight: 'bold',
-              mb: 2
-            }}
-          >
-            Our Projects
+          <Typography variant="h2" component="h1" sx={{ fontWeight: 'bold', mb: 2 }}>
+            Sanitation Best Practices
           </Typography>
-          <Typography
-            variant="h5"
-            sx={{ maxWidth: '800px' }}
-          >
-            Explore our ongoing and completed initiatives to improve water and sanitation facilities in schools across the Philippines.
+          <Typography variant="h5" sx={{ maxWidth: '800px' }}>
+            Explore our partner school's proven sanitation and maintenance practices. Each practice is documented in detail to help other schools implement similar systems effectively.
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 2, maxWidth: '800px', opacity: 0.9 }}>
+            Filter by category to find specific practices or browse through our complete collection of documented success stories.
           </Typography>
         </Container>
-=======
-    <Container>
-      <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
-        Our Projects
-      </Typography>
-      <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
-        Transforming sanitation facilities in Baliwag North Central School
-      </Typography>
-      
-      {/* Project Filters */}
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 4 }}>
-        <Tabs 
-          value={tabValue} 
-          onChange={handleTabChange} 
-          centered
-          variant="fullWidth"
-        >
-          <Tab label="All Projects" />
-          <Tab label="Completed" />
-          <Tab label="In Progress" />
-          <Tab label="Planned" />
-        </Tabs>
->>>>>>> 8a0e5a6adc90771ae0ce537ebec74ef782c3a08e
       </Box>
 
-      {/* Projects List */}
-      <Container maxWidth="lg" sx={{ mb: 8 }}>
-        <Grid container spacing={4}>
-          {projects.map((project) => (
-            <Grid item xs={12} md={6} lg={4} key={project.id}>
-              <Card 
-                sx={{ 
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: 2,
-                  overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                  transition: 'transform 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-10px)'
-                  }
-                }}
+      {/* Loading and Error States */}
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+          <CircularProgress />
+        </Box>
+      )}
+      
+      {error && (
+        <Container maxWidth="lg" sx={{ mb: 4 }}>
+          <Alert severity="error">{error}</Alert>
+        </Container>
+      )}
+
+      {!loading && !error && (
+        <>
+          {/* Category Filter */}
+          <Container maxWidth="lg" sx={{ mb: 4 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              flexWrap: 'wrap',
+              gap: 2, 
+              mb: 4 
+            }}>
+              <Button 
+                variant={selectedCategory === 'all' ? 'contained' : 'outlined'}
+                onClick={() => setSelectedCategory('all')}
               >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={project.image}
-                  alt={project.title}
-                />
-                <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                  <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
-                    {project.title}
-                  </Typography>
-                  <Typography variant="body1" paragraph>
-                    {project.description}
-                  </Typography>
-                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="body2" color="text.secondary">
-                      Progress: {project.progress}%
-                    </Typography>
-                    <Typography variant="body2" color="primary">
-                      Location: {project.location}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ mt: 1, width: '100%', bgcolor: 'background.paper', borderRadius: 1, height: 8 }}>
-                    <Box
-                      sx={{
-                        width: `${project.progress}%`,
-                        bgcolor: 'primary.main',
-                        height: '100%',
-                        borderRadius: 1,
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="body2" color="text.secondary">
-                      ₱{project.raised.toLocaleString()}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      ₱{project.goal.toLocaleString()}
-                    </Typography>
-                  </Box>
-                  <Button 
-                    variant="contained" 
-                    fullWidth 
-                    sx={{ mt: 3 }}
-                    component="a"
-                    href={`/donate?project=${project.id}`}
+                All Practices
+              </Button>
+              {categories.map(category => (
+                <Button 
+                  key={category}
+                  variant={selectedCategory === category ? 'contained' : 'outlined'}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </Button>
+              ))}
+            </Box>
+          </Container>
+
+          {/* Best Practices List */}
+          <Container maxWidth="lg" sx={{ mb: 8 }}>
+            <Grid container spacing={4}>
+              {filteredPractices.map((practice) => (
+                <Grid item xs={12} md={6} lg={4} key={practice.id}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      borderRadius: 2,
+                      overflow: 'hidden',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+                      transition: 'transform 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-10px)',
+                      },
+                    }}
                   >
-                    Support This Project
-                  </Button>
-                </CardContent>
-              </Card>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={practice.image}
+                      alt={practice.title}
+                    />
+                    <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                      <Typography variant="h5" component="h2" gutterBottom sx={{ 
+                        fontWeight: 'bold',
+                        fontSize: '1.25rem',
+                        mb: 2
+                      }}>
+                        {practice.title}
+                      </Typography>
+                      <Typography variant="subtitle1" sx={{ 
+                        mb: 2,
+                        color: 'text.primary',
+                        fontWeight: 500
+                      }}>
+                        {practice.description}
+                      </Typography>
+                      <Typography variant="body2" sx={{ 
+                        color: 'text.secondary',
+                        mb: 2,
+                        lineHeight: 1.6
+                      }}>
+                        {practice.fullDescription}
+                      </Typography>
+                      <Box sx={{ 
+                        mt: 'auto', 
+                        pt: 2, 
+                        borderTop: '1px solid',
+                        borderColor: 'divider'
+                      }}>
+                        <Typography variant="body2" sx={{
+                          display: 'inline-block',
+                          px: 1.5,
+                          py: 0.5,
+                          bgcolor: 'primary.light',
+                          color: 'white',
+                          borderRadius: 1,
+                          fontSize: '0.75rem'
+                        }}>
+                          {practice.category}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Container>
+          </Container>
+        </>
+      )}
+      
+      {/* Video Resources Section */}
+      <Box sx={{ bgcolor: 'grey.100', py: 8 }}>
+        <Container maxWidth="lg">
+          <Typography variant="h3" component="h2" sx={{ 
+            fontWeight: 'bold',
+            mb: 3,
+            textAlign: 'center'
+          }}>
+            Educational Videos
+          </Typography>
+          <Typography variant="h6" sx={{ 
+            mb: 6,
+            textAlign: 'center',
+            color: 'text.secondary'
+          }}>
+            Watch helpful videos about water conservation, proper handwashing techniques, and sanitation practices.
+          </Typography>
+
+          <Box sx={{ position: 'relative', maxWidth: '1200px', mx: 'auto', px: 6 }}>
+            {/* Navigation Buttons */}
+            <IconButton 
+              onClick={handlePrevVideo}
+              sx={{
+                position: 'absolute',
+                left: -30,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                bgcolor: 'white',
+                boxShadow: 2,
+                width: 48,
+                height: 48,
+                '&:hover': { 
+                  bgcolor: 'grey.100',
+                  transform: 'translateY(-50%) scale(1.1)'
+                },
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <NavigateBeforeIcon />
+            </IconButton>
+
+            <IconButton 
+              onClick={handleNextVideo}
+              sx={{
+                position: 'absolute',
+                right: -30,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                bgcolor: 'white',
+                boxShadow: 2,
+                width: 48,
+                height: 48,
+                '&:hover': { 
+                  bgcolor: 'grey.100',
+                  transform: 'translateY(-50%) scale(1.1)'
+                },
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <NavigateNextIcon />
+            </IconButton>
+
+            {/* Videos Display */}
+            <Grid container spacing={4}>
+              {[
+                videos[(currentVideoIndex - 1 + videos.length) % videos.length],
+                videos[currentVideoIndex],
+                videos[(currentVideoIndex + 1) % videos.length]
+              ].map((video, index) => (
+                <Grid item xs={12} md={4} key={video.id}>
+                  <Card sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    boxShadow: index === 1 ? '0 10px 30px rgba(0,0,0,0.2)' : '0 4px 12px rgba(0,0,0,0.1)',
+                    transform: index === 1 ? 'scale(1.05)' : 'scale(1)',
+                    opacity: index === 1 ? 1 : 0.7,
+                    transition: 'all 0.3s ease'
+                  }}>
+                    <Box sx={{ position: 'relative', pt: '56.25%' }}>
+                      <iframe
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          border: 0
+                        }}
+                        src={video.embedUrl}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </Box>
+                    <CardContent>
+                      <Typography variant="h6" component="h3" gutterBottom>
+                        {video.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {video.description}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 }

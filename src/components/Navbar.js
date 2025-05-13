@@ -19,7 +19,7 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 const pages = [
   { title: 'Home', path: '/' },
   { title: 'About', path: '/about' },
-  { title: 'Projects', path: '/projects' },
+  { title: 'Practices', path: '/projects' },
   { title: 'Donate', path: '/donate' },
   { title: 'Resources', path: '/resources' },
   { title: 'Contact', path: '/contact' },

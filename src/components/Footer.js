@@ -269,26 +269,7 @@ function Footer() {
                 <SendIcon />
               </IconButton>
             </Paper>
-            
-            <Button
-              variant="contained"
-              color="primary"
-              component={RouterLink}
-              to="/donate"
-              fullWidth
-              sx={{
-                py: 1.5,
-                borderRadius: 30,
-                fontWeight: 'bold',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-3px)',
-                  boxShadow: `0 8px 15px rgba(${theme.palette.primary.main}, 0.3)`,
-                }
-              }}
-            >
-              Donate Now
-            </Button>
+          
           </Grid>
         </Grid>
         
