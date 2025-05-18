@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
   Card,
   CardContent,
   CardMedia,
+  CircularProgress,  
   Container,
   Grid,
   Typography,
@@ -23,93 +24,105 @@ import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import { Link } from 'react-router-dom';
+import { projectsApi, testimonialsApi, homeApi } from '../services/api';
 
 function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [animateElements, setAnimateElements] = React.useState(false);
+  const [projects, setProjects] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [heroContent, setHeroContent] = useState({});
+  const [sdgGoals, setSdgGoals] = useState([]);
+  const [approachContent, setApproachContent] = useState({});
+  const [processSteps, setProcessSteps] = useState([]);
   
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Using the API functions from api.js for all requests
+        const [
+          projectsResponse, 
+          testimonialsResponse,
+          heroResponse,
+          sdgGoalsResponse,
+          approachResponse,
+          processResponse
+        ] = await Promise.all([
+          projectsApi.getAll(),
+          testimonialsApi.getAll(),
+          homeApi.getHero(),
+          homeApi.getSdgGoals(),
+          homeApi.getApproach(),
+          homeApi.getProcess()
+        ]);
+        
+        setProjects(projectsResponse.data);
+        setTestimonials(testimonialsResponse.data);
+        setHeroContent(heroResponse.data);
+        setSdgGoals(sdgGoalsResponse.data.goals);
+        setApproachContent(approachResponse.data);
+        setProcessSteps(processResponse.data.steps);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
     setAnimateElements(true);
-    
     window.scrollTo(0, 0);
   }, []);
 
-  const featuredProjects = [
-    {
-      title: 'Effective Sanitation Practices',
-      description: 'Documenting and sharing successful sanitation practices while enabling support for facility improvements.',
-      image: '/images/project1.jpg',
-      progress: 85,
-    },
-    {
-      title: 'Hygiene Education Program',
-      description: 'Comprehensive hygiene education initiatives combined with facility enhancement support.',
-      image: '/images/project2.jpg',
-      progress: 65,
-    },
-    {
-      title: 'Maintenance Best Practices',
-      description: 'Sharing maintenance strategies while facilitating partnerships for sustainable facility management.',
-      image: '/images/project3.jpg',
-      progress: 100,
-    },
-  ];
-
-  const testimonials = [
-    {
-      quote: "With KalinisAralan's help, we've installed proper toilets and handwashing stations. Absenteeism has dropped by 30% since the facilities were completed.",
-      author: "Maria Santos",
-      role: "School Principal, Partner School",
-      image: "/images/testimonial1.jpg"
-    },
-    {
-      quote: "The sanitation project has transformed our school environment. Our students now have dignity and privacy when using school facilities.",
-      author: "Juan Reyes",
-      role: "Teacher, Partner School",
-      image: "/images/testimonial2.jpg"
-    },
-    {
-      quote: "As a student, I'm happy that we now have clean toilets and places to wash our hands. I don't worry about getting sick anymore.",
-      author: "Elena Magsaysay",
-      role: "Student, Partner School",
-      image: "/images/testimonial3.jpg"
+  // Map icon types to actual icon components
+  const getIconByType = (iconType) => {
+    switch (iconType) {
+      case 'water':
+        return <WaterIcon fontSize="large" />;
+      case 'medical':
+        return <MedicalServicesIcon fontSize="large" />;
+      case 'book':
+        return <MenuBookIcon fontSize="large" />;
+      case 'handshake':
+        return <HandshakeIcon fontSize="large" />;
+      case 'check':
+        return <CheckCircleIcon fontSize="large" />;
+      default:
+        return <CheckCircleIcon fontSize="large" />;
     }
-  ];
+  };
 
-  const sdgGoals = [
-    {
-      title: "Clean Water & Sanitation",
-      description: "SDG 6: Ensuring availability and sustainable management of water and sanitation for all",
-      icon: <WaterIcon fontSize="large" />,
-      color: "#26bde2"
-    },
-    {
-      title: "Good Health & Well-being",
-      description: "SDG 3: Ensuring healthy lives and promoting well-being for all at all ages",
-      icon: <MedicalServicesIcon fontSize="large" />,
-      color: "#4c9f38"
-    },
-    {
-      title: "Quality Education",
-      description: "SDG 4: Ensuring inclusive and equitable quality education for all",
-      icon: <MenuBookIcon fontSize="large" />,
-      color: "#c5192d"
-    }
-  ];
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography variant="h5" color="error">{error}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box>
-      <Box
-        sx={{
-          position: 'relative',
-          height: { xs: '90vh', md: '85vh' },
-          display: 'flex',
-          alignItems: 'center',
-          overflow: 'hidden',
-          bgcolor: 'black',
-        }}
-      >
+      {/* Hero Section */}
+      <Box sx={{
+        position: 'relative',
+        height: { xs: '90vh', md: '85vh' },
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        bgcolor: 'black',
+      }}>
         <Box
           sx={{
             position: 'absolute',
@@ -117,7 +130,7 @@ function HomePage() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url("/images/hero-bg.jpg")',
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url("${heroContent.backgroundImage}")`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             zIndex: 0,
@@ -144,7 +157,7 @@ function HomePage() {
                       display: 'block'
                     }}
                   >
-                    IMPROVING SCHOOL SANITATION
+                    {heroContent.overline || "IMPROVING SCHOOL SANITATION"}
                   </Typography>
                   <Typography
                     component="h1"
@@ -157,7 +170,7 @@ function HomePage() {
                       lineHeight: 1.2
                     }}
                   >
-                    Transforming School Sanitation in the Philippines
+                    {heroContent.title || "Transforming School Sanitation in the Philippines"}
                   </Typography>
                   <Typography
                     variant="h6"
@@ -168,7 +181,7 @@ function HomePage() {
                       lineHeight: 1.6
                     }}
                   >
-                    KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students.
+                    {heroContent.description || "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students."}
                   </Typography>
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
@@ -225,8 +238,8 @@ function HomePage() {
                 >
                   <Box
                     component="img"
-                    src="/images/children-water.jpg"
-                    alt="Students using new handwashing facilities"
+                    src={heroContent.sideImage || "/images/children-water.jpg"}
+                    alt={heroContent.sideImageAlt || "Students using new handwashing facilities"}
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -283,7 +296,7 @@ function HomePage() {
 
           <Grid container spacing={4}>
             {sdgGoals.map((goal, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={4} key={goal.id || index}>
                 <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
                   <Card 
                     sx={{ 
@@ -310,7 +323,7 @@ function HomePage() {
                         flexDirection: 'column'
                       }}
                     >
-                      {goal.icon}
+                      {getIconByType(goal.iconType)}
                       <Typography variant="h5" component="h3" sx={{ mt: 2, fontWeight: 'bold' }}>
                         {goal.title}
                       </Typography>
@@ -344,7 +357,7 @@ function HomePage() {
                       display: 'block'
                     }}
                   >
-                    OUR APPROACH
+                    {approachContent.overline || "OUR APPROACH"}
                   </Typography>
                   <Typography
                     variant="h3"
@@ -365,7 +378,7 @@ function HomePage() {
                       }
                     }}
                   >
-                    Creating Model School Sanitation
+                    {approachContent.title || "Creating Model School Sanitation"}
                   </Typography>
                   <Typography
                     variant="body1"
@@ -376,17 +389,17 @@ function HomePage() {
                       color: 'text.secondary'
                     }}
                   >
-                    KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools.
+                    {approachContent.description || "KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools."}
                   </Typography>
                 
                   <Box sx={{ mb: 4 }}>
-                    {[
+                    {(approachContent.features || [
                       'Documenting and sharing effective sanitation practices',
                       'Facilitating support for facility improvements',
                       'Creating comprehensive maintenance guides',
                       'Building partnerships for sustainable development',
                       'Enabling knowledge and resource sharing between schools'
-                    ].map((item, index) => (
+                    ]).map((item, index) => (
                       <Box 
                         key={index} 
                         sx={{ 
@@ -418,8 +431,8 @@ function HomePage() {
                 >
                   <Box
                     component="img"
-                    src="/images/mission-image.jpg"
-                    alt="Students using upgraded sanitation facilities"
+                    src={approachContent.image || "/images/mission-image.jpg"}
+                    alt={approachContent.imageAlt || "Students using upgraded sanitation facilities"}
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -458,7 +471,7 @@ function HomePage() {
                   mb: 2,
                 }}
               >
-                How KalinisAralan Works
+                {processSteps.title || "How KalinisAralan Works"}
               </Typography>
               <Typography
                 variant="body1"
@@ -475,24 +488,8 @@ function HomePage() {
           </Fade>
 
           <Grid container spacing={6}>
-            {[
-              {
-                title: "Document",
-                description: "We document successful sanitation practices while identifying areas for improvement and support.",
-                icon: <HandshakeIcon fontSize="large" />
-              },
-              {
-                title: "Connect",
-                description: "We connect schools with resources and support to enhance their sanitation facilities.",
-                icon: <WaterIcon fontSize="large" />
-              },
-              {
-                title: "Share",
-                description: "We share best practices and success stories to inspire and guide other public schools.",
-                icon: <CheckCircleIcon fontSize="large" />
-              }
-            ].map((step, index) => (
-              <Grid item xs={12} md={4} key={index}>
+            {processSteps.map((step, index) => (
+              <Grid item xs={12} md={4} key={step.id || index}>
                 <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
                   <Box
                     sx={{
@@ -540,7 +537,7 @@ function HomePage() {
                         }
                       }}
                     >
-                      {step.icon}
+                      {getIconByType(step.iconType)}
                     </Box>
                     <Typography variant="h4" component="h3" sx={{ mb: 2 }}>
                       {step.title}
@@ -597,8 +594,8 @@ function HomePage() {
           </Fade>
 
           <Grid container spacing={4}>
-            {featuredProjects.map((project, index) => (
-              <Grid item xs={12} md={4} key={index}>
+            {projects.map((project, index) => (
+              <Grid item xs={12} md={4} key={project.id || index}>
                 <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
                   <Card 
                     sx={{ 
@@ -638,7 +635,7 @@ function HomePage() {
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             {testimonials.map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={4} key={testimonial.id || index}>
                 <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
                   <Box
                     sx={{
