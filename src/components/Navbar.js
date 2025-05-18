@@ -18,11 +18,11 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 
 const pages = [
   { title: 'Home', path: '/' },
-  { title: 'About', path: '/about' },
   { title: 'Practices', path: '/projects' },
+  { title: 'About', path: '/about' },
+  { title: 'Contact', path: '/contact' },
   { title: 'Donate', path: '/donate' },
   { title: 'Resources', path: '/resources' },
-  { title: 'Contact', path: '/contact' },
 ];
 
 function Navbar() {

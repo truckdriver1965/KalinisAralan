@@ -34,11 +34,11 @@ function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const inquiryTypes = [
-    'General Inquiry',
-    'Donation Information',
-    'Volunteer Opportunities',
-    'School Partnership',
+    'Documentation Access',
+    'Best Practices Implementation',
     'Technical Assistance',
+    'School Partnership',
+    'Resource Sharing',
     'Media Inquiry',
     'Other'
   ];
@@ -122,42 +122,42 @@ function ContactPage() {
         Contact Us
       </Typography>
       <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
-        We'd love to hear from you. Reach out with any questions or inquiries.
+        Connect with us to learn more about implementing effective sanitation practices in your school.
       </Typography>
       
       <Grid container spacing={4}>
         <Grid item xs={12} md={5}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
+          <Card sx={{ height: 'auto' }}>
+            <CardContent sx={{ pb: '16px !important' }}>
               <Typography variant="h5" gutterBottom>
                 Get in Touch
               </Typography>
               <Typography variant="body1" paragraph>
-                Have questions about our projects, donations, or how you can get involved? 
-                We're here to help!
+                Looking to implement our documented sanitation practices? Have questions about maintenance procedures or facility standards? 
+                We're here to guide you!
               </Typography>
               
-              <Box sx={{ my: 4 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <EmailIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle1">
                       Email Us
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      info@kalinisaralan.org
+                      KalinisAralan@gmail.com
                     </Typography>
                   </Box>
                 </Box>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <PhoneIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle1">
                       Call Us
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      +63 (2) 8123 4567
+                      +63 9196206262
                     </Typography>
                   </Box>
                 </Box>
@@ -169,24 +169,22 @@ function ContactPage() {
                       Visit Us
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      123 Sanitation Street<br />
-                      Makati City, Metro Manila<br />
-                      Philippines
+                      123 España Blvd<br />
+                      Sampaloc, Manila, 1008 Metro Manila
                     </Typography>
                   </Box>
                 </Box>
               </Box>
               
-              <Divider sx={{ my: 3 }} />
-              
-              <Typography variant="h6" gutterBottom>
-                Office Hours
-              </Typography>
-              <Typography variant="body2">
-                Monday - Friday: 9:00 AM - 5:00 PM<br />
-                Saturday: 9:00 AM - 12:00 PM<br />
-                Sunday: Closed
-              </Typography>
+              <Box sx={{ mt: 3, pt: 2, borderTop: 1, borderColor: 'divider' }}>
+                <Typography variant="h6" gutterBottom>
+                  Want to share your expertise?
+                </Typography>
+                <Typography variant="body2">
+                  We welcome professionals with experience in sanitation systems, facility maintenance, and documentation. 
+                  Share your knowledge to help other schools implement better practices.
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         </Grid>
@@ -300,16 +298,6 @@ function ContactPage() {
               </Grid>
             </form>
           </Paper>
-          
-          <Box sx={{ mt: 4 }}>
-            <Typography variant="h6" gutterBottom>
-              Interested in volunteering?
-            </Typography>
-            <Typography variant="body2" paragraph>
-              We welcome volunteers with various skills, from construction and plumbing to education and project management. 
-              Please mention your skills and availability in your message.
-            </Typography>
-          </Box>
         </Grid>
       </Grid>
       
