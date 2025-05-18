@@ -17,9 +17,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 const categories = [
-  'Maintenance',
   'Education',
   'Management',
+  'Maintenance',
   'Community'
 ];
 
