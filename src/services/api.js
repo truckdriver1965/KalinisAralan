@@ -1,64 +1,53 @@
-// API service for handling all fetch requests
-const API_BASE_URL = 'https://api.example.com'; // Replace with your actual API URL
+import axios from 'axios';
 
-// Generic fetch function with error handling
-async function fetchData(endpoint, options = {}) {
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('API fetch error:', error);
-    throw error;
+const api = axios.create({
+  baseURL: 'http://localhost:3001',
+  headers: {
+    'Content-Type': 'application/json'
   }
-}
+});
 
 // Projects API
 export const projectsApi = {
-  getAll: () => fetchData('/projects'),
-  getById: (id) => fetchData(`/projects/${id}`),
-  create: (data) => fetchData('/projects', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }),
-  update: (id, data) => fetchData(`/projects/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-  }),
-  delete: (id) => fetchData(`/projects/${id}`, {
-    method: 'DELETE',
-  }),
+  getAll: () => api.get('/projects'),
+  getById: (id) => api.get(`/projects/${id}`),
+  create: (data) => api.post('/projects', data),
+  update: (id, data) => api.put(`/projects/${id}`, data),
+  delete: (id) => api.delete(`/projects/${id}`)
 };
 
 // Donations API
 export const donationsApi = {
-  create: (data) => fetchData('/donations', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }),
-  getStats: () => fetchData('/donations/stats'),
+  create: (data) => api.post('/donations', data),
+  getStats: () => api.get('/donations/stats')
 };
 
 // Contact form API
 export const contactApi = {
-  sendMessage: (data) => fetchData('/contact', {
-    method: 'POST',
-    body: JSON.stringify(data),
-  }),
+  sendMessage: (data) => api.post('/contact', data)
+};
+
+// Testimonials API
+export const testimonialsApi = {
+  getAll: () => api.get('/testimonials'),
+  getById: (id) => api.get(`/testimonials/${id}`)
+};
+
+export const homeApi = {
+  getHero: () => api.get('/hero'),
+  getSdgGoals: () => api.get('/sdgGoals'),
+  getApproach: () => api.get('/approach'),
+  getProcess: () => api.get('/process'),
+  getFeaturedProjects: () => api.get('/featuredProjects')
+};
+
+export const aboutApi = {
+  getAboutContent: () => api.get('/about')
 };
 
 export default {
   projectsApi,
   donationsApi,
   contactApi,
+  testimonialsApi
 };
