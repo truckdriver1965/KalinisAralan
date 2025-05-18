@@ -33,10 +33,9 @@ function Footer() {
     {
       title: 'About Us',
       links: [
-        { name: 'Our Mission', path: '/about' },
-        { name: 'Our Team', path: '/about#team' },
+        { name: 'About', path: '/about' },
         { name: 'Our Partners', path: '/about#partners' },
-        { name: 'Our Impact', path: '/about#impact' },
+        { name: 'FAQs', path: '/faqs' },
       ]
     },
     {
@@ -44,17 +43,6 @@ function Footer() {
       links: [
         { name: 'Donate', path: '/donate' },
         { name: 'Volunteer', path: '/volunteer' },
-        { name: 'Partner With Us', path: '/partner' },
-        { name: 'Fundraise', path: '/fundraise' },
-      ]
-    },
-    {
-      title: 'Resources',
-      links: [
-        { name: 'Blog', path: '/blog' },
-        { name: 'News', path: '/news' },
-        { name: 'Reports', path: '/reports' },
-        { name: 'FAQs', path: '/faqs' },
       ]
     }
   ];
@@ -63,8 +51,6 @@ function Footer() {
     { icon: <FacebookIcon />, url: 'https://facebook.com' },
     { icon: <TwitterIcon />, url: 'https://twitter.com' },
     { icon: <InstagramIcon />, url: 'https://instagram.com' },
-    { icon: <LinkedInIcon />, url: 'https://linkedin.com' },
-    { icon: <YouTubeIcon />, url: 'https://youtube.com' },
   ];
 
   return (
@@ -103,13 +89,13 @@ function Footer() {
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <PhoneIcon sx={{ color: theme.palette.primary.main, mr: 1 }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                  +63 2 8123 4567
+                  +63 9196206262
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <EmailIcon sx={{ color: theme.palette.primary.main, mr: 1 }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                  info@kalinisaralan.org
+                  KalinisAralan@gmail.com
                 </Typography>
               </Box>
             </Box>
@@ -139,7 +125,7 @@ function Footer() {
           
           {/* Quick Links */}
           {footerLinks.map((section, index) => (
-            <Grid item xs={12} sm={6} md={2} key={index}>
+            <Grid item xs={12} sm={6} md={3} key={index}>
               <Typography 
                 variant="h6" 
                 sx={{ 
@@ -195,82 +181,6 @@ function Footer() {
               </Box>
             </Grid>
           ))}
-          
-          {/* Newsletter */}
-          <Grid item xs={12} md={4}>
-            <Typography 
-              variant="h6" 
-              sx={{ 
-                mb: 3, 
-                color: 'white',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: -8,
-                  left: 0,
-                  width: 40,
-                  height: 3,
-                  backgroundColor: theme.palette.primary.main,
-                  borderRadius: 1
-                }
-              }}
-            >
-              Subscribe to Our Newsletter
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 3, color: 'rgba(255,255,255,0.7)' }}>
-              Stay updated with our latest projects, events, and ways to get involved.
-            </Typography>
-            
-            <Paper
-              component="form"
-              sx={{
-                p: '2px 4px',
-                display: 'flex',
-                alignItems: 'center',
-                bgcolor: 'rgba(255,255,255,0.1)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: 30,
-                mb: 3,
-              }}
-            >
-              <TextField
-                fullWidth
-                placeholder="Your email address"
-                variant="standard"
-                InputProps={{
-                  disableUnderline: true,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon sx={{ color: 'rgba(255,255,255,0.5)', ml: 1 }} />
-                    </InputAdornment>
-                  ),
-                  sx: { 
-                    color: 'white',
-                    px: 1,
-                    '& input::placeholder': {
-                      color: 'rgba(255,255,255,0.5)',
-                      opacity: 1,
-                    }
-                  }
-                }}
-              />
-              <IconButton 
-                type="submit" 
-                sx={{ 
-                  p: '10px', 
-                  color: 'black',
-                  bgcolor: theme.palette.primary.main,
-                  '&:hover': {
-                    bgcolor: theme.palette.primary.dark,
-                  }
-                }}
-              >
-                <SendIcon />
-              </IconButton>
-            </Paper>
-          
-          </Grid>
         </Grid>
         
         <Divider sx={{ my: 4, borderColor: 'rgba(255,255,255,0.1)' }} />

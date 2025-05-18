@@ -22,6 +22,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HandshakeIcon from '@mui/icons-material/Handshake';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   const theme = useTheme();
@@ -167,7 +168,7 @@ function HomePage() {
                       lineHeight: 1.6
                     }}
                   >
-                    KalinisAralan documents and shares our partner school's successful sanitation practices while enabling support for more schools to implement better facilities for their students.
+                    KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students.
                   </Typography>
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
@@ -177,8 +178,8 @@ function HomePage() {
                       variant="contained"
                       color="primary"
                       size="large"
-                      component="a"
-                      href="/donate"
+                      component={Link}
+                      to="/donate"
                       sx={{
                         py: 1.5,
                         px: 4,
@@ -190,8 +191,8 @@ function HomePage() {
                     <Button
                       variant="outlined"
                       size="large"
-                      component="a"
-                      href="/projects"
+                      component={Link}
+                      to="/projects"
                       sx={{
                         py: 1.5,
                         px: 4,
@@ -400,24 +401,6 @@ function HomePage() {
                     ))}
                   </Box>
                   
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="a"
-                    href="/our-approach"
-                    endIcon={<ArrowForwardIcon />}
-                    sx={{
-                      py: 1.5,
-                      px: 4,
-                      fontWeight: 'bold',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateX(5px)',
-                      }
-                    }}
-                  >
-                    Learn More About Our Approach
-                  </Button>
                 </Box>
               </Fade>
             </Grid>
@@ -752,24 +735,6 @@ function HomePage() {
                     spacing={3}
                     justifyContent="center"
                   >
-                    <Button
-                      variant="contained"
-                      size="large"
-                      component="a"
-                      href="/get-involved"
-                      sx={{
-                        py: 1.5,
-                        px: 4,
-                        bgcolor: 'white',
-                        color: 'primary.main',
-                        fontWeight: 'bold',
-                        '&:hover': {
-                          bgcolor: 'rgba(255, 255, 255, 0.9)',
-                        }
-                      }}
-                    >
-                      Get Involved
-                    </Button>
                     <Button
                       variant="outlined"
                       size="large"
