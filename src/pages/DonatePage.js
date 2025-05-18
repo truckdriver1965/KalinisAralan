@@ -21,10 +21,10 @@ import {
   useTheme,
   Fade,
   Grow,
-  Zoom
+  Zoom,
+  Snackbar,
+  Alert
 } from '@mui/material';
-// Remove framer-motion import
-// import { motion } from 'framer-motion';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SchoolIcon from '@mui/icons-material/School';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
@@ -32,8 +32,8 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import PersonIcon from '@mui/icons-material/Person';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import axios from 'axios';
 
-// Animation variants for framer-motion
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { 
@@ -70,21 +70,33 @@ function DonatePage() {
     country: '',
     postalCode: ''
   });
-  const [paymentMethod, setPaymentMethod] = useState('creditCard');
+  const [paymentMethod, setPaymentMethod] = useState('gcash');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0); // For re-triggering animations
+  const [animationKey, setAnimationKey] = useState(0);
+  const [paymentDetails, setPaymentDetails] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    gcashNumber: '',
+    gcashName: '',
+    referenceNumber: ''
+  });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  const [donationReference, setDonationReference] = useState('');
 
-  // Re-trigger animations when step changes
   useEffect(() => {
     setAnimationKey(prevKey => prevKey + 1);
   }, [activeStep]);
 
   const handleNext = () => {
-    // Validate custom amount if that option is selected
     if (activeStep === 0 && donationAmount === 'custom') {
       const amount = Number(customAmount);
       if (isNaN(amount) || amount <= 0) {
-        // You could set an error state here to display to the user
+        setSnackbarMessage('Please enter a valid donation amount');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
         return;
       }
     }
@@ -116,14 +128,95 @@ function DonatePage() {
     setPaymentMethod(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handlePaymentDetailsChange = (event) => {
+    const { name, value } = event.target;
+    setPaymentDetails({
+      ...paymentDetails,
+      [name]: value
+    });
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const validatePaymentDetails = () => {
+    if (paymentMethod === 'creditCard') {
+      if (!paymentDetails.cardNumber || !paymentDetails.expiryDate || !paymentDetails.cvv) {
+        setSnackbarMessage('Please fill in all credit card details');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        return false;
+      }
+    } else if (paymentMethod === 'gcash') {
+      if (!paymentDetails.gcashNumber || !paymentDetails.gcashName) {
+        setSnackbarMessage('Please fill in all GCash details');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        return false;
+      }
+    } else if (paymentMethod === 'bankTransfer') {
+      if (!paymentDetails.referenceNumber) {
+        setSnackbarMessage('Please enter the bank transfer reference number');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    if (!validatePaymentDetails()) {
+      return;
+    }
+    
     setIsProcessing(true);
-    // Simulate processing
-    setTimeout(() => {
+    
+    const donationData = {
+      amount: donationAmount === 'custom' ? customAmount : donationAmount,
+      donor: donorInfo,
+      paymentMethod: paymentMethod,
+      paymentDetails: paymentDetails
+    };
+    
+    console.log('Submitting donation data:', donationData);
+    
+    try {
+      const response = await axios.post(
+        'http://localhost/exercisejsx/kalinisaralan/api/donations.php',
+        donationData
+      );
+      
+      console.log('Response:', response);
+      
+      const data = response.data;
+      
+      if (data.success) {
+        setDonationReference(data.referenceNumber || ('DON-' + Math.floor(100000 + Math.random() * 900000)));
+        
+        setIsProcessing(false);
+        
+        handleNext();
+        
+        setSnackbarMessage('Donation processed successfully!');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+      } else {
+        setSnackbarMessage('Error processing donation: ' + data.message);
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        setIsProcessing(false);
+      }
+    } catch (error) {
+      console.error('Error processing donation:', error);
+      setSnackbarMessage('Failed to process donation. Please try again later.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
       setIsProcessing(false);
-      handleNext();
-    }, 2000);
+    }
   };
 
   const steps = [
@@ -199,7 +292,7 @@ function DonatePage() {
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                     <SchoolIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                     <Typography variant="body1">
-                      ₱500 provides hygiene education for 10 students
+                      ₱500 provides hygiene education for 10 students at Baliwag North Central School
                     </Typography>
                   </Box>
                 </Grid>
@@ -207,7 +300,7 @@ function DonatePage() {
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                     <FavoriteIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                     <Typography variant="body1">
-                      ₱2,500 installs a handwashing station
+                      ₱2,500 installs a handwashing station at the school
                     </Typography>
                   </Box>
                 </Grid>
@@ -215,7 +308,7 @@ function DonatePage() {
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                     <VolunteerActivismIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
                     <Typography variant="body1">
-                      ₱10,000 renovates a school toilet facility
+                      ₱10,000 renovates a toilet facility at Baliwag North Central School
                     </Typography>
                   </Box>
                 </Grid>
@@ -387,6 +480,9 @@ function DonatePage() {
                     required
                     fullWidth
                     label="Card Number"
+                    name="cardNumber"
+                    value={paymentDetails.cardNumber}
+                    onChange={handlePaymentDetailsChange}
                     margin="normal"
                   />
                 </Grid>
@@ -395,6 +491,9 @@ function DonatePage() {
                     required
                     fullWidth
                     label="Expiry Date (MM/YY)"
+                    name="expiryDate"
+                    value={paymentDetails.expiryDate}
+                    onChange={handlePaymentDetailsChange}
                     margin="normal"
                   />
                 </Grid>
@@ -403,6 +502,9 @@ function DonatePage() {
                     required
                     fullWidth
                     label="CVV"
+                    name="cvv"
+                    value={paymentDetails.cvv}
+                    onChange={handlePaymentDetailsChange}
                     margin="normal"
                     type="password"
                   />
@@ -415,12 +517,23 @@ function DonatePage() {
                 <Typography variant="body1" gutterBottom>
                   Please use the following bank details for your transfer:
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ mb: 3 }}>
                   Bank: Sample Bank Philippines<br />
                   Account Name: KalinisAralan Foundation<br />
                   Account Number: 1234-5678-9012-3456<br />
-                  Branch: Main Branch, Manila
+                  Branch: Baliwag Branch
                 </Typography>
+                
+                <TextField
+                  required
+                  fullWidth
+                  label="Bank Transfer Reference Number"
+                  name="referenceNumber"
+                  value={paymentDetails.referenceNumber}
+                  onChange={handlePaymentDetailsChange}
+                  margin="normal"
+                  helperText="Enter the reference number from your bank transfer"
+                />
               </Box>
             )}
 
@@ -429,10 +542,35 @@ function DonatePage() {
                 <Typography variant="body1" gutterBottom>
                   Please send your donation to the following GCash number:
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{ mb: 3 }}>
                   GCash Number: 0917-123-4567<br />
                   Account Name: KalinisAralan Foundation
                 </Typography>
+                
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      label="Your GCash Number"
+                      name="gcashNumber"
+                      value={paymentDetails.gcashNumber}
+                      onChange={handlePaymentDetailsChange}
+                      margin="normal"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      label="GCash Account Name"
+                      name="gcashName"
+                      value={paymentDetails.gcashName}
+                      onChange={handlePaymentDetailsChange}
+                      margin="normal"
+                    />
+                  </Grid>
+                </Grid>
               </Box>
             )}
 
@@ -444,7 +582,7 @@ function DonatePage() {
                 <Typography variant="body1">
                   Donation Amount: ₱{donationAmount === 'custom' 
                     ? customAmount 
-                    : donationAmount ? parseInt(donationAmount).toLocaleString() : '0'}
+                    : donationAmount ? parseInt(donationAmount).toLocaleString() : '0'} will help improve sanitation facilities at Baliwag North Central School.
                 </Typography>
               </Box>
             </Box>
@@ -462,13 +600,13 @@ function DonatePage() {
             <Typography variant="body1" paragraph>
               Your contribution of ₱{donationAmount === 'custom' 
                 ? customAmount 
-                : donationAmount ? parseInt(donationAmount).toLocaleString() : '0'} will help improve sanitation facilities for Filipino students.
+                : donationAmount ? parseInt(donationAmount).toLocaleString() : '0'} will help improve sanitation facilities at Baliwag North Central School.
             </Typography>
             <Typography variant="body1" paragraph>
               A confirmation email has been sent to {donorInfo.email}.
             </Typography>
             <Typography variant="body1" paragraph>
-              Your donation reference number: DON-{Math.floor(100000 + Math.random() * 900000)}
+              Your donation reference number: {donationReference || 'DON-' + Math.floor(100000 + Math.random() * 900000)}
             </Typography>
             <Box sx={{ mt: 4 }}>
               <Button variant="contained" color="primary" href="/">
@@ -502,10 +640,10 @@ function DonatePage() {
           }
         }}>
           <Typography variant="h3" component="h1" color="primary" gutterBottom>
-            Support Our Mission
+            Support Baliwag North Central School
           </Typography>
           <Typography variant="h6" color="text.secondary">
-            Your donation helps us provide clean water and sanitation facilities to schools
+            Your donation helps us provide clean water and sanitation facilities to our school
           </Typography>
         </Box>
       </Fade>
@@ -684,148 +822,194 @@ function DonatePage() {
                     </Box>
                   </Box>
                 </form>
-              </CardContent> {/* This closing tag was missing */}
+              </CardContent>
             </Card>
           </Fade>
         </Grid>
         
         <Grid item xs={12} md={4}>
-            <Fade in={true} timeout={500} style={{ transitionDelay: '400ms' }}>
-              <Card elevation={3} sx={{ 
-                height: '100%', 
-                display: 'flex', 
-                flexDirection: 'column',
-                position: 'relative',
-                overflow: 'hidden',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 12px 30px rgba(0, 0, 0, 0.15)',
-                },
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: 8,
-                  height: '100%',
-                  backgroundColor: 'primary.main'
-                }
-              }}>
-                <CardContent sx={{ p: 3, pl: 4, flexGrow: 1 }}>
-                  <Fade in={true} timeout={600}>
-                    <Box>
-                      <Typography variant="h5" gutterBottom fontWeight="bold" color="primary">
-                        Why Donate?
-                      </Typography>
-                      <Typography variant="body1" paragraph>
-                        Your donation directly supports our mission to improve sanitation facilities in Philippine schools, creating healthier learning environments for students.
-                      </Typography>
+          <Fade in={true} timeout={500} style={{ transitionDelay: '400ms' }}>
+            <Card elevation={3} sx={{ 
+              height: '100%', 
+              display: 'flex', 
+              flexDirection: 'column',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-5px)',
+                boxShadow: '0 12px 30px rgba(0, 0, 0, 0.15)',
+              },
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: 8,
+                height: '100%',
+                backgroundColor: 'primary.main'
+              }
+            }}>
+              <CardContent sx={{ p: 3, pl: 4, flexGrow: 1 }}>
+                <Fade in={true} timeout={600}>
+                  <Box>
+                    <Typography variant="h5" gutterBottom fontWeight="bold" color="primary">
+                      Why Donate?
+                    </Typography>
+                    <Typography variant="body1" paragraph>
+                      Your donation directly supports our mission to improve sanitation facilities at Baliwag North Central School, creating a healthier learning environment for students.
+                    </Typography>
+                  </Box>
+                </Fade>
+                
+                <Divider sx={{ my: 3 }} />
+                
+                <Fade in={true} timeout={700}>
+                  <Box>
+                    <Typography variant="h6" gutterBottom color="primary">
+                      Impact of Your Donation
+                    </Typography>
+                    <Box sx={{ pl: 2 }}>
+                      {[
+                        'Reduced absenteeism due to illness',
+                        'Improved dignity and privacy for students',
+                        'Better hygiene practices in the school',
+                        'Increased school attendance, especially for girls',
+                        'A healthier school environment'
+                      ].map((item, index) => (
+                        <Fade
+                          key={index}
+                          in={true}
+                          timeout={500}
+                          style={{ transitionDelay: `${500 + (index * 100)}ms` }}
+                        >
+                          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                            <Box sx={{ 
+                              width: 6, 
+                              height: 6, 
+                              borderRadius: '50%', 
+                              bgcolor: 'primary.main',
+                              mr: 1.5
+                            }} />
+                            <Typography variant="body2">{item}</Typography>
+                          </Box>
+                        </Fade>
+                      ))}
                     </Box>
-                  </Fade>
-                  
-                  <Divider sx={{ my: 3 }} />
-                  
-                  <Fade in={true} timeout={700}>
-                    <Box>
-                      <Typography variant="h6" gutterBottom color="primary">
-                        Impact of Your Donation
-                      </Typography>
-                      <Box sx={{ pl: 2 }}>
-                        {[
-                          'Reduced absenteeism due to illness',
-                          'Improved dignity and privacy for students',
-                          'Better hygiene practices in schools',
-                          'Increased school attendance, especially for girls',
-                          'Healthier school communities'
-                        ].map((item, index) => (
-                          <Fade
-                            key={index}
-                            in={true}
-                            timeout={500}
-                            style={{ transitionDelay: `${500 + (index * 100)}ms` }}
-                          >
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-                              <Box sx={{ 
-                                width: 6, 
-                                height: 6, 
-                                borderRadius: '50%', 
-                                bgcolor: 'primary.main',
-                                mr: 1.5
-                              }} />
-                              <Typography variant="body2">{item}</Typography>
-                            </Box>
-                          </Fade>
-                        ))}
-                      </Box>
+                  </Box>
+                </Fade>
+                
+                <Divider sx={{ my: 3 }} />
+                
+                <Fade in={true} timeout={800}>
+                  <Box>
+                    <Typography variant="h6" gutterBottom color="primary">
+                      Other Ways to Help
+                    </Typography>
+                    <Box sx={{ pl: 2 }}>
+                      {[
+                        'Volunteer your time at Baliwag North Central School',
+                        'Spread awareness about our school\'s needs',
+                        'Partner with us as a corporate sponsor',
+                        'Donate materials or equipment for the school'
+                      ].map((item, index) => (
+                        <Fade
+                          key={index}
+                          in={true}
+                          timeout={500}
+                          style={{ transitionDelay: `${900 + (index * 100)}ms` }}
+                        >
+                          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                            <Box sx={{ 
+                              width: 6, 
+                              height: 6, 
+                              borderRadius: '50%', 
+                              bgcolor: 'primary.main',
+                              mr: 1.5
+                            }} />
+                            <Typography variant="body2">{item}</Typography>
+                          </Box>
+                        </Fade>
+                      ))}
                     </Box>
-                  </Fade>
-                  
-                  <Divider sx={{ my: 3 }} />
-                  
-                  <Fade in={true} timeout={800}>
-                    <Box>
-                      <Typography variant="h6" gutterBottom color="primary">
-                        Other Ways to Help
-                      </Typography>
-                      <Box sx={{ pl: 2 }}>
-                        {[
-                          'Volunteer your time and skills',
-                          'Spread awareness about our cause',
-                          'Partner with us as a corporate sponsor',
-                          'Donate materials or equipment'
-                        ].map((item, index) => (
-                          <Fade
-                            key={index}
-                            in={true}
-                            timeout={500}
-                            style={{ transitionDelay: `${900 + (index * 100)}ms` }}
-                          >
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
-                              <Box sx={{ 
-                                width: 6, 
-                                height: 6, 
-                                borderRadius: '50%', 
-                                bgcolor: 'primary.main',
-                                mr: 1.5
-                              }} />
-                              <Typography variant="body2">{item}</Typography>
-                            </Box>
-                          </Fade>
-                        ))}
-                      </Box>
-                    </Box>
-                  </Fade>
-                  
-                  <Fade in={true} timeout={1000} style={{ transitionDelay: '1300ms' }}>
-                    <Box>
-                      <Button 
-                        variant="outlined" 
-                        color="primary" 
-                        fullWidth 
-                        href="/contact" 
-                        sx={{ 
-                          mt: 4,
+                  </Box>
+                </Fade>
+                
+                <Fade in={true} timeout={1000} style={{ transitionDelay: '1300ms' }}>
+                  <Box>
+                    <Button 
+                      variant="outlined" 
+                      color="primary" 
+                      fullWidth 
+                      href="/contact" 
+                      sx={{ 
+                        mt: 4,
+                        borderWidth: 2,
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
                           borderWidth: 2,
-                          transition: 'all 0.3s ease',
-                          '&:hover': {
-                            borderWidth: 2,
-                            bgcolor: 'rgba(242, 169, 0, 0.08)',
-                            transform: 'translateY(-3px)',
-                          }
-                        }}
-                      >
-                        Contact Us to Learn More
-                      </Button>
-                    </Box>
-                  </Fade>
-                </CardContent>
-              </Card>
-            </Fade>
+                          bgcolor: 'rgba(242, 169, 0, 0.08)',
+                          transform: 'translateY(-3px)',
+                        }
+                      }}
+                    >
+                      Contact Us to Learn More
+                    </Button>
+                  </Box>
+                </Fade>
+              </CardContent>
+            </Card>
+          </Fade>
+        </Grid>
+      </Grid>
+      
+      {/* Move this Box inside the Grid container or make it a separate Grid item */}
+      <Grid container sx={{ mt: 4 }}>
+        <Grid item xs={12}>
+          <Typography variant="h6" gutterBottom>
+            Your donation will help:
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={4}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <SchoolIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
+                <Typography variant="body1">
+                  ₱500 provides hygiene education for 10 students at Baliwag North Central School
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <FavoriteIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
+                <Typography variant="body1">
+                  ₱2,500 installs a handwashing station at the school
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <VolunteerActivismIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
+                <Typography variant="body1">
+                  ₱10,000 renovates a toilet facility at Baliwag North Central School
+                </Typography>
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
-      </Container>
-    );
+      </Grid>
+      
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </Container>
+  );
 }
 
 export default DonatePage;
