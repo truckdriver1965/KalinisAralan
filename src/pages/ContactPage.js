@@ -18,28 +18,43 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SendIcon from '@mui/icons-material/Send';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import SchoolIcon from '@mui/icons-material/School';
+import axios from 'axios';
 
 function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    subject: '',
-    message: '',
-    inquiryType: ''
+    category: '',
+    recommendation: '',
+    relation: ''
   });
   
   const [formErrors, setFormErrors] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const inquiryTypes = [
-    'Documentation Access',
-    'Best Practices Implementation',
-    'Technical Assistance',
-    'School Partnership',
-    'Resource Sharing',
-    'Media Inquiry',
+  const recommendationCategories = [
+    'Facilities Improvement',
+    'Sanitation Systems',
+    'Educational Resources',
+    'School Programs',
+    'Safety Measures',
+    'Environmental Initiatives',
+    'Other'
+  ];
+  
+  const relationTypes = [
+    'Student',
+    'Parent',
+    'Teacher',
+    'School Staff',
+    'Alumni',
+    'Community Member',
     'Other'
   ];
   
@@ -72,31 +87,34 @@ function ContactPage() {
       errors.email = 'Email is invalid';
     }
     
-    if (!formData.subject.trim()) {
-      errors.subject = 'Subject is required';
+    if (!formData.category) {
+      errors.category = 'Please select a recommendation category';
     }
     
-    if (!formData.message.trim()) {
-      errors.message = 'Message is required';
+    if (!formData.recommendation.trim()) {
+      errors.recommendation = 'Recommendation details are required';
     }
     
-    if (!formData.inquiryType) {
-      errors.inquiryType = 'Please select an inquiry type';
+    if (!formData.relation) {
+      errors.relation = 'Please select your relation to the school';
     }
     
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
   
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     
     if (validateForm()) {
       setIsSubmitting(true);
       
-      // Simulate form submission
-      setTimeout(() => {
-        setIsSubmitting(false);
+      try {
+        // Connect to our backend API
+        const response = await axios.post('http://localhost:5000/api/recommendations', formData);
+        
+        setSnackbarMessage('Thank you for your recommendation! The school administration will review it.');
+        setSnackbarSeverity('success');
         setSnackbarOpen(true);
         
         // Reset form after successful submission
@@ -104,11 +122,18 @@ function ContactPage() {
           name: '',
           email: '',
           phone: '',
-          subject: '',
-          message: '',
-          inquiryType: ''
+          category: '',
+          recommendation: '',
+          relation: ''
         });
-      }, 1500);
+      } catch (error) {
+        console.error('Error submitting recommendation:', error);
+        setSnackbarMessage('There was an error submitting your recommendation. Please try again later.');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
   
@@ -119,10 +144,10 @@ function ContactPage() {
   return (
     <Container>
       <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
-        Contact Us
+        School Recommendations
       </Typography>
       <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
-        Connect with us to learn more about implementing effective sanitation practices in your school.
+        Help us improve Baliwag North Central School by sharing your suggestions and recommendations
       </Typography>
       
       <Grid container spacing={4}>
@@ -130,14 +155,27 @@ function ContactPage() {
           <Card sx={{ height: 'auto' }}>
             <CardContent sx={{ pb: '16px !important' }}>
               <Typography variant="h5" gutterBottom>
-                Get in Touch
+                Why Submit Recommendations?
               </Typography>
               <Typography variant="body1" paragraph>
-                Looking to implement our documented sanitation practices? Have questions about maintenance procedures or facility standards? 
-                We're here to guide you!
+                Your feedback is valuable in helping us create a better learning environment for our students. 
+                Share your ideas on how we can improve our facilities, programs, or sanitation systems.
               </Typography>
               
               <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <SchoolIcon color="primary" sx={{ mr: 2 }} />
+                  <Box>
+                    <Typography variant="subtitle1">
+                      School Address
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Baliwag North Central School<br />
+                      Baliwag, Bulacan
+                    </Typography>
+                  </Box>
+                </Box>
+                
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <EmailIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
@@ -145,32 +183,19 @@ function ContactPage() {
                       Email Us
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      KalinisAralan@gmail.com
+                      bncs@deped.gov.ph
                     </Typography>
                   </Box>
                 </Box>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <PhoneIcon color="primary" sx={{ mr: 2 }} />
                   <Box>
                     <Typography variant="subtitle1">
                       Call Us
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      +63 9196206262
-                    </Typography>
-                  </Box>
-                </Box>
-                
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <LocationOnIcon color="primary" sx={{ mr: 2 }} />
-                  <Box>
-                    <Typography variant="subtitle1">
-                      Visit Us
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      123 España Blvd<br />
-                      Sampaloc, Manila, 1008 Metro Manila
+                      +63 44 123 4567
                     </Typography>
                   </Box>
                 </Box>
@@ -178,11 +203,12 @@ function ContactPage() {
               
               <Box sx={{ mt: 3, pt: 2, borderTop: 1, borderColor: 'divider' }}>
                 <Typography variant="h6" gutterBottom>
-                  Want to share your expertise?
+                  What happens to your recommendations?
                 </Typography>
                 <Typography variant="body2">
-                  We welcome professionals with experience in sanitation systems, facility maintenance, and documentation. 
-                  Share your knowledge to help other schools implement better practices.
+                  All recommendations are reviewed by the school administration and prioritized based on feasibility and impact. 
+                  We may contact you for further details if needed. Selected recommendations will be implemented as part of our 
+                  continuous improvement program.
                 </Typography>
               </Box>
             </CardContent>
@@ -192,7 +218,8 @@ function ContactPage() {
         <Grid item xs={12} md={7}>
           <Paper elevation={3} sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>
-              Send Us a Message
+              <LightbulbIcon sx={{ mr: 1, verticalAlign: 'middle', color: 'primary.main' }} />
+              Share Your Recommendation
             </Typography>
             
             <form onSubmit={handleSubmit}>
@@ -239,15 +266,15 @@ function ContactPage() {
                     required
                     fullWidth
                     select
-                    label="Inquiry Type"
-                    name="inquiryType"
-                    value={formData.inquiryType}
+                    label="Your Relation to the School"
+                    name="relation"
+                    value={formData.relation}
                     onChange={handleInputChange}
-                    error={!!formErrors.inquiryType}
-                    helperText={formErrors.inquiryType}
+                    error={!!formErrors.relation}
+                    helperText={formErrors.relation}
                     margin="normal"
                   >
-                    {inquiryTypes.map((option) => (
+                    {relationTypes.map((option) => (
                       <MenuItem key={option} value={option}>
                         {option}
                       </MenuItem>
@@ -258,28 +285,36 @@ function ContactPage() {
                   <TextField
                     required
                     fullWidth
-                    label="Subject"
-                    name="subject"
-                    value={formData.subject}
+                    select
+                    label="Recommendation Category"
+                    name="category"
+                    value={formData.category}
                     onChange={handleInputChange}
-                    error={!!formErrors.subject}
-                    helperText={formErrors.subject}
+                    error={!!formErrors.category}
+                    helperText={formErrors.category}
                     margin="normal"
-                  />
+                  >
+                    {recommendationCategories.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    label="Message"
-                    name="message"
+                    label="Your Recommendation"
+                    name="recommendation"
                     multiline
                     rows={4}
-                    value={formData.message}
+                    value={formData.recommendation}
                     onChange={handleInputChange}
-                    error={!!formErrors.message}
-                    helperText={formErrors.message}
+                    error={!!formErrors.recommendation}
+                    helperText={formErrors.recommendation}
                     margin="normal"
+                    placeholder="Please describe your recommendation in detail. What specific improvements would you like to see?"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -292,7 +327,7 @@ function ContactPage() {
                     disabled={isSubmitting}
                     sx={{ mt: 2 }}
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? 'Submitting...' : 'Submit Recommendation'}
                   </Button>
                 </Grid>
               </Grid>
@@ -311,11 +346,12 @@ function ContactPage() {
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  How can schools apply for assistance?
+                  How are recommendations evaluated?
                 </Typography>
                 <Typography variant="body2">
-                  Schools can apply for assistance by filling out our School Application Form available in the Resources section. 
-                  Alternatively, school administrators can contact us directly through this form.
+                  Recommendations are evaluated based on feasibility, impact on student learning, cost-effectiveness, 
+                  and alignment with the school's development plan. Priority is given to recommendations that address 
+                  urgent needs and benefit the most students.
                 </Typography>
               </CardContent>
             </Card>
@@ -324,11 +360,11 @@ function ContactPage() {
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  How are donations used?
+                  Will I be notified if my recommendation is implemented?
                 </Typography>
                 <Typography variant="body2">
-                  Donations directly fund our sanitation projects, including materials, labor, and educational programs. 
-                  We ensure transparency by providing regular updates on project progress and financial reports.
+                  Yes, if you provide your contact information, we will notify you if your recommendation is selected 
+                  for implementation. We may also contact you for additional details or to involve you in the implementation process.
                 </Typography>
               </CardContent>
             </Card>
@@ -337,11 +373,11 @@ function ContactPage() {
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  Can I specify which project my donation supports?
+                  Can I submit multiple recommendations?
                 </Typography>
                 <Typography variant="body2">
-                  Yes, donors can specify if they want their contribution to support a particular project or region. 
-                  Please indicate your preference in the donation form or contact us directly.
+                  Absolutely! You can submit as many recommendations as you'd like. Each recommendation will be 
+                  evaluated individually. We encourage you to be specific and detailed in each submission.
                 </Typography>
               </CardContent>
             </Card>
@@ -350,11 +386,12 @@ function ContactPage() {
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  How can companies partner with KalinisAralan?
+                  How can I support the implementation of recommendations?
                 </Typography>
                 <Typography variant="body2">
-                  We offer various partnership opportunities for companies, including corporate sponsorships, 
-                  employee volunteer programs, and in-kind donations. Please contact us to discuss potential collaborations.
+                  You can support implementation by volunteering your time, expertise, or resources. If you're interested 
+                  in contributing beyond just submitting a recommendation, please indicate this in your submission or 
+                  contact the school administration directly.
                 </Typography>
               </CardContent>
             </Card>
@@ -368,8 +405,8 @@ function ContactPage() {
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-          Thank you for your message! We'll get back to you soon.
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
         </Alert>
       </Snackbar>
     </Container>

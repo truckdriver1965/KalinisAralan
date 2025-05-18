@@ -1,0 +1,24 @@
+2025-05-18 14:35:27 - Request received
+2025-05-18 14:35:27 - OPTIONS request handled
+2025-05-18 14:35:27 - Request received
+2025-05-18 14:35:27 - Received data: {"amount":"500","donor":{"firstName":"JADE LLOYD","lastName":"DE LARA","email":"jadedelara25@gmail.com","phone":"09668559513","address":"4580 Atis St. Gen T. De Leon","city":"Valenzuela City","country":"Philippines","postalCode":"1442"},"paymentMethod":"gcash","paymentDetails":{"cardNumber":"","expiryDate":"","cvv":"","gcashNumber":"09668559513","gcashName":"Jade Lloyd de Lara","referenceNumber":""}}
+2025-05-18 14:35:27 - Payment method: gcash
+2025-05-18 14:35:27 - Payment successful, reference: DON-649406
+2025-05-18 14:35:29 - Email sending failed
+2025-05-18 14:35:29 - Success response: {"success":true,"message":"Donation processed successfully but email sending failed","referenceNumber":"DON-649406","emailSent":false}
+2025-05-18 14:35:36 - Request received
+2025-05-18 14:35:36 - OPTIONS request handled
+2025-05-18 14:35:36 - Request received
+2025-05-18 14:35:36 - Received data: {"amount":"500","donor":{"firstName":"JADE LLOYD","lastName":"DE LARA","email":"jadedelara25@gmail.com","phone":"09668559513","address":"4580 Atis St. Gen T. De Leon","city":"Valenzuela City","country":"Philippines","postalCode":"1442"},"paymentMethod":"gcash","paymentDetails":{"cardNumber":"","expiryDate":"","cvv":"","gcashNumber":"09668559513","gcashName":"Jade Lloyd de Lara","referenceNumber":""}}
+2025-05-18 14:35:36 - Payment method: gcash
+2025-05-18 14:35:36 - Payment successful, reference: DON-851980
+2025-05-18 14:35:38 - Email sending failed
+2025-05-18 14:35:38 - Success response: {"success":true,"message":"Donation processed successfully but email sending failed","referenceNumber":"DON-851980","emailSent":false}
+2025-05-18 14:36:30 - Request received
+2025-05-18 14:36:30 - OPTIONS request handled
+2025-05-18 14:36:30 - Request received
+2025-05-18 14:36:30 - Received data: {"amount":"500","donor":{"firstName":"JADE LLOYD","lastName":"DE LARA","email":"jadedelara25@gmail.com","phone":"09668559513","address":"4580 Atis St. Gen T. De Leon","city":"Valenzuela City","country":"Philippines","postalCode":"1442"},"paymentMethod":"gcash","paymentDetails":{"cardNumber":"","expiryDate":"","cvv":"","gcashNumber":"09668559513","gcashName":"Jade Lloyd de Lara","referenceNumber":""}}
+2025-05-18 14:36:30 - Payment method: gcash
+2025-05-18 14:36:30 - Payment successful, reference: DON-839851
+2025-05-18 14:36:32 - Email sending failed
+2025-05-18 14:36:32 - Success response: {"success":true,"message":"Donation processed successfully but email sending failed","referenceNumber":"DON-839851","emailSent":false}
