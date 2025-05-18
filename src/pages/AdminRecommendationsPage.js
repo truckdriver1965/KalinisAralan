@@ -104,12 +104,20 @@ function AdminRecommendationsPage() {
   // Handle recommendation deletion
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/recommendations/${selectedRecommendation.id}`);
+      console.log('Deleting recommendation:', selectedRecommendation.id);
+      const response = await axios.delete(`http://localhost:5000/api/recommendations/${selectedRecommendation.id}`);
+      console.log('Delete response:', response.data);
       setOpenDeleteDialog(false);
       fetchRecommendations();
+      setError(null);
     } catch (err) {
       console.error('Error deleting recommendation:', err);
-      setError('Failed to delete recommendation. Please try again.');
+      let errorMessage = 'Failed to delete recommendation. Please try again.';
+      if (err.response && err.response.data && err.response.data.message) {
+        errorMessage = err.response.data.message;
+      }
+      setError(errorMessage);
+      setOpenDeleteDialog(false);
     }
   };
 

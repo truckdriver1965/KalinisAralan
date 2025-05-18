@@ -13,23 +13,15 @@ app.use(bodyParser.json());
 
 // Data file paths
 const recommendationsFilePath = path.join(__dirname, 'recommendations.json');
-const messagesFilePath = path.join(__dirname, 'messages.json');
 const donationsFilePath = path.join(__dirname, 'donations.json');
 
 // Initialize data files if they don't exist
 if (!fs.existsSync(recommendationsFilePath)) {
   fs.writeFileSync(recommendationsFilePath, JSON.stringify([]));
-  console.log('Created recommendations.json file');
-}
-
-if (!fs.existsSync(messagesFilePath)) {
-  fs.writeFileSync(messagesFilePath, JSON.stringify([]));
-  console.log('Created messages.json file');
 }
 
 if (!fs.existsSync(donationsFilePath)) {
   fs.writeFileSync(donationsFilePath, JSON.stringify([]));
-  console.log('Created donations.json file');
 }
 
 // Recommendations API endpoints
@@ -45,7 +37,6 @@ app.get('/api/recommendations', (req, res) => {
 
 app.post('/api/recommendations', (req, res) => {
   try {
-    console.log('Received recommendation:', req.body);
     const data = JSON.parse(fs.readFileSync(recommendationsFilePath));
     const newRecommendation = {
       id: Date.now().toString(),
@@ -56,45 +47,47 @@ app.post('/api/recommendations', (req, res) => {
     
     data.push(newRecommendation);
     fs.writeFileSync(recommendationsFilePath, JSON.stringify(data, null, 2));
-    console.log('Saved recommendation:', newRecommendation.id);
     
     res.status(201).json(newRecommendation);
   } catch (error) {
     console.error('Error saving recommendation:', error);
-    res.status(500).json({ message: 'Error saving recommendation: ' + error.message });
+    res.status(500).json({ message: 'Error saving recommendation' });
   }
 });
 
-// Messages API endpoints
-app.get('/api/messages', (req, res) => {
+app.put('/api/recommendations/:id', (req, res) => {
   try {
-    const data = JSON.parse(fs.readFileSync(messagesFilePath));
-    res.json(data);
+    const data = JSON.parse(fs.readFileSync(recommendationsFilePath));
+    const index = data.findIndex(item => item.id === req.params.id);
+    
+    if (index === -1) {
+      return res.status(404).json({ message: 'Recommendation not found' });
+    }
+    
+    data[index] = { ...data[index], ...req.body };
+    fs.writeFileSync(recommendationsFilePath, JSON.stringify(data, null, 2));
+    
+    res.json(data[index]);
   } catch (error) {
-    console.error('Error reading messages:', error);
-    res.status(500).json({ message: 'Error fetching messages' });
+    console.error('Error updating recommendation:', error);
+    res.status(500).json({ message: 'Error updating recommendation' });
   }
 });
 
-app.post('/api/messages', (req, res) => {
+app.delete('/api/recommendations/:id', (req, res) => {
   try {
-    console.log('Received message:', req.body);
-    const data = JSON.parse(fs.readFileSync(messagesFilePath));
-    const newMessage = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      status: 'unread',
-      ...req.body
-    };
+    let data = JSON.parse(fs.readFileSync(recommendationsFilePath));
+    const filteredData = data.filter(item => item.id !== req.params.id);
     
-    data.push(newMessage);
-    fs.writeFileSync(messagesFilePath, JSON.stringify(data, null, 2));
-    console.log('Saved message:', newMessage.id);
+    if (filteredData.length === data.length) {
+      return res.status(404).json({ message: 'Recommendation not found' });
+    }
     
-    res.status(201).json(newMessage);
+    fs.writeFileSync(recommendationsFilePath, JSON.stringify(filteredData, null, 2));
+    res.json({ message: 'Recommendation deleted successfully' });
   } catch (error) {
-    console.error('Error saving message:', error);
-    res.status(500).json({ message: 'Error saving message: ' + error.message });
+    console.error('Error deleting recommendation:', error);
+    res.status(500).json({ message: 'Error deleting recommendation' });
   }
 });
 
@@ -111,7 +104,8 @@ app.get('/api/donations', (req, res) => {
 
 app.post('/api/donations', (req, res) => {
   try {
-    console.log('Received donation:', req.body);
+    console.log('Received donation request:', req.body);
+    
     const data = JSON.parse(fs.readFileSync(donationsFilePath));
     const newDonation = {
       id: Date.now().toString(),
@@ -122,8 +116,8 @@ app.post('/api/donations', (req, res) => {
     
     data.push(newDonation);
     fs.writeFileSync(donationsFilePath, JSON.stringify(data, null, 2));
-    console.log('Saved donation:', newDonation.id);
     
+    console.log('Donation saved successfully:', newDonation.id);
     res.status(201).json(newDonation);
   } catch (error) {
     console.error('Error saving donation:', error);
@@ -131,54 +125,42 @@ app.post('/api/donations', (req, res) => {
   }
 });
 
-// Add or update this PUT endpoint for recommendations
-app.put('/api/recommendations/:id', (req, res) => {
+app.put('/api/donations/:id', (req, res) => {
   try {
-    console.log('Updating recommendation:', req.params.id, req.body);
-    const data = JSON.parse(fs.readFileSync(recommendationsFilePath));
+    const data = JSON.parse(fs.readFileSync(donationsFilePath));
     const index = data.findIndex(item => item.id === req.params.id);
     
     if (index === -1) {
-      return res.status(404).json({ message: 'Recommendation not found' });
+      return res.status(404).json({ message: 'Donation not found' });
     }
     
-    // Update the recommendation with new data
     data[index] = { ...data[index], ...req.body };
-    fs.writeFileSync(recommendationsFilePath, JSON.stringify(data, null, 2));
-    console.log('Updated recommendation:', data[index]);
+    fs.writeFileSync(donationsFilePath, JSON.stringify(data, null, 2));
     
     res.json(data[index]);
   } catch (error) {
-    console.error('Error updating recommendation:', error);
-    res.status(500).json({ message: 'Error updating recommendation: ' + error.message });
+    console.error('Error updating donation:', error);
+    res.status(500).json({ message: 'Error updating donation' });
   }
 });
 
-// Add this DELETE endpoint for deleting recommendations
-app.delete('/api/recommendations/:id', (req, res) => {
+app.delete('/api/donations/:id', (req, res) => {
   try {
-    console.log('Deleting recommendation:', req.params.id);
-    const data = JSON.parse(fs.readFileSync(recommendationsFilePath));
-    const index = data.findIndex(item => item.id === req.params.id);
+    let data = JSON.parse(fs.readFileSync(donationsFilePath));
+    const filteredData = data.filter(item => item.id !== req.params.id);
     
-    if (index === -1) {
-      return res.status(404).json({ message: 'Recommendation not found' });
+    if (filteredData.length === data.length) {
+      return res.status(404).json({ message: 'Donation not found' });
     }
     
-    // Remove the recommendation
-    const deleted = data.splice(index, 1)[0];
-    fs.writeFileSync(recommendationsFilePath, JSON.stringify(data, null, 2));
-    console.log('Deleted recommendation:', deleted);
-    
-    res.json({ message: 'Recommendation deleted successfully', deleted });
+    fs.writeFileSync(donationsFilePath, JSON.stringify(filteredData, null, 2));
+    res.json({ message: 'Donation deleted successfully' });
   } catch (error) {
-    console.error('Error deleting recommendation:', error);
-    res.status(500).json({ message: 'Error deleting recommendation: ' + error.message });
+    console.error('Error deleting donation:', error);
+    res.status(500).json({ message: 'Error deleting donation' });
   }
 });
 
-// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`API endpoints available at http://localhost:${PORT}/api/`);
-});
+    console.log(`Server running on port ${PORT}`);
+  });

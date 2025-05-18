@@ -17,65 +17,154 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   CircularProgress,
   Card,
   CardContent,
   Grid,
-  Divider
+  TextField,
+  MenuItem,
+  Alert,
+  Snackbar
 } from '@mui/material';
 import {
   Visibility as VisibilityIcon,
   Delete as DeleteIcon,
-  FilterList as FilterListIcon
+  FilterList as FilterListIcon,
+  Check as CheckIcon,
+  Close as CloseIcon
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import axios from 'axios';
 
 function AdminDonationsPage() {
-  // This is a placeholder. In a real app, you would fetch donations from your backend
-  const [donations, setDonations] = useState([
-    {
-      id: '1',
-      date: '2023-05-15',
-      name: 'John Doe',
-      email: 'john@example.com',
-      amount: 5000,
-      paymentMethod: 'bank_transfer',
-      status: 'completed'
-    },
-    {
-      id: '2',
-      date: '2023-05-16',
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      amount: 2500,
-      paymentMethod: 'gcash',
-      status: 'pending'
-    },
-    {
-      id: '3',
-      date: '2023-05-17',
-      name: 'Robert Johnson',
-      email: 'robert@example.com',
-      amount: 10000,
-      paymentMethod: 'bank_transfer',
-      status: 'completed'
-    }
-  ]);
-  
-  const [loading, setLoading] = useState(false);
+  const [donations, setDonations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedDonation, setSelectedDonation] = useState(null);
   const [openViewDialog, setOpenViewDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const { user } = useAuth();
+  
+  // Fetch donations from the backend
+  const fetchDonations = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:5000/api/donations');
+      setDonations(response.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching donations:', err);
+      setError('Failed to load donations. Please try again later.');
+      
+      // For development - set sample data if API fails
+      setDonations([
+        {
+          id: '1',
+          timestamp: '2023-05-15T08:30:00.000Z',
+          name: 'John Doe',
+          email: 'john@example.com',
+          amount: '5000',
+          paymentMethod: 'Bank Transfer',
+          status: 'completed',
+          phone: '09123456789',
+          message: 'Happy to support the school'
+        },
+        {
+          id: '2',
+          timestamp: '2023-05-16T10:15:00.000Z',
+          name: 'Jane Smith',
+          email: 'jane@example.com',
+          amount: '2500',
+          paymentMethod: 'GCash',
+          status: 'pending',
+          phone: '',
+          message: ''
+        },
+        {
+          id: '3',
+          timestamp: '2023-05-17T14:45:00.000Z',
+          name: 'Robert Johnson',
+          email: 'robert@example.com',
+          amount: '10000',
+          paymentMethod: 'Bank Transfer',
+          status: 'completed',
+          phone: '09187654321',
+          message: 'For the library renovation'
+        }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    fetchDonations();
+  }, []);
+  
+  // Handle status update
+  const handleStatusUpdate = async (id, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/donations/${id}`, { status: newStatus });
+      fetchDonations();
+      setSnackbar({
+        open: true,
+        message: `Donation status updated to ${newStatus}`,
+        severity: 'success'
+      });
+    } catch (err) {
+      console.error('Error updating donation status:', err);
+      setSnackbar({
+        open: true,
+        message: 'Failed to update donation status',
+        severity: 'error'
+      });
+      
+      // For development - update local state if API fails
+      setDonations(donations.map(donation => 
+        donation.id === id ? { ...donation, status: newStatus } : donation
+      ));
+    }
+  };
+  
+  // Handle donation deletion
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/api/donations/${selectedDonation.id}`);
+      setOpenDeleteDialog(false);
+      fetchDonations();
+      setSnackbar({
+        open: true,
+        message: 'Donation deleted successfully',
+        severity: 'success'
+      });
+    } catch (err) {
+      console.error('Error deleting donation:', err);
+      setSnackbar({
+        open: true,
+        message: 'Failed to delete donation',
+        severity: 'error'
+      });
+      
+      // For development - update local state if API fails
+      setDonations(donations.filter(d => d.id !== selectedDonation.id));
+      setOpenDeleteDialog(false);
+    }
+  };
+  
+  // Filter donations based on selected status
+  const filteredDonations = statusFilter === 'all' 
+    ? donations 
+    : donations.filter(donation => donation.status === statusFilter);
   
   // Calculate stats
   const totalDonations = donations.length;
-  const totalAmount = donations.reduce((sum, donation) => sum + donation.amount, 0);
+  const totalAmount = donations.reduce((sum, donation) => sum + Number(donation.amount), 0);
   const pendingDonations = donations.filter(d => d.status === 'pending').length;
   
   // Handle pagination
@@ -107,15 +196,19 @@ function AdminDonationsPage() {
     setOpenDeleteDialog(false);
   };
   
-  const handleDelete = () => {
-    // In a real app, you would call your API to delete the donation
-    setDonations(donations.filter(d => d.id !== selectedDonation.id));
-    setOpenDeleteDialog(false);
-  };
-  
   // Format currency
   const formatCurrency = (amount) => {
-    return `₱${amount.toLocaleString()}`;
+    return `₱${Number(amount).toLocaleString()}`;
+  };
+  
+  // Format date
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString();
+  };
+  
+  // Handle snackbar close
+  const handleSnackbarClose = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
   
   return (
@@ -161,11 +254,51 @@ function AdminDonationsPage() {
         </Grid>
       </Grid>
       
+      {/* Filters */}
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <FilterListIcon sx={{ mr: 1 }} />
+          <Typography variant="h6">Filters</Typography>
+        </Box>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              select
+              fullWidth
+              label="Status"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <MenuItem value="all">All Statuses</MenuItem>
+              <MenuItem value="pending">Pending</MenuItem>
+              <MenuItem value="completed">Completed</MenuItem>
+              <MenuItem value="rejected">Rejected</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <Button 
+              variant="outlined" 
+              onClick={() => setStatusFilter('all')}
+              sx={{ mt: 1 }}
+            >
+              Clear Filters
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+      
       {/* Donations Table */}
       <Paper>
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
             <CircularProgress />
+          </Box>
+        ) : error ? (
+          <Box sx={{ p: 3, textAlign: 'center' }}>
+            <Typography color="error">{error}</Typography>
+            <Button variant="contained" onClick={fetchDonations} sx={{ mt: 2 }}>
+              Try Again
+            </Button>
           </Box>
         ) : (
           <>
@@ -182,20 +315,18 @@ function AdminDonationsPage() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {donations
+                  {filteredDonations
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((donation) => (
                       <TableRow key={donation.id}>
-                        <TableCell>{donation.date}</TableCell>
+                        <TableCell>{formatDate(donation.timestamp)}</TableCell>
                         <TableCell>{donation.name}</TableCell>
                         <TableCell>{formatCurrency(donation.amount)}</TableCell>
-                        <TableCell>
-                          {donation.paymentMethod === 'bank_transfer' ? 'Bank Transfer' : 'GCash'}
-                        </TableCell>
+                        <TableCell>{donation.paymentMethod}</TableCell>
                         <TableCell>
                           <Chip 
-                            label={donation.status === 'completed' ? 'Completed' : 'Pending'} 
-                            color={donation.status === 'completed' ? 'success' : 'warning'}
+                            label={donation.status.charAt(0).toUpperCase() + donation.status.slice(1)} 
+                            color={donation.status === 'completed' ? 'success' : donation.status === 'pending' ? 'warning' : 'error'}
                             size="small"
                           />
                         </TableCell>
@@ -207,17 +338,38 @@ function AdminDonationsPage() {
                           >
                             <VisibilityIcon />
                           </IconButton>
+                          {donation.status === 'pending' && (
+                            <>
+                              <IconButton 
+                                color="success" 
+                                onClick={() => handleStatusUpdate(donation.id, 'completed')}
+                                size="small"
+                                title="Mark as Completed"
+                              >
+                                <CheckIcon />
+                              </IconButton>
+                              <IconButton 
+                                color="error" 
+                                onClick={() => handleStatusUpdate(donation.id, 'rejected')}
+                                size="small"
+                                title="Reject Donation"
+                              >
+                                <CloseIcon />
+                              </IconButton>
+                            </>
+                          )}
                           <IconButton 
                             color="error" 
                             onClick={() => handleOpenDeleteDialog(donation)}
                             size="small"
+                            title="Delete"
                           >
                             <DeleteIcon />
                           </IconButton>
                         </TableCell>
                       </TableRow>
                     ))}
-                  {donations.length === 0 && (
+                  {filteredDonations.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} align="center">
                         <Typography variant="body1" sx={{ py: 2 }}>
@@ -232,7 +384,7 @@ function AdminDonationsPage() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={donations.length}
+              count={filteredDonations.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -249,8 +401,8 @@ function AdminDonationsPage() {
             <DialogTitle>
               Donation Details
               <Chip 
-                label={selectedDonation.status === 'completed' ? 'Completed' : 'Pending'} 
-                color={selectedDonation.status === 'completed' ? 'success' : 'warning'}
+                label={selectedDonation.status.charAt(0).toUpperCase() + selectedDonation.status.slice(1)} 
+                color={selectedDonation.status === 'completed' ? 'success' : selectedDonation.status === 'pending' ? 'warning' : 'error'}
                 size="small"
                 sx={{ ml: 2 }}
               />
@@ -263,11 +415,15 @@ function AdminDonationsPage() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Date</Typography>
-                  <Typography variant="body1">{selectedDonation.date}</Typography>
+                  <Typography variant="body1">{formatDate(selectedDonation.timestamp)}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Email</Typography>
                   <Typography variant="body1">{selectedDonation.email}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle2">Phone</Typography>
+                  <Typography variant="body1">{selectedDonation.phone || 'Not provided'}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Amount</Typography>
@@ -278,16 +434,41 @@ function AdminDonationsPage() {
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Payment Method</Typography>
                   <Typography variant="body1">
-                    {selectedDonation.paymentMethod === 'bank_transfer' ? 'Bank Transfer' : 'GCash'}
+                    {selectedDonation.paymentMethod}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Status</Typography>
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2">Message</Typography>
                   <Typography variant="body1">
-                    {selectedDonation.status === 'completed' ? 'Completed' : 'Pending'}
+                    {selectedDonation.message || 'No message provided'}
                   </Typography>
                 </Grid>
               </Grid>
+              
+              {selectedDonation.status === 'pending' && (
+                <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
+                  <Button 
+                    variant="contained" 
+                    color="success" 
+                    onClick={() => {
+                      handleStatusUpdate(selectedDonation.id, 'completed');
+                      handleCloseViewDialog();
+                    }}
+                  >
+                    Approve Donation
+                  </Button>
+                  <Button 
+                    variant="contained" 
+                    color="error" 
+                    onClick={() => {
+                      handleStatusUpdate(selectedDonation.id, 'rejected');
+                      handleCloseViewDialog();
+                    }}
+                  >
+                    Reject Donation
+                  </Button>
+                </Box>
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseViewDialog}>Close</Button>
@@ -300,15 +481,27 @@ function AdminDonationsPage() {
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <Typography>
             Are you sure you want to delete this donation record from {selectedDonation?.name}? This action cannot be undone.
-          </DialogContentText>
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button onClick={handleDelete} color="error">Delete</Button>
         </DialogActions>
       </Dialog>
+      
+      {/* Snackbar for notifications */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
