@@ -110,8 +110,17 @@ function ContactPage() {
       setIsSubmitting(true);
       
       try {
-        // Connect to our backend API
-        const response = await axios.post('http://localhost:5000/api/recommendations', formData);
+        console.log('Submitting recommendation:', formData);
+        
+        // Connect to our backend API with proper headers
+        const response = await axios.post('http://localhost:5000/api/recommendations', formData, {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000 // 10 second timeout
+        });
+        
+        console.log('Response received:', response.data);
         
         setSnackbarMessage('Thank you for your recommendation! The school administration will review it.');
         setSnackbarSeverity('success');
@@ -128,7 +137,18 @@ function ContactPage() {
         });
       } catch (error) {
         console.error('Error submitting recommendation:', error);
-        setSnackbarMessage('There was an error submitting your recommendation. Please try again later.');
+        
+        // Provide more specific error message if available
+        let errorMessage = 'There was an error submitting your recommendation. Please try again later.';
+        if (error.response) {
+          console.error('Error response data:', error.response.data);
+          errorMessage = error.response.data.message || errorMessage;
+        } else if (error.request) {
+          console.error('No response received');
+          errorMessage = 'No response received from server. Please check if the server is running.';
+        }
+        
+        setSnackbarMessage(errorMessage);
         setSnackbarSeverity('error');
         setSnackbarOpen(true);
       } finally {
