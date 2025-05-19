@@ -134,7 +134,7 @@ function ProjectsPage() {
     { 
       id: 1, 
       title: 'Tamang Paggamit ng Tubig sa Paaralan', 
-      description: 'Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan.', 
+      description: 'Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan at sa bahay.', 
       embedUrl: 'https://www.youtube.com/embed/ZyelwJfRrjE',
       watchUrl: 'https://www.youtube.com/watch?v=ZyelwJfRrjE', 
       thumbnail: '/images/video-thumb-1.jpg' 
@@ -166,7 +166,7 @@ function ProjectsPage() {
     { 
       id: 5, 
       title: 'Water Conservation Tips', 
-      description: 'Mga paraan para makatipid ng tubig sa paaralan at bahay.', 
+      description: "Mga iba't ibang paraan para makatipid ng tubig sa paaralan at bahay.", 
       embedUrl: 'https://www.youtube.com/embed/NfDrluWKewE',
       watchUrl: 'https://www.youtube.com/shorts/NfDrluWKewE', 
       thumbnail: '/images/video-thumb-5.jpg' 
@@ -174,7 +174,7 @@ function ProjectsPage() {
     { 
       id: 6, 
       title: 'Proper Waste Segregation', 
-      description: 'Tamang paghihiwalay ng basura para mapanatili ang malinis na kapaligiran.', 
+      description: 'Tamang paghihiwalay ng mga basura para mapanatili ang malinis na kapaligiran.', 
       embedUrl: 'https://www.youtube.com/embed/7c-HK90xnUg',
       watchUrl: 'https://www.youtube.com/watch?v=7c-HK90xnUg', 
       thumbnail: '/images/video-thumb-6.jpg' 
@@ -182,7 +182,7 @@ function ProjectsPage() {
     { 
       id: 7, 
       title: 'School Plumbing Maintenance', 
-      description: 'Plumbing maintenance para sa mga paaralan.', 
+      description: 'Plumbing maintenance at installation para sa mga paaralan.', 
       embedUrl: 'https://www.youtube.com/embed/ntVXAFHTVU0', 
       watchUrl: 'https://www.youtube.com/watch?v=ntVXAFHTVU0', 
       thumbnail: '/images/video-thumb-7.jpg' 
@@ -190,7 +190,7 @@ function ProjectsPage() {
     { 
       id: 8, 
       title: 'Eco-Friendly School Practices', 
-      description: 'Mga environment-friendly na maaaring isagawa sa paaralan.', 
+      description: 'Mga environment-friendly na maaaring isagawa sa paaralan at kung saan man.', 
       embedUrl: 'https://www.youtube.com/embed/9VpnPAlPDSw', 
       watchUrl: 'https://www.youtube.com/watch?v=9VpnPAlPDSw', 
       thumbnail: '/images/video-thumb-8.jpg' 
