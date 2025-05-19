@@ -1,0 +1,191 @@
+{
+    "projects": [
+      {
+        "id": 1,
+        "title": "Handwashing Station Installation",
+        "description": "Construction and installation of durable handwashing stations with multiple faucets to promote proper hygiene practices among students.",
+        "image": "/images/initiatives3.jpg",
+        "progress": 100
+      },
+      {
+        "id": 2,
+        "title": "School Ground Maintenance",
+        "description": "Regular maintenance and beautification of school grounds including recycling initiatives and proper waste management practices.",
+        "image": "/images/initiatives1.jpg",
+        "progress": 85
+      },
+      {
+        "id": 3,
+        "title": "Facility Construction",
+        "description": "Building and improving sanitation facilities using durable materials and proper construction techniques for long-term sustainability.",
+        "image": "/images/initiatives2.jpg",
+        "progress": 90
+      }
+    ],
+    "testimonials": [
+      {
+        "id": 1,
+        "quote": "With KalinisAralan's help, we've installed proper toilets and handwashing stations. Absenteeism has dropped by 30% since the facilities were completed.",
+        "author": "Maria Santos",
+        "role": "School Principal, Partner School",
+        "image": "/images/testimonial1.jpg"
+      },
+      {
+        "id": 2,
+        "quote": "The sanitation project has transformed our school environment. Our students now have dignity and privacy when using school facilities.",
+        "author": "Juan Reyes",
+        "role": "Teacher, Partner School",
+        "image": "/images/testimonial2.jpg"
+      },
+      {
+        "id": 3,
+        "quote": "As a student, I'm happy that we now have clean toilets and places to wash our hands. I don't worry about getting sick anymore.",
+        "author": "Elena Magsaysay",
+        "role": "Student, Partner School",
+        "image": "/images/testimonial3.jpg"
+      }
+    ],
+    "hero": {
+      "overline": "IMPROVING SCHOOL SANITATION",
+      "title": "Transforming School Sanitation in the Philippines",
+      "description": "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students.",
+      "backgroundImage": "/images/hero-bg.jpg",
+      "sideImage": "/images/cleaning hands 2.jpg",
+      "sideImageAlt": "Students using new handwashing facilities",
+      "primaryButtonText": "Support Our Cause",
+      "primaryButtonLink": "/donate",
+      "secondaryButtonText": "View Best Practices",
+      "secondaryButtonLink": "/projects"
+    },
+    "sdgGoals": {
+      "title": "Contributing to Global Goals",
+      "subtitle": "SUSTAINABLE DEVELOPMENT GOALS",
+      "description": "Our work directly supports these UN Sustainable Development Goals",
+      "goals": [
+        {
+          "id": 1,
+          "title": "Clean Water & Sanitation",
+          "description": "SDG 6: Ensuring availability and sustainable management of water and sanitation for all",
+          "iconType": "water",
+          "color": "#26bde2"
+        },
+        {
+          "id": 2,
+          "title": "Good Health & Well-being",
+          "description": "SDG 3: Ensuring healthy lives and promoting well-being for all at all ages",
+          "iconType": "medical",
+          "color": "#4c9f38"
+        },
+        {
+          "id": 3,
+          "title": "Quality Education",
+          "description": "SDG 4: Ensuring inclusive and equitable quality education for all",
+          "iconType": "book",
+          "color": "#c5192d"
+        }
+      ]
+    },
+    "approach": {
+      "overline": "OUR APPROACH",
+      "title": "Creating Model School Sanitation",
+      "description": "KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools.",
+      "image": "/images/hand washing.jpg",
+      "imageAlt": "Students using upgraded sanitation facilities",
+      "features": [
+        "Documenting and sharing effective sanitation practices",
+        "Facilitating support for facility improvements",
+        "Creating comprehensive maintenance guides",
+        "Building partnerships for sustainable development",
+        "Enabling knowledge and resource sharing between schools"
+      ]
+    },
+    "process": {
+      "title": "How KalinisAralan Works",
+      "subtitle": "THE PROCESS",
+      "description": "Our initiative improves school sanitation in three simple steps",
+      "steps": [
+        {
+          "id": 1,
+          "title": "Document",
+          "description": "We document successful sanitation practices from our model school",
+          "iconType": "book"
+        },
+        {
+          "id": 2,
+          "title": "Share",
+          "description": "We share these practices through our platform and workshops",
+          "iconType": "handshake"
+        },
+        {
+          "id": 3,
+          "title": "Support",
+          "description": "We enable support for schools to implement these practices",
+          "iconType": "check"
+        }
+      ]
+    },
+    "featuredProjects": {
+      "title": "Featured Initiativessss",
+      "subtitle": "OUR SCHOOL PARTNER'S PROJECTS",
+      "description": "Explore our ongoing and completed sanitation projects at our partner school"
+    },
+    "about": {
+      "header": {
+        "title": "About KalinisAralan",
+        "subtitle": "Showcasing Effective School Sanitation Practices"
+      },
+      "mission": {
+        "title": "Our Mission",
+        "description": "KalinisAralan aims to document and share effective school sanitation practices through our partner school, while enabling support mechanisms for other public schools across the Philippines to implement similar systems."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "description": "We envision a network of Philippine public schools implementing effective sanitation practices through knowledge sharing and mutual support, creating healthier learning environments for all students."
+      },
+      "story": {
+        "title": "Our Story",
+        "paragraphs": [
+          "In 2025, KalinisAralan was established as a collaborative project with our partner school, Baliwag North Central School, to document their effective sanitation practices and create a platform that enables both knowledge sharing and support mechanisms for other public schools.",
+          "Through our documentation work and support initiatives, we aim to create a comprehensive digital platform that not only highlights successful practices but also facilitates partnerships and resources to help other schools improve their facilities."
+        ]
+      },
+      "approach": {
+        "title": "Our Approach",
+        "strategies": [
+          {
+            "title": "Documentation & Support",
+            "description": "We thoroughly document our partner school's practices while identifying opportunities for support and collaboration between schools to improve sanitation facilities."
+          },
+          {
+            "title": "Digital Platform",
+            "description": "Our platform serves as both a knowledge hub and a connection point, enabling schools to learn from successful practices and access support for implementation."
+          },
+          {
+            "title": "Community Building",
+            "description": "We facilitate knowledge sharing and support networks between schools, creating a community committed to improving sanitation standards through collaboration."
+          }
+        ]
+      },
+      "team": {
+        "title": "Our Team",
+        "description": "Meet the dedicated team behind KalinisAralan's mission to document and share effective school sanitation practices.",
+        "members": [
+          {
+            "name": "Jade Lloyd de Lara",
+            "position": "Full-Stack Developer",
+            "image": "/images/jade.jpg"
+          },
+          {
+            "name": "Sean Kelly Jordan",
+            "position": "Front-End Developer",
+            "image": "/images/sean.png"
+          },
+          {
+            "name": "John Rafael Villacorte",
+            "position": "Back-End Developer",
+            "image": "/images/john.jpg"
+          }
+        ]
+      }
+    }
+  }

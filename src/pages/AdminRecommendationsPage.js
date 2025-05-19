@@ -54,43 +54,132 @@ function AdminRecommendationsPage() {
     rejected: 0
   });
 
-  // Fetch recommendations from the backend
+  // Fetch recommendations from the backend with fallback
   const fetchRecommendations = async () => {
     setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:5000/api/recommendations');
-      setRecommendations(response.data);
-      
-      // Calculate stats
-      const total = response.data.length;
-      const pending = response.data.filter(item => item.status === 'pending').length;
-      const approved = response.data.filter(item => item.status === 'approved').length;
-      const rejected = response.data.filter(item => item.status === 'rejected').length;
-      
-      setStats({ total, pending, approved, rejected });
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching recommendations:', err);
-      setError('Failed to load recommendations. Please try again later.');
-    } finally {
-      setLoading(false);
+    let tried = false;
+    
+    // Get the base URL from localStorage or use default
+    const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
+    
+    const tryFetch = async (endpoint) => {
+      try {
+        console.log(`Trying to fetch from: ${endpoint}`);
+        
+        // Get auth token if available
+        const token = localStorage.getItem('token');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        
+        const response = await axios.get(endpoint, { headers });
+        console.log('API Response:', response.data);
+        
+        if (!response.data) {
+          throw new Error('Empty response received');
+        }
+        
+        // Handle both array responses and responses with a data property
+        const responseData = Array.isArray(response.data) ? response.data : 
+                            (response.data.data && Array.isArray(response.data.data)) ? response.data.data : [];
+        
+        setRecommendations(responseData);
+        
+        // Calculate stats
+        const total = responseData.length;
+        const pending = responseData.filter(item => item.status === 'pending' || !item.status).length;
+        const approved = responseData.filter(item => item.status === 'approved').length;
+        const rejected = responseData.filter(item => item.status === 'rejected').length;
+        
+        setStats({ total, pending, approved, rejected });
+        setError(null);
+        return true;
+      } catch (err) {
+        console.error(`Error fetching from ${endpoint}:`, err);
+        return false;
+      }
+    };
+    
+    // Try multiple endpoints with different URL patterns
+    const endpoints = [
+      `${baseURL}/api/contact`,
+      `${baseURL}/api/recommendations`,
+      `${baseURL}/api/contacts`,
+      `${baseURL}/contact`
+    ];
+    
+    for (const endpoint of endpoints) {
+      const success = await tryFetch(endpoint);
+      if (success) {
+        setLoading(false);
+        return;
+      }
     }
+    
+    // If all endpoints fail, try without the base URL (relative paths)
+    const relativeEndpoints = [
+      '/api/contact',
+      '/api/recommendations',
+      '/api/contacts'
+    ];
+    
+    for (const endpoint of relativeEndpoints) {
+      const success = await tryFetch(endpoint);
+      if (success) {
+        setLoading(false);
+        return;
+      }
+    }
+    
+    // If all attempts fail
+    setError('Failed to load recommendations. Please check your network connection and ensure the backend server is running.');
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchRecommendations();
   }, []);
 
-  // Handle status update
+  // Handle status update with improved error handling
   const handleStatusUpdate = async (id, newStatus) => {
     try {
       console.log(`Updating recommendation ${id} to status: ${newStatus}`);
-      const response = await axios.put(`http://localhost:5000/api/recommendations/${id}`, { 
-        status: newStatus 
-      });
-      console.log('Update response:', response.data);
+      
+      // Get the base URL from localStorage or use default
+      const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
+      
+      // Get auth token if available
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
+      // Try multiple endpoint patterns
+      const endpoints = [
+        `${baseURL}/api/contact/${id}`,
+        `${baseURL}/api/recommendations/${id}`,
+        `${baseURL}/api/contacts/${id}`
+      ];
+      
+      let success = false;
+      let responseData = null;
+      
+      for (const endpoint of endpoints) {
+        try {
+          const response = await axios.put(endpoint, { status: newStatus }, { headers });
+          console.log('Update response:', response.data);
+          success = true;
+          responseData = response.data;
+          break;
+        } catch (err) {
+          console.error(`Error updating at ${endpoint}:`, err);
+          // Continue to next endpoint
+        }
+      }
+      
+      if (!success) {
+        throw new Error('All update endpoints failed');
+      }
+      
       fetchRecommendations();
       setError(null);
+      return responseData;
     } catch (err) {
       console.error('Error updating recommendation status:', err);
       let errorMessage = 'Failed to update recommendation status. Please try again.';
@@ -101,12 +190,44 @@ function AdminRecommendationsPage() {
     }
   };
 
-  // Handle recommendation deletion
+  // Handle recommendation deletion with improved error handling
   const handleDelete = async () => {
     try {
-      console.log('Deleting recommendation:', selectedRecommendation.id);
-      const response = await axios.delete(`http://localhost:5000/api/recommendations/${selectedRecommendation.id}`);
-      console.log('Delete response:', response.data);
+      const id = selectedRecommendation._id || selectedRecommendation.id;
+      console.log('Deleting recommendation:', id);
+      
+      // Get the base URL from localStorage or use default
+      const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
+      
+      // Get auth token if available
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
+      // Try multiple endpoint patterns
+      const endpoints = [
+        `${baseURL}/api/contact/${id}`,
+        `${baseURL}/api/recommendations/${id}`,
+        `${baseURL}/api/contacts/${id}`
+      ];
+      
+      let success = false;
+      
+      for (const endpoint of endpoints) {
+        try {
+          const response = await axios.delete(endpoint, { headers });
+          console.log('Delete response:', response.data);
+          success = true;
+          break;
+        } catch (err) {
+          console.error(`Error deleting at ${endpoint}:`, err);
+          // Continue to next endpoint
+        }
+      }
+      
+      if (!success) {
+        throw new Error('All delete endpoints failed');
+      }
+      
       setOpenDeleteDialog(false);
       fetchRecommendations();
       setError(null);
@@ -121,15 +242,16 @@ function AdminRecommendationsPage() {
     }
   };
 
-  // Filter recommendations based on selected filters
+  // Filter recommendations based on selected filters - updated to handle contact form fields
   const filteredRecommendations = recommendations.filter(item => {
-    const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
-    const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
+    const itemStatus = item.status || 'pending'; // Default to pending if status is not set
+    const matchesStatus = statusFilter === 'all' || itemStatus === statusFilter;
+    const matchesCategory = categoryFilter === 'all' || item.subject === categoryFilter;
     return matchesStatus && matchesCategory;
   });
 
-  // Get unique categories for filter dropdown
-  const categories = ['all', ...new Set(recommendations.map(item => item.category))];
+  // Get unique categories for filter dropdown - updated to use subject field
+  const categories = ['all', ...new Set(recommendations.map(item => item.subject).filter(Boolean))];
 
   // Handle pagination
   const handleChangePage = (event, newPage) => {
@@ -277,8 +399,25 @@ function AdminRecommendationsPage() {
           </Box>
         ) : error ? (
           <Box sx={{ p: 3, textAlign: 'center' }}>
-            <Typography color="error">{error}</Typography>
-            <Button variant="contained" onClick={fetchRecommendations} sx={{ mt: 2 }}>
+            <Typography variant="h6" color="error" gutterBottom>Error Loading Data</Typography>
+            <Typography color="error" paragraph>{error}</Typography>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="body2" paragraph>
+                Possible solutions:
+              </Typography>
+              <Typography variant="body2" component="ul" align="left" sx={{ display: 'inline-block' }}>
+                <li>Make sure the backend server is running at http://localhost:5000</li>
+                <li>Check if the API endpoint is correct (/api/contact)</li>
+                <li>Verify network connectivity</li>
+                <li>Check browser console for more detailed error messages</li>
+              </Typography>
+            </Box>
+            <Button 
+              variant="contained" 
+              onClick={fetchRecommendations} 
+              sx={{ mt: 2 }}
+              startIcon={<FilterListIcon />}
+            >
               Try Again
             </Button>
           </Box>
@@ -290,8 +429,8 @@ function AdminRecommendationsPage() {
                   <TableRow>
                     <TableCell>Date</TableCell>
                     <TableCell>Name</TableCell>
-                    <TableCell>Category</TableCell>
-                    <TableCell>Relation</TableCell>
+                    <TableCell>Subject</TableCell>
+                    <TableCell>Email</TableCell>
                     <TableCell>Status</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
@@ -299,55 +438,62 @@ function AdminRecommendationsPage() {
                 <TableBody>
                   {filteredRecommendations
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((recommendation) => (
-                      <TableRow key={recommendation.id}>
-                        <TableCell>{formatDate(recommendation.timestamp)}</TableCell>
-                        <TableCell>{recommendation.name}</TableCell>
-                        <TableCell>{recommendation.category}</TableCell>
-                        <TableCell>{recommendation.relation}</TableCell>
-                        <TableCell>
-                          <Chip 
-                            label={recommendation.status.charAt(0).toUpperCase() + recommendation.status.slice(1)} 
-                            color={getStatusColor(recommendation.status)}
-                            size="small"
-                          />
-                        </TableCell>
-                        <TableCell align="right">
-                          <IconButton 
-                            color="primary" 
-                            onClick={() => handleOpenViewDialog(recommendation)}
-                            size="small"
-                          >
-                            <VisibilityIcon />
-                          </IconButton>
-                          {recommendation.status === 'pending' && (
-                            <>
-                              <IconButton 
-                                color="success" 
-                                onClick={() => handleStatusUpdate(recommendation.id, 'approved')}
-                                size="small"
-                              >
-                                <CheckIcon />
-                              </IconButton>
-                              <IconButton 
-                                color="error" 
-                                onClick={() => handleStatusUpdate(recommendation.id, 'rejected')}
-                                size="small"
-                              >
-                                <CloseIcon />
-                              </IconButton>
-                            </>
-                          )}
-                          <IconButton 
-                            color="error" 
-                            onClick={() => handleOpenDeleteDialog(recommendation)}
-                            size="small"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    .map((recommendation) => {
+                      const id = recommendation._id || recommendation.id;
+                      const status = recommendation.status || 'pending';
+                      const subject = recommendation.subject || recommendation.category || 'General';
+                      const createdAt = recommendation.createdAt || recommendation.timestamp || new Date().toISOString();
+                      
+                      return (
+                        <TableRow key={id}>
+                          <TableCell>{formatDate(createdAt)}</TableCell>
+                          <TableCell>{recommendation.name}</TableCell>
+                          <TableCell>{subject}</TableCell>
+                          <TableCell>{recommendation.email}</TableCell>
+                          <TableCell>
+                            <Chip 
+                              label={status.charAt(0).toUpperCase() + status.slice(1)} 
+                              color={getStatusColor(status)}
+                              size="small"
+                            />
+                          </TableCell>
+                          <TableCell align="right">
+                            <IconButton 
+                              color="primary" 
+                              onClick={() => handleOpenViewDialog(recommendation)}
+                              size="small"
+                            >
+                              <VisibilityIcon />
+                            </IconButton>
+                            {(status === 'pending') && (
+                              <>
+                                <IconButton 
+                                  color="success" 
+                                  onClick={() => handleStatusUpdate(id, 'approved')}
+                                  size="small"
+                                >
+                                  <CheckIcon />
+                                </IconButton>
+                                <IconButton 
+                                  color="error" 
+                                  onClick={() => handleStatusUpdate(id, 'rejected')}
+                                  size="small"
+                                >
+                                  <CloseIcon />
+                                </IconButton>
+                              </>
+                            )}
+                            <IconButton 
+                              color="error" 
+                              onClick={() => handleOpenDeleteDialog(recommendation)}
+                              size="small"
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   {filteredRecommendations.length === 0 && (
                     <TableRow>
                       <TableCell colSpan={6} align="center">
@@ -380,8 +526,8 @@ function AdminRecommendationsPage() {
             <DialogTitle>
               Recommendation Details
               <Chip 
-                label={selectedRecommendation.status.charAt(0).toUpperCase() + selectedRecommendation.status.slice(1)} 
-                color={getStatusColor(selectedRecommendation.status)}
+                label={(selectedRecommendation.status || 'Pending').charAt(0).toUpperCase() + (selectedRecommendation.status || 'pending').slice(1)} 
+                color={getStatusColor(selectedRecommendation.status || 'pending')}
                 size="small"
                 sx={{ ml: 2 }}
               />
@@ -394,7 +540,7 @@ function AdminRecommendationsPage() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Date Submitted</Typography>
-                  <Typography variant="body1">{formatDate(selectedRecommendation.timestamp)}</Typography>
+                  <Typography variant="body1">{formatDate(selectedRecommendation.createdAt || selectedRecommendation.timestamp || new Date().toISOString())}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2">Email</Typography>
@@ -405,23 +551,19 @@ function AdminRecommendationsPage() {
                   <Typography variant="body1">{selectedRecommendation.phone || 'Not provided'}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Relation to School</Typography>
-                  <Typography variant="body1">{selectedRecommendation.relation}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Category</Typography>
-                  <Typography variant="body1">{selectedRecommendation.category}</Typography>
+                  <Typography variant="subtitle2">Subject/Category</Typography>
+                  <Typography variant="body1">{selectedRecommendation.subject || selectedRecommendation.category || 'General'}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
-                  <Typography variant="subtitle2">Recommendation</Typography>
+                  <Typography variant="subtitle2">Message/Recommendation</Typography>
                   <Paper variant="outlined" sx={{ p: 2, mt: 1, bgcolor: 'background.default' }}>
-                    <Typography variant="body1">{selectedRecommendation.recommendation}</Typography>
+                    <Typography variant="body1">{selectedRecommendation.message || selectedRecommendation.recommendation || 'No message provided'}</Typography>
                   </Paper>
                 </Grid>
               </Grid>
               
-              {selectedRecommendation.status === 'pending' && (
+              {(!selectedRecommendation.status || selectedRecommendation.status === 'pending') && (
                 <Box sx={{ mt: 3 }}>
                   <Typography variant="subtitle2">Update Status</Typography>
                   <Box sx={{ mt: 1 }}>
@@ -429,7 +571,7 @@ function AdminRecommendationsPage() {
                       variant="contained" 
                       color="success" 
                       onClick={() => {
-                        handleStatusUpdate(selectedRecommendation.id, 'approved');
+                        handleStatusUpdate(selectedRecommendation._id || selectedRecommendation.id, 'approved');
                         handleCloseViewDialog();
                       }}
                       sx={{ mr: 2 }}
@@ -440,7 +582,7 @@ function AdminRecommendationsPage() {
                       variant="contained" 
                       color="error" 
                       onClick={() => {
-                        handleStatusUpdate(selectedRecommendation.id, 'rejected');
+                        handleStatusUpdate(selectedRecommendation._id || selectedRecommendation.id, 'rejected');
                         handleCloseViewDialog();
                       }}
                     >

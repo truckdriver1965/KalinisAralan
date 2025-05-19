@@ -179,23 +179,32 @@ function DonatePage() {
       amount: donationAmount === 'custom' ? customAmount : donationAmount,
       donor: donorInfo,
       paymentMethod: paymentMethod,
-      paymentDetails: paymentDetails
+      paymentDetails: paymentDetails,
+      status: 'pending',
+      timestamp: new Date().toISOString()
     };
     
     console.log('Submitting donation data:', donationData);
     
     try {
+      // Updated to use the Express server endpoint instead of PHP
       const response = await axios.post(
-        'http://localhost/exercisejsx/kalinisaralan/api/donations.php',
-        donationData
+        'http://localhost:5000/api/donations',
+        donationData,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000 // 10 second timeout
+        }
       );
       
       console.log('Response:', response);
       
       const data = response.data;
       
-      if (data.success) {
-        setDonationReference(data.referenceNumber || ('DON-' + Math.floor(100000 + Math.random() * 900000)));
+      if (data && data.id) {
+        setDonationReference(data.id || ('DON-' + Math.floor(100000 + Math.random() * 900000)));
         
         setIsProcessing(false);
         
@@ -205,14 +214,25 @@ function DonatePage() {
         setSnackbarSeverity('success');
         setSnackbarOpen(true);
       } else {
-        setSnackbarMessage('Error processing donation: ' + data.message);
+        setSnackbarMessage('Error processing donation: ' + (data.message || 'Unknown error'));
         setSnackbarSeverity('error');
         setSnackbarOpen(true);
         setIsProcessing(false);
       }
     } catch (error) {
       console.error('Error processing donation:', error);
-      setSnackbarMessage('Failed to process donation. Please try again later.');
+      
+      // Provide more specific error message if available
+      let errorMessage = 'Failed to process donation. Please try again later.';
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        errorMessage = error.response.data.message || errorMessage;
+      } else if (error.request) {
+        console.error('No response received');
+        errorMessage = 'No response received from server. Please check if the server is running.';
+      }
+      
+      setSnackbarMessage(errorMessage);
       setSnackbarSeverity('error');
       setSnackbarOpen(true);
       setIsProcessing(false);

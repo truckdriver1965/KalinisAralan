@@ -112,15 +112,46 @@ function ContactPage() {
       try {
         console.log('Submitting recommendation:', formData);
         
-        // Connect to our backend API with proper headers
-        const response = await axios.post('http://localhost:5000/api/recommendations', formData, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 10000 // 10 second timeout
-        });
+        // Format the data to match what the admin dashboard expects
+        const formattedData = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || '',
+          subject: formData.category, // Map category to subject for consistency
+          message: formData.recommendation, // Map recommendation to message
+          status: 'pending',
+          relation: formData.relation
+        };
         
-        console.log('Response received:', response.data);
+        console.log('Formatted data:', formattedData);
+        
+        // Try to submit to the contact endpoint first
+        try {
+          const response = await axios.post('http://localhost:5000/api/contact', formattedData, {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            timeout: 10000 // 10 second timeout
+          });
+          
+          console.log('Contact API response:', response.data);
+        } catch (contactError) {
+          console.error('Error submitting to contact API:', contactError);
+          
+          // If contact API fails, try the recommendations endpoint
+          const recResponse = await axios.post('http://localhost:5000/api/recommendations', {
+            ...formattedData,
+            category: formData.category,
+            recommendation: formData.recommendation
+          }, {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            timeout: 10000
+          });
+          
+          console.log('Recommendations API response:', recResponse.data);
+        }
         
         setSnackbarMessage('Thank you for your recommendation! The school administration will review it.');
         setSnackbarSeverity('success');
