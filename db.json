@@ -252,40 +252,64 @@
         "fullDescription": "The school organizes quarterly clean-up drives involving students, teachers, parents, and local community members. These events focus on maintaining both school facilities and surrounding areas, promoting community engagement in sanitation efforts.",
         "image": "/images/community cleaning.jpg",
         "category": "Community"
+      },
+      {
+        "id": 9,
+        "title": "National Handwashing Day",
+        "description": "An annual event promoting proper hand hygiene",
+        "fullDescription": "The school conducts activities on National Handwashing Day, including workshops, demonstrations, and competitions to raise awareness about the importance of hand hygiene. This event engages students and parents in learning proper handwashing techniques.",
+        "image": "/images/national handwashing day.jpg",
+        "category": "Education"
+      },
+      {
+        "id": 10,
+        "title": "School Ground Maintenance",
+        "description": "Regular maintenance and beautification of school grounds",
+        "fullDescription": "The school implements a monthly schedule for maintaining school grounds, including landscaping, waste management, and recycling initiatives. This ensures a clean and pleasant environment for students and staff.",
+        "image": "/images/community cleaning 3.jpg",
+        "category": "Maintenance"
+      },
+      {
+        "id": 11,
+        "title": "Waste Management Materials",
+        "description": "Proper checking of waste taking materials",
+        "fullDescription": "Every month the school will check for the materials such as trashcan and trash bins in each rooms and around the school. Those that do not have any will receive their own an placed accordingly for everyone to use.",
+        "image": "/images/trashcan.jpg",
+        "category": "Management"
       }
     ],
     "practiceVideos": [
       {
         "id": 1,
-        "title": "Tamang Paggamit ng Tubig sa Paaralan",
-        "description": "Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan at sa bahay.",
-        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "watchUrl": "https://www.youtube.com/watch?v=ZyelwJfRrjE",
-        "thumbnail": "/images/video-thumb-1.jpg"
+        "title": "WHO: How to handwash?",
+        "description": "Learn the proper handwashing technique recommended by the World Health Organization",
+        "embedUrl": "https://www.youtube.com/embed/3PmVJQUCm4E",
+        "watchUrl": "https://www.youtube.com/watch?v=3PmVJQUCm4E",
+        "thumbnail": "/images/video-thumbnails/handwashing.jpg"
       },
       {
         "id": 2,
-        "title": "Wastong Pangangalaga ng CR",
-        "description": "Mga tamang hakbang sa pangangalaga at paglilinis ng mga palikuran sa paaralan.",
-        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "watchUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "thumbnail": "/images/video-thumb-2.jpg"
+        "title": "UNICEF: Handwashing with Soap – a Lifesaving Act",
+        "description": "Understanding the importance of handwashing in schools and proper techniques",
+        "embedUrl": "https://www.youtube.com/embed/GYFWbwgf-2Q",
+        "watchUrl": "https://www.youtube.com/watch?v=GYFWbwgf-2Q",
+        "thumbnail": "/images/video-thumbnails/handwashing-soap.jpg"
       },
       {
         "id": 3,
-        "title": "Tamang Paghuhugas ng Kamay",
-        "description": "Step-by-step guide sa tamang paraan ng paghuhugas ng kamay para maiwasan ang sakit.",
-        "embedUrl": "https://www.youtube.com/embed/def456uvw",
-        "watchUrl": "https://www.youtube.com/watch?v=def456uvw",
-        "thumbnail": "/images/video-thumb-3.jpg"
+        "title": "Clean Hands Save Lives",
+        "description": "Learn about the five critical times for handwashing in schools",
+        "embedUrl": "https://www.youtube.com/embed/DDjcJ-fSUgg",
+        "watchUrl": "https://www.youtube.com/watch?v=DDjcJ-fSUgg",
+        "thumbnail": "/images/video-thumbnails/clean-hands.jpg"
       },
       {
         "id": 4,
-        "title": "Paghihiwalay ng Basura",
-        "description": "Gabay sa tamang paghihiwalay ng basura at ang kahalagahan nito sa kalinisan.",
-        "embedUrl": "https://www.youtube.com/embed/ghi789jkl",
-        "watchUrl": "https://www.youtube.com/watch?v=ghi789jkl",
-        "thumbnail": "/images/video-thumb-4.jpg"
+        "title": "School Sanitation and Hygiene",
+        "description": "Best practices for maintaining clean and hygienic school facilities",
+        "embedUrl": "https://www.youtube.com/embed/JIJB7cv97Dg",
+        "watchUrl": "https://www.youtube.com/watch?v=JIJB7cv97Dg",
+        "thumbnail": "/images/video-thumbnails/school-sanitation.jpg"
       }
     ]
   }
