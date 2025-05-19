@@ -45,7 +45,7 @@ function ProjectsPage() {
           title: 'Regular Cleaning Schedule',
           description: 'Daily cleaning schedule implemented by the school maintenance staff',
           fullDescription: 'The school maintains cleanliness through a structured daily schedule: Morning inspection (6:30 AM), After-recess cleanup (10:00 AM), Post-lunch maintenance (1:30 PM), and End-day thorough cleaning (4:30 PM). This systematic approach ensures facilities remain clean throughout the school day.',
-          image: '/images/practice1.jpg',
+          image: '/images/cleaning.jpg',
           category: 'Maintenance',
         },
         {
@@ -53,7 +53,7 @@ function ProjectsPage() {
           title: 'Student Cleanliness Program',
           description: 'Weekly student assignments for basic facility maintenance',
           fullDescription: 'Each section has assigned cleaning duties on rotation. Students handle basic tasks like keeping the sink areas dry, ensuring proper tissue disposal, and reporting any maintenance issues to teachers. This program builds student responsibility while maintaining facility cleanliness.',
-          image: '/images/practice2.jpg',
+          image: '/images/community cleaning.jpg',
           category: 'Education',
         },
         {
@@ -61,7 +61,7 @@ function ProjectsPage() {
           title: 'Supply Management',
           description: 'Monthly inventory system for cleaning materials',
           fullDescription: 'The school maintains a monthly inventory of cleaning supplies including tissue paper, hand soap, and cleaning agents. The admin staff tracks usage patterns and ensures timely restocking. This prevents shortages and maintains consistent facility cleanliness.',
-          image: '/images/practice3.jpg',
+          image: '/images/donations.jpg',
           category: 'Management',
         },
         {
@@ -69,7 +69,7 @@ function ProjectsPage() {
           title: 'Facility Maintenance Checklist',
           description: 'Daily inspection and maintenance verification system',
           fullDescription: 'Maintenance staff uses a detailed checklist covering all facility areas: functioning water supply, clean toilet bowls, adequate lighting, proper drainage, and ventilation. Issues are immediately reported to the administration for quick resolution.',
-          image: '/images/practice4.jpg',
+          image: '/images/checking water.jpg',
           category: 'Maintenance',
         },
         {
@@ -77,7 +77,7 @@ function ProjectsPage() {
           title: 'Parent-Teacher Collaboration',
           description: 'Monthly meetings for facility maintenance planning',
           fullDescription: 'The PTA actively participates in facility maintenance through monthly meetings where they discuss maintenance needs, contribute to supply procurement, and organize quarterly general cleaning activities involving parents and teachers.',
-          image: '/images/practice5.jpg',
+          image: '/images/ptc.jpg',
           category: 'Community',
         },
         {
@@ -85,8 +85,32 @@ function ProjectsPage() {
           title: 'Basic Repairs System',
           description: 'Immediate response protocol for minor facility issues',
           fullDescription: 'The school has a designated maintenance team that handles basic repairs like fixing leaky faucets, unclogging drains, and replacing broken fixtures. This quick-response system prevents small issues from becoming major problems.',
-          image: '/images/practice6.jpg',
+          image: '/images/building of station.jpg',
           category: 'Management',
+        },
+        {
+          id: 7,
+          title: 'Sanitation Awareness Campaign',
+          description: 'Educational programs promoting hygiene and cleanliness',
+          fullDescription: 'The school conducts monthly workshops and poster campaigns to educate students on proper hygiene practices, including handwashing techniques, waste segregation, and maintaining clean facilities. These initiatives foster a culture of cleanliness among students.',
+          image: '/images/cleaning hands.jpg',
+          category: 'Education',
+        },
+        {
+          id: 8,
+          title: 'Restroom Monitoring System',
+          description: 'Scheduled checks to ensure restroom cleanliness',
+          fullDescription: 'A designated staff member performs hourly checks on restroom conditions, ensuring they are clean, stocked with supplies, and functioning properly. A logbook is maintained to track cleaning schedules and report any persistent issues for immediate action.',
+          image: '/images/restroom.jpg',
+          category: 'Maintenance',
+        },
+        {
+          id: 9,
+          title: 'National Handwashing Day',
+          description: 'An event for the entire school that raises awareness on handwashing',
+          fullDescription: 'The school celebrates National Handwashing Day with activities like handwashing demonstrations, poster-making contests, and educational talks. This event emphasizes the importance of hand hygiene in preventing illness and promotes a culture of cleanliness among students.',
+          image: '/images/national handwashing day.jpg',
+          category: 'Education',
         }
       ];
 
@@ -111,56 +135,56 @@ function ProjectsPage() {
       id: 1, 
       title: 'Tamang Paggamit ng Tubig sa Paaralan', 
       description: 'Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-1', 
+      embedUrl: 'https://www.youtube.com/watch?v=ZyelwJfRrjE', 
       thumbnail: '/images/video-thumb-1.jpg' 
     }, 
     { 
       id: 2, 
       title: 'Wastong Pangangalaga ng Palikuran', 
       description: 'Mga tips para sa tamang pag-maintain ng school restrooms.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-2', 
+      embedUrl: 'https://www.youtube.com/watch?v=JhwdMhiV2dI', 
       thumbnail: '/images/video-thumb-2.jpg' 
     }, 
     { 
       id: 3, 
       title: 'Proper Handwashing Campaign', 
-      description: 'Paano ituro sa mga estudyante ang tamang paghuhugas ng kamay.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-3', 
+      description: 'Tutorial kung paano gawin ang tamang paghuhugas ng kamay.', 
+      embedUrl: 'https://www.youtube.com/watch?v=BGvkDv34rYA', 
       thumbnail: '/images/video-thumb-3.jpg' 
     },
     { 
       id: 4, 
       title: 'Paglilinis ng Water Tank', 
       description: 'Step-by-step guide sa tamang paglilinis ng water tank sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-4', 
+      embedUrl: 'https://www.youtube.com/watch?v=ldZ83nYAOKM', 
       thumbnail: '/images/video-thumb-4.jpg' 
     },
     { 
       id: 5, 
       title: 'Water Conservation Tips', 
       description: 'Mga paraan para makatipid ng tubig sa paaralan at bahay.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-5', 
+      embedUrl: 'https://www.youtube.com/shorts/NfDrluWKewE', 
       thumbnail: '/images/video-thumb-5.jpg' 
     },
     { 
       id: 6, 
       title: 'Proper Waste Segregation', 
-      description: 'Tamang paghihiwalay ng basura para sa malinis na kapaligiran.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-6', 
+      description: 'Tamang paghihiwalay ng basura para mapanatili ang malinis na kapaligiran.', 
+      embedUrl: 'https://www.youtube.com/watch?v=7c-HK90xnUg', 
       thumbnail: '/images/video-thumb-6.jpg' 
     },
     { 
       id: 7, 
       title: 'School Plumbing Maintenance', 
-      description: 'Basic plumbing maintenance para sa mga paaralan.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-7', 
+      description: 'Plumbing maintenance para sa mga paaralan.', 
+      embedUrl: 'https://www.youtube.com/watch?v=ntVXAFHTVU0', 
       thumbnail: '/images/video-thumb-7.jpg' 
     },
     { 
       id: 8, 
       title: 'Eco-Friendly School Practices', 
-      description: 'Mga environment-friendly na gawain sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/embed/your-video-id-8', 
+      description: 'Mga environment-friendly na maaaring isagawa sa paaralan.', 
+      embedUrl: 'https://www.youtube.com/watch?v=9VpnPAlPDSw', 
       thumbnail: '/images/video-thumb-8.jpg' 
     }
   ];
@@ -265,30 +289,63 @@ function ProjectsPage() {
                   >
                     <CardMedia
                       component="img"
-                      height="200"
+                      sx={{
+                        height: 200,
+                        objectFit: 'cover',
+                        width: '100%'
+                      }}
                       image={practice.image}
                       alt={practice.title}
                     />
-                    <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                      <Typography variant="h5" component="h2" gutterBottom sx={{ 
-                        fontWeight: 'bold',
-                        fontSize: '1.25rem',
-                        mb: 2
-                      }}>
+                    <CardContent sx={{ 
+                      flexGrow: 1,
+                      p: 3,
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}>
+                      <Typography 
+                        variant="h5" 
+                        component="h2" 
+                        gutterBottom 
+                        sx={{ 
+                          fontWeight: 'bold',
+                          fontSize: '1.25rem',
+                          mb: 2,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}
+                      >
                         {practice.title}
                       </Typography>
-                      <Typography variant="subtitle1" sx={{ 
-                        mb: 2,
-                        color: 'text.primary',
-                        fontWeight: 500
-                      }}>
+                      <Typography 
+                        variant="subtitle1" 
+                        sx={{ 
+                          mb: 2,
+                          color: 'text.primary',
+                          fontWeight: 500,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}
+                      >
                         {practice.description}
                       </Typography>
-                      <Typography variant="body2" sx={{ 
-                        color: 'text.secondary',
-                        mb: 2,
-                        lineHeight: 1.6
-                      }}>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          color: 'text.secondary',
+                          mb: 2,
+                          lineHeight: 1.6,
+                          flexGrow: 1,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 4,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}
+                      >
                         {practice.fullDescription}
                       </Typography>
                       <Box sx={{ 
