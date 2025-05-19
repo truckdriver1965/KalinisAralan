@@ -50,10 +50,10 @@ function AboutPage() {
   }
 
   return (
-    <Container>
+    <Container sx={{ pt: 4 }}> {/* Add top padding to container */}
       {/* Mission and Vision Section */}
-      <Box sx={{ mb: 6 }}>
-        <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h3" component="h1" color="primary" gutterBottom align="center" sx={{ mt: 2 }}>
           {aboutContent.header.title}
         </Typography>
         <Typography variant="h5" paragraph align="center" sx={{ mb: 4 }}>

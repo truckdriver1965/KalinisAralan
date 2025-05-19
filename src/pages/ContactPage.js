@@ -193,8 +193,8 @@ function ContactPage() {
   };
 
   return (
-    <Container>
-      <Typography variant="h3" component="h1" color="primary" gutterBottom align="center">
+    <Container sx={{ pt: 4 }}> {/* Add top padding to container */}
+      <Typography variant="h3" component="h1" color="primary" gutterBottom align="center" sx={{ mt: 2 }}>
         School Recommendations
       </Typography>
       <Typography variant="h6" paragraph align="center" sx={{ mb: 4 }}>
