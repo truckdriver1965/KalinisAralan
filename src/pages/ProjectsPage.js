@@ -135,56 +135,64 @@ function ProjectsPage() {
       id: 1, 
       title: 'Tamang Paggamit ng Tubig sa Paaralan', 
       description: 'Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/watch?v=ZyelwJfRrjE', 
+      embedUrl: 'https://www.youtube.com/embed/ZyelwJfRrjE',
+      watchUrl: 'https://www.youtube.com/watch?v=ZyelwJfRrjE', 
       thumbnail: '/images/video-thumb-1.jpg' 
     }, 
     { 
       id: 2, 
       title: 'Wastong Pangangalaga ng Palikuran', 
       description: 'Mga tips para sa tamang pag-maintain ng school restrooms.', 
-      embedUrl: 'https://www.youtube.com/watch?v=JhwdMhiV2dI', 
+      embedUrl: 'https://www.youtube.com/embed/JhwdMhiV2dI',
+      watchUrl: 'https://www.youtube.com/watch?v=JhwdMhiV2dI', 
       thumbnail: '/images/video-thumb-2.jpg' 
     }, 
     { 
       id: 3, 
       title: 'Proper Handwashing Campaign', 
       description: 'Tutorial kung paano gawin ang tamang paghuhugas ng kamay.', 
-      embedUrl: 'https://www.youtube.com/watch?v=BGvkDv34rYA', 
+      embedUrl: 'https://www.youtube.com/embed/BGvkDv34rYA',
+      watchUrl: 'https://www.youtube.com/watch?v=BGvkDv34rYA', 
       thumbnail: '/images/video-thumb-3.jpg' 
     },
     { 
       id: 4, 
       title: 'Paglilinis ng Water Tank', 
       description: 'Step-by-step guide sa tamang paglilinis ng water tank sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/watch?v=ldZ83nYAOKM', 
+      embedUrl: 'https://www.youtube.com/embed/ldZ83nYAOKM', 
+      watchUrl: 'https://www.youtube.com/watch?v=ldZ83nYAOKM', 
       thumbnail: '/images/video-thumb-4.jpg' 
     },
     { 
       id: 5, 
       title: 'Water Conservation Tips', 
       description: 'Mga paraan para makatipid ng tubig sa paaralan at bahay.', 
-      embedUrl: 'https://www.youtube.com/shorts/NfDrluWKewE', 
+      embedUrl: 'https://www.youtube.com/embed/NfDrluWKewE',
+      watchUrl: 'https://www.youtube.com/shorts/NfDrluWKewE', 
       thumbnail: '/images/video-thumb-5.jpg' 
     },
     { 
       id: 6, 
       title: 'Proper Waste Segregation', 
       description: 'Tamang paghihiwalay ng basura para mapanatili ang malinis na kapaligiran.', 
-      embedUrl: 'https://www.youtube.com/watch?v=7c-HK90xnUg', 
+      embedUrl: 'https://www.youtube.com/embed/7c-HK90xnUg',
+      watchUrl: 'https://www.youtube.com/watch?v=7c-HK90xnUg', 
       thumbnail: '/images/video-thumb-6.jpg' 
     },
     { 
       id: 7, 
       title: 'School Plumbing Maintenance', 
       description: 'Plumbing maintenance para sa mga paaralan.', 
-      embedUrl: 'https://www.youtube.com/watch?v=ntVXAFHTVU0', 
+      embedUrl: 'https://www.youtube.com/embed/ntVXAFHTVU0', 
+      watchUrl: 'https://www.youtube.com/watch?v=ntVXAFHTVU0', 
       thumbnail: '/images/video-thumb-7.jpg' 
     },
     { 
       id: 8, 
       title: 'Eco-Friendly School Practices', 
       description: 'Mga environment-friendly na maaaring isagawa sa paaralan.', 
-      embedUrl: 'https://www.youtube.com/watch?v=9VpnPAlPDSw', 
+      embedUrl: 'https://www.youtube.com/embed/9VpnPAlPDSw', 
+      watchUrl: 'https://www.youtube.com/watch?v=9VpnPAlPDSw', 
       thumbnail: '/images/video-thumb-8.jpg' 
     }
   ];
