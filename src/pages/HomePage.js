@@ -567,7 +567,7 @@ function HomePage() {
                   display: 'block'
                 }}
               >
-                OUR PROJECTS
+                OUR SCHOOL PARTNER'S PROJECTS 
               </Typography>
               <Typography
                 variant="h3"

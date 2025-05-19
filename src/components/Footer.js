@@ -83,19 +83,19 @@ function Footer() {
               <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
                 <LocationOnIcon sx={{ color: theme.palette.primary.main, mr: 1, mt: 0.5 }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                  123 España Blvd, Sampaloc, Manila, 1008 Metro Manila
+                Baliwag North Central School, Lopez Jaena St, Baliwag, Bulacan
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <PhoneIcon sx={{ color: theme.palette.primary.main, mr: 1 }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                  +63 9196206262
+                  +63 44 123 4567
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <EmailIcon sx={{ color: theme.palette.primary.main, mr: 1 }} />
                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                  KalinisAralan@gmail.com
+                  bncs@deped.gov.ph
                 </Typography>
               </Box>
             </Box>
