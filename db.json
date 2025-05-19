@@ -187,5 +187,105 @@
           }
         ]
       }
-    }
+    },
+    "practices": [
+      {
+        "id": 1,
+        "title": "Regular Cleaning Schedule",
+        "description": "Daily cleaning schedule implemented by the school maintenance staff",
+        "fullDescription": "The school maintains cleanliness through a structured daily schedule: Morning inspection (6:30 AM), After-recess cleanup (10:00 AM), Post-lunch maintenance (1:30 PM), and End-day thorough cleaning (4:30 PM). This systematic approach ensures facilities remain clean throughout the school day.",
+        "image": "/images/cleaning.jpg",
+        "category": "Maintenance"
+      },
+      {
+        "id": 2,
+        "title": "Student Cleanliness Program",
+        "description": "Weekly student assignments for basic facility maintenance",
+        "fullDescription": "Each section has assigned cleaning duties on rotation. Students handle basic tasks like keeping the sink areas dry, ensuring proper tissue disposal, and reporting any maintenance issues to teachers. This program builds student responsibility while maintaining facility cleanliness.",
+        "image": "/images/community cleaning.jpg",
+        "category": "Education"
+      },
+      {
+        "id": 3,
+        "title": "Supply Management",
+        "description": "Monthly inventory system for cleaning materials",
+        "fullDescription": "The school maintains a monthly inventory of cleaning supplies including tissue paper, hand soap, and cleaning agents. The admin staff tracks usage patterns and ensures timely restocking. This prevents shortages and maintains consistent facility cleanliness.",
+        "image": "/images/donations.jpg",
+        "category": "Management"
+      },
+      {
+        "id": 4,
+        "title": "Facility Maintenance Checklist",
+        "description": "Daily inspection and maintenance verification system",
+        "fullDescription": "Maintenance staff uses a detailed checklist covering all facility areas: functioning water supply, clean toilet bowls, adequate lighting, proper drainage, and ventilation. Issues are immediately reported to the administration for quick resolution.",
+        "image": "/images/checking water.jpg",
+        "category": "Maintenance"
+      },
+      {
+        "id": 5,
+        "title": "Parent-Teacher Collaboration",
+        "description": "Monthly meetings for facility maintenance planning",
+        "fullDescription": "The PTA actively participates in facility maintenance through monthly meetings where they discuss maintenance needs, contribute to supply procurement, and organize quarterly general cleaning activities involving parents and teachers.",
+        "image": "/images/ptc.jpg",
+        "category": "Community"
+      },
+      {
+        "id": 6,
+        "title": "Basic Repairs System",
+        "description": "Immediate response protocol for minor facility issues",
+        "fullDescription": "The school has a designated maintenance team that handles basic repairs like fixing leaky faucets, unclogging drains, and replacing broken fixtures. This quick-response system prevents small issues from becoming major problems.",
+        "image": "/images/building of station.jpg",
+        "category": "Management"
+      },
+      {
+        "id": 7,
+        "title": "Sanitation Awareness Campaign",
+        "description": "Educational programs promoting hygiene and cleanliness",
+        "fullDescription": "The school conducts monthly workshops and poster campaigns to educate students on proper hygiene practices, including handwashing techniques, waste segregation, and maintaining clean facilities. These initiatives foster a culture of cleanliness among students.",
+        "image": "/images/cleaning hands.jpg",
+        "category": "Education"
+      },
+      {
+        "id": 8,
+        "title": "Community Clean-up Drive",
+        "description": "Quarterly community-wide sanitation activities",
+        "fullDescription": "The school organizes quarterly clean-up drives involving students, teachers, parents, and local community members. These events focus on maintaining both school facilities and surrounding areas, promoting community engagement in sanitation efforts.",
+        "image": "/images/community cleaning.jpg",
+        "category": "Community"
+      }
+    ],
+    "practiceVideos": [
+      {
+        "id": 1,
+        "title": "Tamang Paggamit ng Tubig sa Paaralan",
+        "description": "Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan at sa bahay.",
+        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
+        "watchUrl": "https://www.youtube.com/watch?v=ZyelwJfRrjE",
+        "thumbnail": "/images/video-thumb-1.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Wastong Pangangalaga ng CR",
+        "description": "Mga tamang hakbang sa pangangalaga at paglilinis ng mga palikuran sa paaralan.",
+        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
+        "watchUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
+        "thumbnail": "/images/video-thumb-2.jpg"
+      },
+      {
+        "id": 3,
+        "title": "Tamang Paghuhugas ng Kamay",
+        "description": "Step-by-step guide sa tamang paraan ng paghuhugas ng kamay para maiwasan ang sakit.",
+        "embedUrl": "https://www.youtube.com/embed/def456uvw",
+        "watchUrl": "https://www.youtube.com/watch?v=def456uvw",
+        "thumbnail": "/images/video-thumb-3.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Paghihiwalay ng Basura",
+        "description": "Gabay sa tamang paghihiwalay ng basura at ang kahalagahan nito sa kalinisan.",
+        "embedUrl": "https://www.youtube.com/embed/ghi789jkl",
+        "watchUrl": "https://www.youtube.com/watch?v=ghi789jkl",
+        "thumbnail": "/images/video-thumb-4.jpg"
+      }
+    ]
   }

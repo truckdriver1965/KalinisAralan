@@ -45,6 +45,13 @@ export const aboutApi = {
   getAboutContent: () => api.get('/about')
 };
 
+export const practicesApi = {
+  getAll: () => api.get('/practices'),
+  getVideos: () => api.get('/practiceVideos'),
+  getByCategory: (category) => api.get(`/practices?category=${category}`),
+  getById: (id) => api.get(`/practices/${id}`)
+};
+
 export default {
   projectsApi,
   donationsApi,
