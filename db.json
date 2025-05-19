@@ -252,6 +252,30 @@
         "fullDescription": "The school organizes quarterly clean-up drives involving students, teachers, parents, and local community members. These events focus on maintaining both school facilities and surrounding areas, promoting community engagement in sanitation efforts.",
         "image": "/images/community cleaning.jpg",
         "category": "Community"
+      },
+      {
+        "id": 9,
+        "title": "National Handwashing Day",
+        "description": "An annual event promoting proper hand hygiene",
+        "fullDescription": "The school conducts activities on National Handwashing Day, including workshops, demonstrations, and competitions to raise awareness about the importance of hand hygiene. This event engages students and parents in learning proper handwashing techniques.",
+        "image": "/images/national handwashing day.jpg",
+        "category": "Education"
+      },
+      {
+        "id": 10,
+        "title": "School Ground Maintenance",
+        "description": "Regular maintenance and beautification of school grounds",
+        "fullDescription": "The school implements a monthly schedule for maintaining school grounds, including landscaping, waste management, and recycling initiatives. This ensures a clean and pleasant environment for students and staff.",
+        "image": "/images/community cleaning 3.jpg",
+        "category": "Maintenance"
+      },
+      {
+        "id": 11,
+        "title": "Waste Management Materials",
+        "description": "Proper checking of waste taking materials",
+        "fullDescription": "Every month the school will check for the materials such as trashcan and trash bins in each rooms and around the school. Those that do not have any will receive their own an placed accordingly for everyone to use.",
+        "image": "/images/trashcan.jpg",
+        "category": "Management"
       }
     ],
     "practiceVideos": [
