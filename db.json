@@ -257,35 +257,35 @@
     "practiceVideos": [
       {
         "id": 1,
-        "title": "Tamang Paggamit ng Tubig sa Paaralan",
-        "description": "Alamin ang mga paraan kung paano makatipid ng tubig sa paaralan at sa bahay.",
-        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "watchUrl": "https://www.youtube.com/watch?v=ZyelwJfRrjE",
-        "thumbnail": "/images/video-thumb-1.jpg"
+        "title": "WHO: How to handwash?",
+        "description": "Learn the proper handwashing technique recommended by the World Health Organization",
+        "embedUrl": "https://www.youtube.com/embed/3PmVJQUCm4E",
+        "watchUrl": "https://www.youtube.com/watch?v=3PmVJQUCm4E",
+        "thumbnail": "/images/video-thumbnails/handwashing.jpg"
       },
       {
         "id": 2,
-        "title": "Wastong Pangangalaga ng CR",
-        "description": "Mga tamang hakbang sa pangangalaga at paglilinis ng mga palikuran sa paaralan.",
-        "embedUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "watchUrl": "https://www.youtube.com/embed/ZyelwJfRrjE",
-        "thumbnail": "/images/video-thumb-2.jpg"
+        "title": "UNICEF: Handwashing with Soap – a Lifesaving Act",
+        "description": "Understanding the importance of handwashing in schools and proper techniques",
+        "embedUrl": "https://www.youtube.com/embed/GYFWbwgf-2Q",
+        "watchUrl": "https://www.youtube.com/watch?v=GYFWbwgf-2Q",
+        "thumbnail": "/images/video-thumbnails/handwashing-soap.jpg"
       },
       {
         "id": 3,
-        "title": "Tamang Paghuhugas ng Kamay",
-        "description": "Step-by-step guide sa tamang paraan ng paghuhugas ng kamay para maiwasan ang sakit.",
-        "embedUrl": "https://www.youtube.com/embed/def456uvw",
-        "watchUrl": "https://www.youtube.com/watch?v=def456uvw",
-        "thumbnail": "/images/video-thumb-3.jpg"
+        "title": "Clean Hands Save Lives",
+        "description": "Learn about the five critical times for handwashing in schools",
+        "embedUrl": "https://www.youtube.com/embed/DDjcJ-fSUgg",
+        "watchUrl": "https://www.youtube.com/watch?v=DDjcJ-fSUgg",
+        "thumbnail": "/images/video-thumbnails/clean-hands.jpg"
       },
       {
         "id": 4,
-        "title": "Paghihiwalay ng Basura",
-        "description": "Gabay sa tamang paghihiwalay ng basura at ang kahalagahan nito sa kalinisan.",
-        "embedUrl": "https://www.youtube.com/embed/ghi789jkl",
-        "watchUrl": "https://www.youtube.com/watch?v=ghi789jkl",
-        "thumbnail": "/images/video-thumb-4.jpg"
+        "title": "School Sanitation and Hygiene",
+        "description": "Best practices for maintaining clean and hygienic school facilities",
+        "embedUrl": "https://www.youtube.com/embed/JIJB7cv97Dg",
+        "watchUrl": "https://www.youtube.com/watch?v=JIJB7cv97Dg",
+        "thumbnail": "/images/video-thumbnails/school-sanitation.jpg"
       }
     ]
   }
