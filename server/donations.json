@@ -73,30 +73,5 @@
       "gcashName": "John Rafael Villacorte",
       "referenceNumber": ""
     }
-  },
-  {
-    "id": "1747738709111",
-    "timestamp": "2025-05-20T10:58:29.060Z",
-    "status": "pending",
-    "amount": "10000",
-    "donor": {
-      "firstName": "Leigh",
-      "lastName": "De Lara",
-      "email": "randy_mgb@yahoo.com",
-      "phone": "09151492704",
-      "address": "4580 Atis St.",
-      "city": "Valenzuela City",
-      "country": "Philippines",
-      "postalCode": "1442"
-    },
-    "paymentMethod": "bankTransfer",
-    "paymentDetails": {
-      "cardNumber": "",
-      "expiryDate": "",
-      "cvv": "",
-      "gcashNumber": "",
-      "gcashName": "",
-      "referenceNumber": "32432453244233423"
-    }
   }
 ]

@@ -118,12 +118,6 @@ function AdminLoginPage() {
             {loading ? <CircularProgress size={24} /> : 'Sign In'}
           </Button>
         </Box>
-        
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="caption" color="text.secondary">
-            Default credentials: username: admin, password: admin123
-          </Typography>
-        </Box>
       </Paper>
     </Container>
   );
