@@ -117,7 +117,7 @@ function HomePage() {
       {/* Hero Section */}
       <Box sx={{
         position: 'relative',
-        height: { xs: '90vh', md: '85vh' },
+        height: '85vh',
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
@@ -130,124 +130,96 @@ function HomePage() {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url("${heroContent.backgroundImage}")`,
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4)), url("${heroContent.backgroundImage}")`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            zIndex: 0,
-            animation: 'zoomEffect 20s infinite alternate',
-            '@keyframes zoomEffect': {
-              '0%': { transform: 'scale(1)' },
-              '100%': { transform: 'scale(1.1)' }
-            }
+            zIndex: 0
           }}
         />
         
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={7}>
-              <Fade in={true} timeout={1000}>
-                <Box>
-                  <Typography
-                    variant="overline"
-                    sx={{
-                      color: theme.palette.primary.main,
-                      fontWeight: 'bold',
-                      letterSpacing: 2,
-                      mb: 1,
-                      display: 'block'
-                    }}
-                  >
-                    {heroContent.overline || "IMPROVING SCHOOL SANITATION"}
-                  </Typography>
-                  <Typography
-                    component="h1"
-                    variant="h2"
-                    sx={{ 
-                      color: 'white',
-                      fontWeight: 'bold',
-                      mb: 2,
-                      fontSize: { xs: '2.5rem', md: '3.5rem' },
-                      lineHeight: 1.2
-                    }}
-                  >
-                    {heroContent.title || "Transforming School Sanitation in the Philippines"}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    sx={{ 
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      mb: 4,
-                      maxWidth: '600px',
-                      lineHeight: 1.6
-                    }}
-                  >
-                    {heroContent.description || "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students."}
-                  </Typography>
-                  <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
-                    spacing={2}
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      component={Link}
-                      to="/donate"
-                      sx={{
-                        py: 1.5,
-                        px: 4,
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      Support Our Cause
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      size="large"
-                      component={Link}
-                      to="/projects"
-                      sx={{
-                        py: 1.5,
-                        px: 4,
-                        color: 'white',
-                        borderColor: 'white',
-                        '&:hover': {
-                          borderColor: theme.palette.primary.main,
-                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                        }
-                      }}
-                    >
-                      View Best Practices
-                    </Button>
-                  </Stack>
-                </Box>
-              </Fade>
-            </Grid>
-            <Grid item xs={12} md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
-              <Zoom in={true} timeout={1500} style={{ transitionDelay: '500ms' }}>
-                <Box
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={8}>
+              <Box>
+                <Typography
+                  variant="overline"
                   sx={{
-                    position: 'relative',
-                    height: '400px',
-                    width: '100%',
-                    borderRadius: '20px',
-                    overflow: 'hidden',
-                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
-                    border: '5px solid rgba(255, 255, 255, 0.1)',
+                    color: theme.palette.primary.main,
+                    fontWeight: 'bold',
+                    letterSpacing: 2,
+                    mb: 1,
+                    display: 'block'
                   }}
                 >
-                  <Box
-                    component="img"
-                    src={heroContent.sideImage || "/images/children-water.jpg"}
-                    alt={heroContent.sideImageAlt || "Students using new handwashing facilities"}
+                  {heroContent.overline || "IMPROVING SCHOOL SANITATION"}
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  sx={{ 
+                    color: 'white',
+                    fontWeight: 'bold',
+                    mb: 2,
+                    fontSize: { xs: '2.5rem', md: '3.5rem' },
+                    lineHeight: 1.2,
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                  }}
+                >
+                  {heroContent.title || "Transforming School Sanitation in the Philippines"}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ 
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    mb: 4,
+                    maxWidth: '600px',
+                    lineHeight: 1.6,
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+                  }}
+                >
+                  {heroContent.description || "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students."}
+                </Typography>
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  spacing={2}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    component={Link}
+                    to="/donate"
                     sx={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
+                      py: 1.5,
+                      px: 4,
+                      fontWeight: 'bold',
                     }}
-                  />
-                </Box>
-              </Zoom>
+                  >
+                    {heroContent.primaryButtonText || "SUPPORT OUR CAUSE"}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="large"
+                    component={Link}
+                    to="/projects"
+                    sx={{
+                      py: 1.5,
+                      px: 4,
+                      fontWeight: 'bold',
+                      borderWidth: 2,
+                      color: 'white',
+                      borderColor: 'white',
+                      '&:hover': {
+                        borderWidth: 2,
+                        borderColor: 'primary.main'
+                      }
+                    }}
+                  >
+                    {heroContent.secondaryButtonText || "VIEW BEST PRACTICES"}
+                  </Button>
+                </Stack>
+              </Box>
             </Grid>
           </Grid>
         </Container>
