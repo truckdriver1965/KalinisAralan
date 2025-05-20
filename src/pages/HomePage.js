@@ -26,6 +26,7 @@ import HandshakeIcon from '@mui/icons-material/Handshake';
 import { Link } from 'react-router-dom';
 import { projectsApi, testimonialsApi, homeApi } from '../services/api';
 
+
 function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -38,13 +39,13 @@ function HomePage() {
   const [sdgGoals, setSdgGoals] = useState([]);
   const [approachContent, setApproachContent] = useState({});
   const [processSteps, setProcessSteps] = useState([]);
-  
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Using the API functions from api.js for all requests
         const [
-          projectsResponse, 
+          projectsResponse,
           testimonialsResponse,
           heroResponse,
           sdgGoalsResponse,
@@ -58,7 +59,7 @@ function HomePage() {
           homeApi.getApproach(),
           homeApi.getProcess()
         ]);
-        
+       
         setProjects(projectsResponse.data);
         setTestimonials(testimonialsResponse.data);
         setHeroContent(heroResponse.data);
@@ -73,10 +74,12 @@ function HomePage() {
       }
     };
 
+
     fetchData();
     setAnimateElements(true);
     window.scrollTo(0, 0);
   }, []);
+
 
   // Map icon types to actual icon components
   const getIconByType = (iconType) => {
@@ -96,6 +99,7 @@ function HomePage() {
     }
   };
 
+
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -104,6 +108,7 @@ function HomePage() {
     );
   }
 
+
   if (error) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -111,6 +116,7 @@ function HomePage() {
       </Box>
     );
   }
+
 
   return (
     <Box>
@@ -136,7 +142,7 @@ function HomePage() {
             zIndex: 0
           }}
         />
-        
+       
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Grid container spacing={4}>
             <Grid item xs={12} md={8}>
@@ -156,7 +162,7 @@ function HomePage() {
                 <Typography
                   component="h1"
                   variant="h2"
-                  sx={{ 
+                  sx={{
                     color: 'white',
                     fontWeight: 'bold',
                     mb: 2,
@@ -169,7 +175,7 @@ function HomePage() {
                 </Typography>
                 <Typography
                   variant="h6"
-                  sx={{ 
+                  sx={{
                     color: 'rgba(255, 255, 255, 0.9)',
                     mb: 4,
                     maxWidth: '600px',
@@ -225,6 +231,7 @@ function HomePage() {
         </Container>
       </Box>
 
+
       {/* SDG Goals Section */}
       <Box sx={{ py: 8, bgcolor: '#f8f9fa' }}>
         <Container maxWidth="lg">
@@ -245,7 +252,7 @@ function HomePage() {
               <Typography
                 variant="h3"
                 component="h2"
-                sx={{ 
+                sx={{
                   fontWeight: 'bold',
                   mb: 2,
                 }}
@@ -254,7 +261,7 @@ function HomePage() {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ 
+                sx={{
                   maxWidth: '800px',
                   mx: 'auto',
                   color: 'text.secondary',
@@ -266,12 +273,13 @@ function HomePage() {
             </Box>
           </Fade>
 
+
           <Grid container spacing={4}>
             {sdgGoals.map((goal, index) => (
               <Grid item xs={12} md={4} key={goal.id || index}>
                 <Fade in={animateElements} timeout={1000} style={{ transitionDelay: `${200 * (index + 1)}ms` }}>
-                  <Card 
-                    sx={{ 
+                  <Card
+                    sx={{
                       height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
@@ -284,11 +292,11 @@ function HomePage() {
                       }
                     }}
                   >
-                    <Box 
-                      sx={{ 
-                        bgcolor: goal.color, 
-                        color: 'white', 
-                        p: 3, 
+                    <Box
+                      sx={{
+                        bgcolor: goal.color,
+                        color: 'white',
+                        p: 3,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -313,6 +321,7 @@ function HomePage() {
         </Container>
       </Box>
 
+
       <Box sx={{ py: 10, bgcolor: '#f8f9fa' }}>
         <Container maxWidth="lg">
           <Grid container spacing={6} alignItems="center">
@@ -334,7 +343,7 @@ function HomePage() {
                   <Typography
                     variant="h3"
                     component="h2"
-                    sx={{ 
+                    sx={{
                       fontWeight: 'bold',
                       mb: 3,
                       position: 'relative',
@@ -354,7 +363,7 @@ function HomePage() {
                   </Typography>
                   <Typography
                     variant="body1"
-                    sx={{ 
+                    sx={{
                       mb: 4,
                       fontSize: '1.1rem',
                       lineHeight: 1.7,
@@ -363,7 +372,7 @@ function HomePage() {
                   >
                     {approachContent.description || "KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools."}
                   </Typography>
-                
+               
                   <Box sx={{ mb: 4 }}>
                     {(approachContent.features || [
                       'Documenting and sharing effective sanitation practices',
@@ -372,12 +381,12 @@ function HomePage() {
                       'Building partnerships for sustainable development',
                       'Enabling knowledge and resource sharing between schools'
                     ]).map((item, index) => (
-                      <Box 
-                        key={index} 
-                        sx={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          mb: 2 
+                      <Box
+                        key={index}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          mb: 2
                         }}
                       >
                         <CheckCircleIcon color="primary" sx={{ mr: 2 }} />
@@ -385,7 +394,7 @@ function HomePage() {
                       </Box>
                     ))}
                   </Box>
-                  
+                 
                 </Box>
               </Fade>
             </Grid>
@@ -418,6 +427,7 @@ function HomePage() {
         </Container>
       </Box>
 
+
       {/* How It Works - Three-Step Process */}
       <Box sx={{ py: 10, bgcolor: 'white' }}>
         <Container maxWidth="lg">
@@ -438,7 +448,7 @@ function HomePage() {
               <Typography
                 variant="h3"
                 component="h2"
-                sx={{ 
+                sx={{
                   fontWeight: 'bold',
                   mb: 2,
                 }}
@@ -447,7 +457,7 @@ function HomePage() {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ 
+                sx={{
                   maxWidth: '800px',
                   mx: 'auto',
                   color: 'text.secondary',
@@ -458,6 +468,7 @@ function HomePage() {
               </Typography>
             </Box>
           </Fade>
+
 
           <Grid container spacing={6}>
             {processSteps.map((step, index) => (
@@ -525,6 +536,7 @@ function HomePage() {
         </Container>
       </Box>
 
+
       {/* Remove the entire school partner projects section and go directly to testimonials */}
       <Box sx={{ py: 8, bgcolor: 'background.paper' }}>
         <Container maxWidth="lg">
@@ -588,10 +600,11 @@ function HomePage() {
         </Container>
       </Box>
 
+
       {/* Call to Action */}
-      <Box 
-        sx={{ 
-          py: 10, 
+      <Box
+        sx={{
+          py: 10,
           bgcolor: 'primary.main',
           color: 'white',
           position: 'relative',
@@ -656,5 +669,6 @@ function HomePage() {
     </Box>
   );
 }
+
 
 export default HomePage;
