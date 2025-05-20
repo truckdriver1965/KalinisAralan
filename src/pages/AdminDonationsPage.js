@@ -211,6 +211,7 @@ function AdminDonationsPage() {
     setSnackbar({ ...snackbar, open: false });
   };
   
+  // Update the table columns in the render section
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -318,9 +319,10 @@ function AdminDonationsPage() {
                   {filteredDonations
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((donation) => (
+                      // Update the table row in the TableBody section
                       <TableRow key={donation.id}>
                         <TableCell>{formatDate(donation.timestamp)}</TableCell>
-                        <TableCell>{donation.name}</TableCell>
+                        <TableCell>{`${donation.donor.firstName} ${donation.donor.lastName}`}</TableCell>
                         <TableCell>{formatCurrency(donation.amount)}</TableCell>
                         <TableCell>{donation.paymentMethod}</TableCell>
                         <TableCell>
@@ -398,81 +400,46 @@ function AdminDonationsPage() {
       <Dialog open={openViewDialog} onClose={handleCloseViewDialog} maxWidth="md" fullWidth>
         {selectedDonation && (
           <>
-            <DialogTitle>
-              Donation Details
-              <Chip 
-                label={selectedDonation.status.charAt(0).toUpperCase() + selectedDonation.status.slice(1)} 
-                color={selectedDonation.status === 'completed' ? 'success' : selectedDonation.status === 'pending' ? 'warning' : 'error'}
-                size="small"
-                sx={{ ml: 2 }}
-              />
-            </DialogTitle>
+            <DialogTitle>Donation Details</DialogTitle>
             <DialogContent>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Donor Name</Typography>
-                  <Typography variant="body1">{selectedDonation.name}</Typography>
+              <Box sx={{ pt: 2 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" color="text.secondary">Donor Information</Typography>
+                    <Typography variant="body1">
+                      {`${selectedDonation.donor.firstName} ${selectedDonation.donor.lastName}`}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Email: {selectedDonation.donor.email}<br />
+                      Phone: {selectedDonation.donor.phone || 'Not provided'}<br />
+                      Address: {selectedDonation.donor.address}, {selectedDonation.donor.city}, {selectedDonation.donor.country} {selectedDonation.donor.postalCode}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2">Date</Typography>
+                    <Typography variant="body1">{formatDate(selectedDonation.timestamp)}</Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2">Amount</Typography>
+                    <Typography variant="body1" fontWeight="bold" color="success.main">
+                      {formatCurrency(selectedDonation.amount)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2">Payment Method</Typography>
+                    <Typography variant="body1">
+                      {selectedDonation.paymentMethod}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2">Message</Typography>
+                    <Typography variant="body1">
+                      {selectedDonation.message || 'No message provided'}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Date</Typography>
-                  <Typography variant="body1">{formatDate(selectedDonation.timestamp)}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Email</Typography>
-                  <Typography variant="body1">{selectedDonation.email}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Phone</Typography>
-                  <Typography variant="body1">{selectedDonation.phone || 'Not provided'}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Amount</Typography>
-                  <Typography variant="body1" fontWeight="bold" color="success.main">
-                    {formatCurrency(selectedDonation.amount)}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle2">Payment Method</Typography>
-                  <Typography variant="body1">
-                    {selectedDonation.paymentMethod}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle2">Message</Typography>
-                  <Typography variant="body1">
-                    {selectedDonation.message || 'No message provided'}
-                  </Typography>
-                </Grid>
-              </Grid>
-              
-              {selectedDonation.status === 'pending' && (
-                <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-                  <Button 
-                    variant="contained" 
-                    color="success" 
-                    onClick={() => {
-                      handleStatusUpdate(selectedDonation.id, 'completed');
-                      handleCloseViewDialog();
-                    }}
-                  >
-                    Approve Donation
-                  </Button>
-                  <Button 
-                    variant="contained" 
-                    color="error" 
-                    onClick={() => {
-                      handleStatusUpdate(selectedDonation.id, 'rejected');
-                      handleCloseViewDialog();
-                    }}
-                  >
-                    Reject Donation
-                  </Button>
-                </Box>
-              )}
+              </Box>
             </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseViewDialog}>Close</Button>
-            </DialogActions>
           </>
         )}
       </Dialog>

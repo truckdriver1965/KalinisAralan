@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { 
   Container, 
   Typography, 
@@ -23,6 +24,45 @@ import PersonIcon from '@mui/icons-material/Person';
 
 function AdminDashboardPage() {
   const { user, logout } = useAuth();
+  const [stats, setStats] = useState({
+    recommendations: {
+      total: 0,
+      pending: 0
+    },
+    donations: {
+      total: 0,
+      amount: 0
+    }
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [recommendationsRes, donationsRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/recommendations'),
+          axios.get('http://localhost:5000/api/donations')
+        ]);
+
+        const recommendations = recommendationsRes.data;
+        const donations = donationsRes.data;
+
+        setStats({
+          recommendations: {
+            total: recommendations.length,
+            pending: recommendations.filter(r => r.status === 'pending').length
+          },
+          donations: {
+            total: donations.length,
+            amount: donations.reduce((sum, donation) => sum + (parseFloat(donation.amount) || 0), 0)
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      }
+    };
+
+    fetchStats();
+  }, []);
   
   const handleLogout = () => {
     logout();
@@ -93,14 +133,16 @@ function AdminDashboardPage() {
               <Card sx={{ bgcolor: 'primary.light', height: '100%' }}>
                 <CardContent>
                   <Typography variant="h6" color="primary.contrastText">Recommendations</Typography>
-                  <Typography variant="h3" color="primary.contrastText">--</Typography>
+                  <Typography variant="h3" color="primary.contrastText">{stats.recommendations.total}</Typography>
+                  <Typography variant="subtitle1" color="primary.contrastText">
+                    Pending: {stats.recommendations.pending}
+                  </Typography>
                   <Box sx={{ mt: 2 }}>
                     <Button 
                       variant="contained" 
                       color="primary" 
                       component={Link} 
                       to="/admin/recommendations"
-                      sx={{ bgcolor: 'white', color: 'primary.main' }}
                     >
                       View All
                     </Button>
@@ -113,14 +155,16 @@ function AdminDashboardPage() {
               <Card sx={{ bgcolor: 'secondary.light', height: '100%' }}>
                 <CardContent>
                   <Typography variant="h6" color="secondary.contrastText">Donations</Typography>
-                  <Typography variant="h3" color="secondary.contrastText">--</Typography>
+                  <Typography variant="h3" color="secondary.contrastText">{stats.donations.total}</Typography>
+                  <Typography variant="subtitle1" color="secondary.contrastText">
+                    Total Amount: ₱{stats.donations.amount.toLocaleString()}
+                  </Typography>
                   <Box sx={{ mt: 2 }}>
                     <Button 
                       variant="contained" 
                       color="secondary" 
                       component={Link} 
                       to="/admin/donations"
-                      sx={{ bgcolor: 'white', color: 'secondary.main' }}
                     >
                       View All
                     </Button>

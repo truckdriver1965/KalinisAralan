@@ -1,1 +1,28 @@
+<<<<<<< HEAD
 []
+=======
+[
+  {
+    "_id": "1747622510141",
+    "createdAt": "2025-05-19T02:41:50.141Z",
+    "status": "approved",
+    "name": "JADE LLOYD N DE LARA",
+    "email": "jadedelara25@gmail.com",
+    "phone": "09668559513",
+    "subject": "Sanitation Systems",
+    "message": "SANIDAD TITEEE",
+    "relation": "Teacher"
+  },
+  {
+    "_id": "1747711296403",
+    "createdAt": "2025-05-20T03:21:36.403Z",
+    "status": "pending",
+    "name": "Leigh De Lara",
+    "email": "randy_mgb@yahoo.com",
+    "phone": "09151492704",
+    "subject": "Sanitation Systems",
+    "message": "PLEASE ADD A TOILET WITH BIDET THANK YOU ",
+    "relation": "School Staff"
+  }
+]
+>>>>>>> dfbd66962d662d23f4c57648bc797d9e8fb3a87e
