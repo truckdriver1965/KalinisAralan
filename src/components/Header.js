@@ -43,10 +43,10 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="inherit" sx={{ bgcolor: 'white', boxShadow: 1 }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <WaterDropIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <WaterDropIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, color: 'primary.main' }} />
           <Typography
             variant="h6"
             component={RouterLink}
@@ -57,7 +57,7 @@ function Header() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: 'primary.main',
               textDecoration: 'none',
               flexGrow: isMobile ? 1 : 0
             }}
@@ -71,7 +71,7 @@ function Header() {
                 size="large"
                 aria-label="menu"
                 onClick={toggleDrawer(true)}
-                color="inherit"
+                color="primary"
               >
                 <MenuIcon />
               </IconButton>
@@ -108,7 +108,7 @@ function Header() {
                   key={item.name}
                   component={RouterLink}
                   to={item.path}
-                  sx={{ color: 'white', mx: 1 }}
+                  sx={{ color: 'primary.main', mx: 1 }}
                 >
                   {item.name}
                 </Button>
@@ -120,7 +120,7 @@ function Header() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Admin Login">
                 <IconButton 
-                  color="inherit" 
+                  color="primary" 
                   component={RouterLink} 
                   to="/admin/login"
                   size="small"
