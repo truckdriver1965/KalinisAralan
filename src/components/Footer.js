@@ -34,15 +34,14 @@ function Footer() {
       title: 'About Us',
       links: [
         { name: 'About', path: '/about' },
-        { name: 'Our Partners', path: '/about#partners' },
-        { name: 'FAQs', path: '/faqs' },
+        { name: 'Our Team', path: '/about#partners' },
       ]
     },
     {
       title: 'Get Involved',
       links: [
         { name: 'Donate', path: '/donate' },
-        { name: 'Volunteer', path: '/volunteer' },
+        { name: 'Recommendations', path: '/contact' },
       ]
     }
   ];
