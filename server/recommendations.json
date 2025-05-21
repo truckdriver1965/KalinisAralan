@@ -21,5 +21,18 @@
     "relation": "Alumni",
     "category": "Other",
     "recommendation": "Please provide more chairs and more tables for the cafeteria. Thank you."
+  },
+  {
+    "id": "1747797999033",
+    "timestamp": "2025-05-21T03:26:39.033Z",
+    "status": "pending",
+    "name": "Rafael Villacorte",
+    "email": "villacorterafael@gmail.com",
+    "phone": "09196206262",
+    "subject": "Environmental Initiatives",
+    "message": "Add basketball court",
+    "relation": "Other",
+    "category": "Environmental Initiatives",
+    "recommendation": "Add basketball court"
   }
 ]

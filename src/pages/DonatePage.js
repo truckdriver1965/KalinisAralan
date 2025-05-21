@@ -982,41 +982,7 @@ function DonatePage() {
           </Fade>
         </Grid>
       </Grid>
-      
-      {/* Move this Box inside the Grid container or make it a separate Grid item */}
-      <Grid container sx={{ mt: 4 }}>
-        <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
-            Your donation will help:
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <SchoolIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
-                <Typography variant="body1">
-                  ₱500 provides hygiene education for 10 students at Baliwag North Central School
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <FavoriteIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
-                <Typography variant="body1">
-                  ₱2,500 installs a handwashing station at the school
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <VolunteerActivismIcon color="primary" sx={{ fontSize: 40, mb: 1 }} />
-                <Typography variant="body1">
-                  ₱10,000 renovates a toilet facility at Baliwag North Central School
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+    
       
       <Snackbar
         open={snackbarOpen}
