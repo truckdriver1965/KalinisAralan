@@ -1,67 +1,25 @@
 [
   {
-    "id": "1747584518895",
-    "timestamp": "2025-05-18T16:08:38.895Z",
-    "status": "pending",
-    "name": "JADE LLOYD N DE LARA",
-    "email": "jadedelara25@gmail.com",
-    "phone": "09668559513",
-    "category": "Sanitation Systems",
-    "recommendation": "NIGGA",
-    "relation": "Parent"
-  },
-  {
-    "id": "1747584665801",
-    "timestamp": "2025-05-18T16:11:05.801Z",
-    "status": "pending",
-    "name": "Leigh De Lara",
-    "email": "randy_mgb@yahoo.com",
-    "phone": "09668559513",
-    "category": "Environmental Initiatives",
-    "recommendation": "TITEEE",
-    "relation": "Student"
-  },
-  {
-    "id": "1747585642244",
-    "timestamp": "2025-05-18T16:27:22.244Z",
-    "status": "pending",
-    "name": "JADE LLOYD N DE LARA",
-    "email": "jadedelara25@gmail.com",
-    "phone": "09668559513",
-    "category": "Sanitation Systems",
-    "recommendation": "TAE",
-    "relation": "Teacher"
-  },
-  {
-    "id": "1747622223210",
-    "timestamp": "2025-05-19T02:37:03.210Z",
-    "status": "pending",
-    "name": "JADE LLOYD N DE LARA",
-    "email": "jadedelara25@gmail.com",
-    "phone": "09668559513",
-    "category": "Sanitation Systems",
-    "recommendation": "TITEE SEAN KELLY JORDAN",
-    "relation": "Parent"
-  },
-  {
-    "id": "1747622404157",
-    "timestamp": "2025-05-19T02:40:04.157Z",
-    "status": "pending",
-    "name": "JADE LLOYD N DE LARA",
-    "email": "jadedelara25@gmail.com",
-    "phone": "09668559513",
-    "category": "Educational Resources",
-    "recommendation": "TITWW",
-    "relation": "Parent"
-  },
-  {
     "id": "1747711296403",
     "timestamp": "2025-05-20T03:21:36.403Z",
-    "status": "pending",
+    "status": "approved",
     "name": "Leigh De Lara",
     "email": "randy_mgb@yahoo.com",
     "category": "Sanitation Systems",
     "message": "PLEASE ADD A TOILET WITH BIDET THANK YOU ",
     "phone": "09151492704"
+  },
+  {
+    "id": "1747797532812",
+    "timestamp": "2025-05-21T03:18:52.812Z",
+    "status": "approved",
+    "name": "Mara Cervantes",
+    "email": "mararoselycervantes@gmail.com",
+    "phone": "09151492704",
+    "subject": "Other",
+    "message": "Please provide more chairs and more tables for the cafeteria. Thank you.",
+    "relation": "Alumni",
+    "category": "Other",
+    "recommendation": "Please provide more chairs and more tables for the cafeteria. Thank you."
   }
 ]

@@ -15,7 +15,7 @@ import {
   useTheme,
   Tooltip
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import LockIcon from '@mui/icons-material/Lock';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
@@ -26,6 +26,7 @@ function Header() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -34,6 +35,13 @@ function Header() {
     { name: 'Contact', path: '/contact' },
     { name: 'Donate', path: '/donate' }
   ];
+
+  const isActive = (path) => {
+    if (path === '/') {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
+  };
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -93,6 +101,11 @@ function Header() {
                         key={item.name} 
                         component={RouterLink} 
                         to={item.path}
+                        sx={{
+                          bgcolor: isActive(item.path) ? 'primary.light' : 'transparent',
+                          color: 'text.primary',
+                          fontWeight: isActive(item.path) ? 700 : 400
+                        }}
                       >
                         <ListItemText primary={item.name} />
                       </ListItem>
@@ -108,7 +121,15 @@ function Header() {
                   key={item.name}
                   component={RouterLink}
                   to={item.path}
-                  sx={{ color: 'primary.main', mx: 1 }}
+                  sx={{
+                    mx: 1,
+                    color: 'text.primary',
+                    bgcolor: isActive(item.path) ? 'primary.light' : 'transparent',
+                    '&:hover': {
+                      bgcolor: isActive(item.path) ? 'primary.light' : 'rgba(0, 0, 0, 0.04)'
+                    },
+                    fontWeight: isActive(item.path) ? 700 : 400
+                  }}
                 >
                   {item.name}
                 </Button>
@@ -124,7 +145,10 @@ function Header() {
                   component={RouterLink} 
                   to="/admin/login"
                   size="small"
-                  sx={{ opacity: 0.7 }}
+                  sx={{
+                    opacity: isActive('/admin') ? 1 : 0.7,
+                    bgcolor: isActive('/admin') ? 'primary.light' : 'transparent'
+                  }}
                 >
                   <LockIcon fontSize="small" />
                 </IconButton>
