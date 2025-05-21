@@ -36,6 +36,7 @@ import {
 } from '@mui/icons-material';
 import axios from 'axios';
 import { Edit as EditIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 function AdminRecommendationsPage() {
   const [recommendations, setRecommendations] = useState([]);
@@ -378,9 +379,19 @@ function AdminRecommendationsPage() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        School Recommendations Dashboard
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          School Recommendations Dashboard
+        </Typography>
+        <Button
+          component={Link}
+          to="/admin"
+          variant="outlined"
+          color="primary"
+        >
+          Back to Dashboard
+        </Button>
+      </Box>
       
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
