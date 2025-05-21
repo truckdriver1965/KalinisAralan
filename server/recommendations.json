@@ -23,6 +23,7 @@
     "recommendation": "Please provide more chairs and more tables for the cafeteria. Thank you."
   },
   {
+<<<<<<< HEAD
     "id": "1747797999033",
     "timestamp": "2025-05-21T03:26:39.033Z",
     "status": "pending",
@@ -34,5 +35,18 @@
     "relation": "Other",
     "category": "Environmental Initiatives",
     "recommendation": "Add basketball court"
+=======
+    "id": "1747801077639",
+    "timestamp": "2025-05-21T04:17:57.640Z",
+    "status": "pending",
+    "name": "PERCY SILVALA",
+    "email": "jadedelara25@gmail.com",
+    "phone": "096685595132",
+    "subject": "Educational Resources",
+    "message": "add this ",
+    "relation": "Parent",
+    "category": "Educational Resources",
+    "recommendation": "add this "
+>>>>>>> 1e4e0785d4284e7a1a9d9a0bf9a3e68e70cfc8ad
   }
 ]
