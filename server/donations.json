@@ -52,7 +52,7 @@
   {
     "id": "1747641069009",
     "timestamp": "2025-05-19T07:51:08.983Z",
-    "status": "pending",
+    "status": "rejected",
     "amount": "99999999",
     "donor": {
       "firstName": "Rafael",
@@ -147,6 +147,31 @@
       "gcashNumber": "09196206262",
       "gcashName": "John Rafael Villacorte",
       "referenceNumber": ""
+    }
+  },
+  {
+    "id": "1747808519033",
+    "timestamp": "2025-05-21T06:21:59.028Z",
+    "status": "pending",
+    "amount": "10000",
+    "donor": {
+      "firstName": "Kriselle",
+      "lastName": "Portillo",
+      "email": "portillokriselle@gmail.com",
+      "phone": "09678067033",
+      "address": "Maui Oasis, Sta. Mesa, Manila",
+      "city": "Ilagan",
+      "country": "Philippines",
+      "postalCode": "1116"
+    },
+    "paymentMethod": "bankTransfer",
+    "paymentDetails": {
+      "cardNumber": "",
+      "expiryDate": "",
+      "cvv": "",
+      "gcashNumber": "",
+      "gcashName": "",
+      "referenceNumber": "1234567890"
     }
   }
 ]

@@ -7,17 +7,24 @@ import {
   Button, 
   Paper, 
   Alert,
-  CircularProgress
+  CircularProgress,
+  InputAdornment,
+  IconButton,
+  Snackbar
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function AdminLoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -40,17 +47,40 @@ function AdminLoginPage() {
       setLoading(false);
       return;
     }
+
+    // Password validation
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      setLoading(false);
+      return;
+    }
     
     // Attempt login
     const success = login(username, password);
     
     if (success) {
-      navigate('/admin');
+      setShowSuccess(true);
+      // Delay navigation to show success message
+      setTimeout(() => {
+        navigate('/admin');
+      }, 1500);
     } else {
-      setError('Invalid username or password');
+      setError('Invalid username or password. Please check your credentials and try again.');
     }
     
     setLoading(false);
+  };
+  
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
   };
   
   return (
@@ -102,11 +132,25 @@ function AdminLoginPage() {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             type="submit"
@@ -119,6 +163,18 @@ function AdminLoginPage() {
           </Button>
         </Box>
       </Paper>
+
+      {/* Success Message */}
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={1500}
+        onClose={handleCloseSuccess}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSuccess} severity="success" sx={{ width: '100%' }}>
+          Login successful! Redirecting to dashboard...
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
