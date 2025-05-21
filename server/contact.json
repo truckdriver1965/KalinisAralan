@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[]
-=======
 [
   {
     "_id": "1747622510141",
@@ -23,6 +20,16 @@
     "subject": "Sanitation Systems",
     "message": "PLEASE ADD A TOILET WITH BIDET THANK YOU ",
     "relation": "School Staff"
+  },
+  {
+    "_id": "1747807560777",
+    "createdAt": "2025-05-21T06:06:00.777Z",
+    "status": "pending",
+    "name": "Rafael Villacorte",
+    "email": "villacorterafael@gmail.com",
+    "phone": "09196206262",
+    "subject": "School Programs",
+    "message": "sadasdsadsdsasd",
+    "relation": "Parent"
   }
 ]
->>>>>>> dfbd66962d662d23f4c57648bc797d9e8fb3a87e
