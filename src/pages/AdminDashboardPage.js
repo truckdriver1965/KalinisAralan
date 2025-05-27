@@ -12,7 +12,11 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -24,6 +28,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 function AdminDashboardPage() {
   const { user, logout } = useAuth();
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
   const [stats, setStats] = useState({
     recommendations: {
       total: 0,
@@ -64,10 +69,19 @@ function AdminDashboardPage() {
     fetchStats();
   }, []);
   
-  const handleLogout = () => {
-    logout();
+  const handleLogoutClick = () => {
+    setOpenLogoutDialog(true);
   };
-  
+
+  const handleLogoutConfirm = () => {
+    logout();
+    setOpenLogoutDialog(false);
+  };
+
+  const handleLogoutCancel = () => {
+    setOpenLogoutDialog(false);
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Grid container spacing={3}>
@@ -112,7 +126,7 @@ function AdminDashboardPage() {
               
               <Divider />
               
-              <ListItem button onClick={handleLogout}>
+              <ListItem button onClick={handleLogoutClick}>
                 <ListItemIcon>
                   <LogoutIcon color="error" />
                 </ListItemIcon>
@@ -209,6 +223,24 @@ function AdminDashboardPage() {
           </Card>
         </Grid>
       </Grid>
+
+      {/* Logout Confirmation Dialog */}
+      <Dialog
+        open={openLogoutDialog}
+        onClose={handleLogoutCancel}
+        aria-labelledby="logout-dialog-title"
+      >
+        <DialogTitle id="logout-dialog-title">Confirm Logout</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to log out?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogoutCancel}>Cancel</Button>
+          <Button onClick={handleLogoutConfirm} color="error" variant="contained">
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

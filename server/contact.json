@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[]
-=======
 [
   {
     "_id": "1747622510141",
@@ -10,7 +7,7 @@
     "email": "jadedelara25@gmail.com",
     "phone": "09668559513",
     "subject": "Sanitation Systems",
-    "message": "SANIDAD TITEEE",
+    "message": "hehe sample ",
     "relation": "Teacher"
   },
   {
@@ -23,6 +20,27 @@
     "subject": "Sanitation Systems",
     "message": "PLEASE ADD A TOILET WITH BIDET THANK YOU ",
     "relation": "School Staff"
+  },
+  {
+    "_id": "1747807560777",
+    "createdAt": "2025-05-21T06:06:00.777Z",
+    "status": "pending",
+    "name": "Rafael Villacorte",
+    "email": "villacorterafael@gmail.com",
+    "phone": "09196206262",
+    "subject": "School Programs",
+    "message": "sadasdsadsdsasd",
+    "relation": "Parent"
+  },
+  {
+    "_id": "1747808562766",
+    "createdAt": "2025-05-21T06:22:42.766Z",
+    "status": "approved",
+    "name": "Rafael Villacorte",
+    "email": "villacorterafael@gmail.com",
+    "phone": "09196206262",
+    "subject": "Educational Resources",
+    "message": "I recommend adding more projects and events for science related subjects to further enhance the knowledge of the students.",
+    "relation": "Teacher"
   }
 ]
->>>>>>> dfbd66962d662d23f4c57648bc797d9e8fb3a87e

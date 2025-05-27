@@ -35,6 +35,8 @@ import {
   FilterList as FilterListIcon
 } from '@mui/icons-material';
 import axios from 'axios';
+import { Edit as EditIcon } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 function AdminRecommendationsPage() {
   const [recommendations, setRecommendations] = useState([]);
@@ -47,12 +49,90 @@ function AdminRecommendationsPage() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [statusFilter, setStatusFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
+  // Add these state declarations
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    phone: ''
+  });
   const [stats, setStats] = useState({
     total: 0,
     pending: 0,
     approved: 0,
     rejected: 0
   });
+
+  // Add the handler functions right after the state declarations
+  const handleEditFormChange = (event) => {
+    const { name, value } = event.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleOpenEditDialog = (recommendation) => {
+    setSelectedRecommendation(recommendation);
+    setEditFormData({
+      name: recommendation.name || '',
+      email: recommendation.email || '',
+      subject: recommendation.subject || recommendation.category || '',
+      message: recommendation.message || recommendation.recommendation || '',
+      phone: recommendation.phone || ''
+    });
+    setOpenEditDialog(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+  };
+
+  const handleEdit = async () => {
+    try {
+      const id = selectedRecommendation._id || selectedRecommendation.id;
+      const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
+      const token = localStorage.getItem('token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      
+      const endpoints = [
+        `${baseURL}/api/contact/${id}`,
+        `${baseURL}/api/recommendations/${id}`,
+        `${baseURL}/api/contacts/${id}`
+      ];
+      
+      let success = false;
+      
+      for (const endpoint of endpoints) {
+        try {
+          const response = await axios.put(endpoint, editFormData, { headers });
+          console.log('Edit response:', response.data);
+          success = true;
+          break;
+        } catch (err) {
+          console.error(`Error editing at ${endpoint}:`, err);
+        }
+      }
+      
+      if (!success) {
+        throw new Error('All edit endpoints failed');
+      }
+      
+      setOpenEditDialog(false);
+      fetchRecommendations();
+      setError(null);
+    } catch (err) {
+      console.error('Error editing recommendation:', err);
+      let errorMessage = 'Failed to edit recommendation. Please try again.';
+      if (err.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      }
+      setError(errorMessage);
+      setOpenEditDialog(false);
+    }
+  };
 
   // Fetch recommendations from the backend with fallback
   const fetchRecommendations = async () => {
@@ -299,9 +379,19 @@ function AdminRecommendationsPage() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        School Recommendations Dashboard
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          School Recommendations Dashboard
+        </Typography>
+        <Button
+          component={Link}
+          to="/admin"
+          variant="outlined"
+          color="primary"
+        >
+          Back to Dashboard
+        </Button>
+      </Box>
       
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -465,6 +555,14 @@ function AdminRecommendationsPage() {
                             >
                               <VisibilityIcon />
                             </IconButton>
+                            {/* Add the Edit button here */}
+                            <IconButton 
+                              color="primary" 
+                              onClick={() => handleOpenEditDialog(recommendation)}
+                              size="small"
+                            >
+                              <EditIcon />
+                            </IconButton>
                             {(status === 'pending') && (
                               <>
                                 <IconButton 
@@ -610,6 +708,67 @@ function AdminRecommendationsPage() {
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button onClick={handleDelete} color="error">Delete</Button>
+        </DialogActions>
+      </Dialog>
+      
+      {/* Edit Dialog - Move this inside the return statement */}
+      <Dialog open={openEditDialog} onClose={handleCloseEditDialog} maxWidth="md" fullWidth>
+        <DialogTitle>Edit Recommendation</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Name"
+                name="name"
+                value={editFormData.name}
+                onChange={handleEditFormChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                type="email"
+                value={editFormData.email}
+                onChange={handleEditFormChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Subject"
+                name="subject"
+                value={editFormData.subject}
+                onChange={handleEditFormChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Phone"
+                name="phone"
+                value={editFormData.phone}
+                onChange={handleEditFormChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Message"
+                name="message"
+                multiline
+                rows={4}
+                value={editFormData.message}
+                onChange={handleEditFormChange}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseEditDialog}>Cancel</Button>
+          <Button onClick={handleEdit} color="primary" variant="contained">Save Changes</Button>
         </DialogActions>
       </Dialog>
     </Container>
