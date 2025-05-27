@@ -85,18 +85,80 @@ function DonatePage() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
   const [donationReference, setDonationReference] = useState('');
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     setAnimationKey(prevKey => prevKey + 1);
   }, [activeStep]);
 
-  const handleNext = () => {
-    if (activeStep === 0 && donationAmount === 'custom') {
+  const validateDonationAmount = () => {
+    if (!donationAmount) {
+      setSnackbarMessage('Please select a donation amount');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return false;
+    }
+    
+    if (donationAmount === 'custom') {
       const amount = Number(customAmount);
       if (isNaN(amount) || amount <= 0) {
         setSnackbarMessage('Please enter a valid donation amount');
         setSnackbarSeverity('error');
         setSnackbarOpen(true);
+        return false;
+      }
+    }
+    return true;
+  };
+  
+  const validateDonorInfo = () => {
+    const errors = {};
+    
+    if (!donorInfo.firstName.trim()) {
+      errors.firstName = 'First name is required';
+    } else if (donorInfo.firstName.trim().length < 2) {
+      errors.firstName = 'First name must be at least 2 characters';
+    }
+    
+    if (!donorInfo.lastName.trim()) {
+      errors.lastName = 'Last name is required';
+    } else if (donorInfo.lastName.trim().length < 2) {
+      errors.lastName = 'Last name must be at least 2 characters';
+    }
+    
+    if (!donorInfo.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^\S+@\S+\.\S+$/.test(donorInfo.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (donorInfo.phone && !/^(\+\d{1,3})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(donorInfo.phone)) {
+      errors.phone = 'Please enter a valid phone number';
+    }
+    
+    if (donorInfo.postalCode && !/^\d{4,6}$/.test(donorInfo.postalCode)) {
+      errors.postalCode = 'Please enter a valid postal code';
+    }
+    
+    setFormErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      setSnackbarMessage('Please correct the errors in the form');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return false;
+    }
+    
+    return true;
+  };
+
+  const handleNext = () => {
+    if (activeStep === 0) {
+      if (!validateDonationAmount()) {
+        return;
+      }
+    } else if (activeStep === 1) {
+      if (!validateDonorInfo()) {
         return;
       }
     }
@@ -122,6 +184,14 @@ function DonatePage() {
       ...donorInfo,
       [name]: value
     });
+    
+    // Clear error when user types
+    if (formErrors[name]) {
+      setFormErrors({
+        ...formErrors,
+        [name]: ''
+      });
+    }
   };
 
   const handlePaymentMethodChange = (event) => {
@@ -134,6 +204,14 @@ function DonatePage() {
       ...paymentDetails,
       [name]: value
     });
+    
+    // Clear error when user types
+    if (formErrors[name]) {
+      setFormErrors({
+        ...formErrors,
+        [name]: ''
+      });
+    }
   };
 
   const handleSnackbarClose = () => {
@@ -141,28 +219,36 @@ function DonatePage() {
   };
 
   const validatePaymentDetails = () => {
-    if (paymentMethod === 'creditCard') {
-      if (!paymentDetails.cardNumber || !paymentDetails.expiryDate || !paymentDetails.cvv) {
-        setSnackbarMessage('Please fill in all credit card details');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
-        return false;
+    const errors = {};
+    
+ 
+    if (paymentMethod === 'gcash') {
+      if (!paymentDetails.gcashNumber) {
+        errors.gcashNumber = 'GCash number is required';
+      } else if (!/^09\d{9}$|^(\+63|0063)\d{10}$/.test(paymentDetails.gcashNumber.replace(/\s/g, ''))) {
+        errors.gcashNumber = 'Please enter a valid GCash number';
       }
-    } else if (paymentMethod === 'gcash') {
-      if (!paymentDetails.gcashNumber || !paymentDetails.gcashName) {
-        setSnackbarMessage('Please fill in all GCash details');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
-        return false;
+      
+      if (!paymentDetails.gcashName) {
+        errors.gcashName = 'GCash account name is required';
       }
     } else if (paymentMethod === 'bankTransfer') {
       if (!paymentDetails.referenceNumber) {
-        setSnackbarMessage('Please enter the bank transfer reference number');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
-        return false;
+        errors.referenceNumber = 'Reference number is required';
+      } else if (paymentDetails.referenceNumber.length < 6) {
+        errors.referenceNumber = 'Please enter a valid reference number';
       }
     }
+    
+    setFormErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      setSnackbarMessage('Please correct the errors in the payment details');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      return false;
+    }
+    
     return true;
   };
 
@@ -300,6 +386,8 @@ function DonatePage() {
                 type="number"
                 InputProps={{ inputProps: { min: 100 } }}
                 sx={{ mt: 2 }}
+                error={formErrors.customAmount}
+                helperText={formErrors.customAmount}
               />
             )}
 
@@ -352,6 +440,8 @@ function DonatePage() {
                   value={donorInfo.firstName}
                   onChange={handleDonorInfoChange}
                   margin="normal"
+                  error={!!formErrors.firstName}
+                  helperText={formErrors.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -363,6 +453,8 @@ function DonatePage() {
                   value={donorInfo.lastName}
                   onChange={handleDonorInfoChange}
                   margin="normal"
+                  error={!!formErrors.lastName}
+                  helperText={formErrors.lastName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -375,6 +467,8 @@ function DonatePage() {
                   value={donorInfo.email}
                   onChange={handleDonorInfoChange}
                   margin="normal"
+                  error={!!formErrors.email}
+                  helperText={formErrors.email}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -385,6 +479,8 @@ function DonatePage() {
                   value={donorInfo.phone}
                   onChange={handleDonorInfoChange}
                   margin="normal"
+                  error={!!formErrors.phone}
+                  helperText={formErrors.phone}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -425,6 +521,8 @@ function DonatePage() {
                   value={donorInfo.postalCode}
                   onChange={handleDonorInfoChange}
                   margin="normal"
+                  error={!!formErrors.postalCode}
+                  helperText={formErrors.postalCode}
                 />
               </Grid>
             </Grid>
@@ -443,22 +541,7 @@ function DonatePage() {
                 value={paymentMethod}
                 onChange={handlePaymentMethodChange}
               >
-                <Paper 
-                  elevation={paymentMethod === 'creditCard' ? 3 : 1}
-                  sx={{ 
-                    p: 2, 
-                    mb: 2,
-                    border: paymentMethod === 'creditCard' ? '2px solid' : '1px solid',
-                    borderColor: paymentMethod === 'creditCard' ? 'primary.main' : 'divider',
-                    borderRadius: 2
-                  }}
-                >
-                  <FormControlLabel
-                    value="creditCard"
-                    control={<Radio color="primary" />}
-                    label="Credit/Debit Card"
-                  />
-                </Paper>
+     
                 <Paper 
                   elevation={paymentMethod === 'bankTransfer' ? 3 : 1}
                   sx={{ 
@@ -504,6 +587,8 @@ function DonatePage() {
                     value={paymentDetails.cardNumber}
                     onChange={handlePaymentDetailsChange}
                     margin="normal"
+                    error={!!formErrors.cardNumber}
+                    helperText={formErrors.cardNumber}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -515,6 +600,8 @@ function DonatePage() {
                     value={paymentDetails.expiryDate}
                     onChange={handlePaymentDetailsChange}
                     margin="normal"
+                    error={!!formErrors.expiryDate}
+                    helperText={formErrors.expiryDate}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -527,6 +614,8 @@ function DonatePage() {
                     onChange={handlePaymentDetailsChange}
                     margin="normal"
                     type="password"
+                    error={!!formErrors.cvv}
+                    helperText={formErrors.cvv}
                   />
                 </Grid>
               </Grid>
@@ -552,7 +641,8 @@ function DonatePage() {
                   value={paymentDetails.referenceNumber}
                   onChange={handlePaymentDetailsChange}
                   margin="normal"
-                  helperText="Enter the reference number from your bank transfer"
+                  error={!!formErrors.referenceNumber}
+                  helperText={formErrors.referenceNumber || "Enter the reference number from your bank transfer"}
                 />
               </Box>
             )}
@@ -577,6 +667,8 @@ function DonatePage() {
                       value={paymentDetails.gcashNumber}
                       onChange={handlePaymentDetailsChange}
                       margin="normal"
+                      error={!!formErrors.gcashNumber}
+                      helperText={formErrors.gcashNumber}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -588,6 +680,8 @@ function DonatePage() {
                       value={paymentDetails.gcashName}
                       onChange={handlePaymentDetailsChange}
                       margin="normal"
+                      error={!!formErrors.gcashName}
+                      helperText={formErrors.gcashName}
                     />
                   </Grid>
                 </Grid>

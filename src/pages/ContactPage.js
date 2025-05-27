@@ -79,12 +79,18 @@ function ContactPage() {
     
     if (!formData.name.trim()) {
       errors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      errors.name = 'Name must be at least 2 characters long';
     }
     
     if (!formData.email.trim()) {
       errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Email is invalid';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (formData.phone && !/^(\+\d{1,3})?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number';
     }
     
     if (!formData.category) {
@@ -93,6 +99,8 @@ function ContactPage() {
     
     if (!formData.recommendation.trim()) {
       errors.recommendation = 'Recommendation details are required';
+    } else if (formData.recommendation.trim().length < 10) {
+      errors.recommendation = 'Please provide more details (at least 10 characters)';
     }
     
     if (!formData.relation) {
