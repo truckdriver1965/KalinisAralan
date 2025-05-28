@@ -1,315 +1,314 @@
 {
-    "projects": [
-      {
-        "id": 1,
-        "title": "Handwashing Station Installation",
-        "description": "Construction and installation of durable handwashing stations with multiple faucets to promote proper hygiene practices among students.",
-        "image": "/images/initiatives3.jpg",
-        "progress": 100
-      },
-      {
-        "id": 2,
-        "title": "School Ground Maintenance",
-        "description": "Regular maintenance and beautification of school grounds including recycling initiatives and proper waste management practices.",
-        "image": "/images/initiatives1.jpg",
-        "progress": 85
-      },
-      {
-        "id": 3,
-        "title": "Facility Construction",
-        "description": "Building and improving sanitation facilities using durable materials and proper construction techniques for long-term sustainability.",
-        "image": "/images/initiatives2.jpg",
-        "progress": 90
-      }
-    ],
-    "testimonials": [
-      {
-        "id": 1,
-        "quote": "With KalinisAralan's help, we've installed proper toilets and handwashing stations. Absenteeism has dropped by 30% since the facilities were completed.",
-        "author": "Maria Santos",
-        "role": "School Principal, Partner School",
-        "image": "/images/testimonial1.jpg"
-      },
-      {
-        "id": 2,
-        "quote": "The sanitation project has transformed our school environment. Our students now have dignity and privacy when using school facilities.",
-        "author": "Juan Reyes",
-        "role": "Teacher, Partner School",
-        "image": "/images/testimonial2.jpg"
-      },
-      {
-        "id": 3,
-        "quote": "As a student, I'm happy that we now have clean toilets and places to wash our hands. I don't worry about getting sick anymore.",
-        "author": "Elena Magsaysay",
-        "role": "Student, Partner School",
-        "image": "/images/testimonial3.jpg"
-      }
-    ],
-    "hero": {
-      "overline": "IMPROVING SCHOOL SANITATION",
-      "title": "Transforming School Sanitation in the Philippines",
-      "description": "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students.",
-      "backgroundImage": "/images/school.jpg",
-      "sideImage": "/images/cleaning hands 2.jpg",
-      "sideImageAlt": "Students using new handwashing facilities",
-      "primaryButtonText": "Support Our Cause",
-      "primaryButtonLink": "/donate",
-      "secondaryButtonText": "View Best Practices",
-      "secondaryButtonLink": "/projects"
+  "projects": [
+    {
+      "id": "1",
+      "title": "Handwashing Station Installationnn",
+      "description": "Construction and installation of durable handwashing stations with multiple faucets to promote proper hygiene practices among students.",
+      "image": "/images/initiatives3.jpg",
+      "progress": 100
     },
-    "sdgGoals": {
-      "title": "Contributing to Global Goals",
-      "subtitle": "SUSTAINABLE DEVELOPMENT GOALS",
-      "description": "Our work directly supports these UN Sustainable Development Goals",
-      "goals": [
-        {
-          "id": 1,
-          "title": "Clean Water & Sanitation",
-          "description": "SDG 6: Ensuring availability and sustainable management of water and sanitation for all",
-          "iconType": "water",
-          "color": "#26bde2"
-        },
-        {
-          "id": 2,
-          "title": "Good Health & Well-being",
-          "description": "SDG 3: Ensuring healthy lives and promoting well-being for all at all ages",
-          "iconType": "medical",
-          "color": "#4c9f38"
-        },
-        {
-          "id": 3,
-          "title": "Quality Education",
-          "description": "SDG 4: Ensuring inclusive and equitable quality education for all",
-          "iconType": "book",
-          "color": "#c5192d"
-        }
+    {
+      "id": "2",
+      "title": "School Ground Maintenancee",
+      "description": "Regular maintenance and beautification of school grounds including recycling initiatives and proper waste management practices.",
+      "image": "/images/initiatives1.jpg",
+      "progress": 85
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "1",
+      "quote": "With KalinisAralan's help, we've installed proper toilets and handwashing stations. Absenteeism has dropped by 30% since the facilities were completed.",
+      "author": "Maria Santos",
+      "role": "School Principal, Partner School",
+      "image": "/images/testimonial1.jpg"
+    },
+    {
+      "id": "2",
+      "quote": "The sanitation project has transformed our school environment. Our students now have dignity and privacy when using school facilities.",
+      "author": "Juan Reyes",
+      "role": "Teacher, Partner School",
+      "image": "/images/testimonial2.jpg"
+    },
+    {
+      "id": "3",
+      "quote": "As a student, I'm happy that we now have clean toilets and places to wash our hands. I don't worry about getting sick anymore.",
+      "author": "Elena Magsaysay",
+      "role": "Student, Partner School",
+      "image": "/images/testimonial3.jpg"
+    }
+  ],
+  "hero": {
+    "overline": "IMPROVING SCHOOL SANITATION",
+    "title": "Transforming School Sanitation in the Philippines",
+    "description": "KalinisAralan documents and shares Baliwag North Central School's successful sanitation practices while enabling support for more schools to implement better facilities for their students.",
+    "backgroundImage": "/images/school.jpg",
+    "sideImage": "/images/cleaning hands 2.jpg",
+    "sideImageAlt": "Students using new handwashing facilities",
+    "primaryButtonText": "Support Our Cause",
+    "primaryButtonLink": "/donate",
+    "secondaryButtonText": "View Best Practices",
+    "secondaryButtonLink": "/projects"
+  },
+  "sdgGoals": {
+    "title": "Contributing to Global Goals",
+    "subtitle": "SUSTAINABLE DEVELOPMENT GOALS",
+    "description": "Our work directly supports these UN Sustainable Development Goals",
+    "goals": [
+      {
+        "id": 1,
+        "title": "Clean Water & Sanitation",
+        "description": "SDG 6: Ensuring availability and sustainable management of water and sanitation for all",
+        "iconType": "water",
+        "color": "#26bde2"
+      },
+      {
+        "id": 2,
+        "title": "Good Health & Well-being",
+        "description": "SDG 3: Ensuring healthy lives and promoting well-being for all at all ages",
+        "iconType": "medical",
+        "color": "#4c9f38"
+      },
+      {
+        "id": 3,
+        "title": "Quality Education",
+        "description": "SDG 4: Ensuring inclusive and equitable quality education for all",
+        "iconType": "book",
+        "color": "#c5192d"
+      }
+    ]
+  },
+  "approach": {
+    "overline": "OUR APPROACH",
+    "title": "Creating Model School Sanitation",
+    "description": "KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools.",
+    "image": "/images/hand washing.jpg",
+    "imageAlt": "Students using upgraded sanitation facilities",
+    "features": [
+      "Documenting and sharing effective sanitation practices",
+      "Facilitating support for facility improvements",
+      "Creating comprehensive maintenance guides",
+      "Building partnerships for sustainable development",
+      "Enabling knowledge and resource sharing between schools"
+    ]
+  },
+  "process": {
+    "title": "How KalinisAralan Works",
+    "subtitle": "THE PROCESS",
+    "description": "Our initiative improves school sanitation in three simple steps",
+    "steps": [
+      {
+        "id": 1,
+        "title": "Document",
+        "description": "We document successful sanitation practices from our model school",
+        "iconType": "book"
+      },
+      {
+        "id": 2,
+        "title": "Share",
+        "description": "We share these practices through our platform and workshops",
+        "iconType": "handshake"
+      },
+      {
+        "id": 3,
+        "title": "Support",
+        "description": "We enable support for schools to implement these practices",
+        "iconType": "check"
+      }
+    ]
+  },
+  "featuredProjects": {
+    "title": "Featured Initiativessss",
+    "subtitle": "OUR SCHOOL PARTNER'S PROJECTS",
+    "description": "Explore our ongoing and completed sanitation projects at our partner school"
+  },
+  "about": {
+    "header": {
+      "title": "About KalinisAralan",
+      "subtitle": "Showcasing Effective School Sanitation Practices"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "KalinisAralan aims to document and share effective school sanitation practices through our partner school, while enabling support mechanisms for other public schools across the Philippines to implement similar systems."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "We envision a network of Philippine public schools implementing effective sanitation practices through knowledge sharing and mutual support, creating healthier learning environments for all students."
+    },
+    "story": {
+      "title": "Our Story",
+      "paragraphs": [
+        "In 2025, KalinisAralan was established as a collaborative project with our partner school, Baliwag North Central School, to document their effective sanitation practices and create a platform that enables both knowledge sharing and support mechanisms for other public schools.",
+        "Through our documentation work and support initiatives, we aim to create a comprehensive digital platform that not only highlights successful practices but also facilitates partnerships and resources to help other schools improve their facilities."
       ]
     },
     "approach": {
-      "overline": "OUR APPROACH",
-      "title": "Creating Model School Sanitation",
-      "description": "KalinisAralan combines documentation of effective sanitation practices with a platform for support, creating a sustainable model that both shares knowledge and enables improvement of facilities across Philippine public schools.",
-      "image": "/images/hand washing.jpg",
-      "imageAlt": "Students using upgraded sanitation facilities",
-      "features": [
-        "Documenting and sharing effective sanitation practices",
-        "Facilitating support for facility improvements",
-        "Creating comprehensive maintenance guides",
-        "Building partnerships for sustainable development",
-        "Enabling knowledge and resource sharing between schools"
-      ]
-    },
-    "process": {
-      "title": "How KalinisAralan Works",
-      "subtitle": "THE PROCESS",
-      "description": "Our initiative improves school sanitation in three simple steps",
-      "steps": [
+      "title": "Our Approach",
+      "strategies": [
         {
-          "id": 1,
-          "title": "Document",
-          "description": "We document successful sanitation practices from our model school",
-          "iconType": "book"
+          "title": "Documentation & Support",
+          "description": "We thoroughly document our partner school's practices while identifying opportunities for support and collaboration between schools to improve sanitation facilities."
         },
         {
-          "id": 2,
-          "title": "Share",
-          "description": "We share these practices through our platform and workshops",
-          "iconType": "handshake"
+          "title": "Digital Platform",
+          "description": "Our platform serves as both a knowledge hub and a connection point, enabling schools to learn from successful practices and access support for implementation."
         },
         {
-          "id": 3,
-          "title": "Support",
-          "description": "We enable support for schools to implement these practices",
-          "iconType": "check"
+          "title": "Community Building",
+          "description": "We facilitate knowledge sharing and support networks between schools, creating a community committed to improving sanitation standards through collaboration."
         }
       ]
     },
-    "featuredProjects": {
-      "title": "Featured Initiativessss",
-      "subtitle": "OUR SCHOOL PARTNER'S PROJECTS",
-      "description": "Explore our ongoing and completed sanitation projects at our partner school"
+    "team": {
+      "title": "Our Team",
+      "description": "Meet the dedicated team behind KalinisAralan's mission to document and share effective school sanitation practices.",
+      "members": [
+        {
+          "name": "Jade Lloyd de Lara",
+          "position": "Full-Stack Developer",
+          "image": "/images/jade.jpg"
+        },
+        {
+          "name": "Sean Kelly Jordan",
+          "position": "Front-End Developer",
+          "image": "/images/sean.png"
+        },
+        {
+          "name": "John Rafael Villacorte",
+          "position": "Back-End Developer",
+          "image": "/images/john.jpg"
+        }
+      ]
+    }
+  },
+  "practices": [
+    {
+      "title": "Regular Cleaning Schedule",
+      "description": "Daily cleaning schedule implemented by the school maintenance staff",
+      "fullDescription": "The school maintains cleanliness through a structured daily schedule: Morning inspection (6:30 AM), After-recess cleanup (10:00 AM), Post-lunch maintenance (1:30 PM), and End-day thorough cleaning (4:30 PM). This systematic approach ensures facilities remain clean throughout the school day.",
+      "category": "Maintenance",
+      "id": "1"
     },
-    "about": {
-      "header": {
-        "title": "About KalinisAralan",
-        "subtitle": "Showcasing Effective School Sanitation Practices"
-      },
-      "mission": {
-        "title": "Our Mission",
-        "description": "KalinisAralan aims to document and share effective school sanitation practices through our partner school, while enabling support mechanisms for other public schools across the Philippines to implement similar systems."
-      },
-      "vision": {
-        "title": "Our Vision",
-        "description": "We envision a network of Philippine public schools implementing effective sanitation practices through knowledge sharing and mutual support, creating healthier learning environments for all students."
-      },
-      "story": {
-        "title": "Our Story",
-        "paragraphs": [
-          "In 2025, KalinisAralan was established as a collaborative project with our partner school, Baliwag North Central School, to document their effective sanitation practices and create a platform that enables both knowledge sharing and support mechanisms for other public schools.",
-          "Through our documentation work and support initiatives, we aim to create a comprehensive digital platform that not only highlights successful practices but also facilitates partnerships and resources to help other schools improve their facilities."
-        ]
-      },
-      "approach": {
-        "title": "Our Approach",
-        "strategies": [
-          {
-            "title": "Documentation & Support",
-            "description": "We thoroughly document our partner school's practices while identifying opportunities for support and collaboration between schools to improve sanitation facilities."
-          },
-          {
-            "title": "Digital Platform",
-            "description": "Our platform serves as both a knowledge hub and a connection point, enabling schools to learn from successful practices and access support for implementation."
-          },
-          {
-            "title": "Community Building",
-            "description": "We facilitate knowledge sharing and support networks between schools, creating a community committed to improving sanitation standards through collaboration."
-          }
-        ]
-      },
-      "team": {
-        "title": "Our Team",
-        "description": "Meet the dedicated team behind KalinisAralan's mission to document and share effective school sanitation practices.",
-        "members": [
-          {
-            "name": "Jade Lloyd de Lara",
-            "position": "Full-Stack Developer",
-            "image": "/images/jade.jpg"
-          },
-          {
-            "name": "Sean Kelly Jordan",
-            "position": "Front-End Developer",
-            "image": "/images/sean.png"
-          },
-          {
-            "name": "John Rafael Villacorte",
-            "position": "Back-End Developer",
-            "image": "/images/john.jpg"
-          }
-        ]
-      }
+    {
+      "id": "3",
+      "title": "Supply Management",
+      "description": "Monthly inventory system for cleaning materials",
+      "fullDescription": "The school maintains a monthly inventory of cleaning supplies including tissue paper, hand soap, and cleaning agents. The admin staff tracks usage patterns and ensures timely restocking. This prevents shortages and maintains consistent facility cleanliness.",
+      "image": "/images/donations.jpg",
+      "category": "Management"
     },
-    "practices": [
-      {
-        "id": 1,
-        "title": "Regular Cleaning Schedule",
-        "description": "Daily cleaning schedule implemented by the school maintenance staff",
-        "fullDescription": "The school maintains cleanliness through a structured daily schedule: Morning inspection (6:30 AM), After-recess cleanup (10:00 AM), Post-lunch maintenance (1:30 PM), and End-day thorough cleaning (4:30 PM). This systematic approach ensures facilities remain clean throughout the school day.",
-        "image": "/images/cleaning.jpg",
-        "category": "Maintenance"
-      },
-      {
-        "id": 2,
-        "title": "Student Cleanliness Program",
-        "description": "Weekly student assignments for basic facility maintenance",
-        "fullDescription": "Each section has assigned cleaning duties on rotation. Students handle basic tasks like keeping the sink areas dry, ensuring proper tissue disposal, and reporting any maintenance issues to teachers. This program builds student responsibility while maintaining facility cleanliness.",
-        "image": "/images/community cleaning.jpg",
-        "category": "Education"
-      },
-      {
-        "id": 3,
-        "title": "Supply Management",
-        "description": "Monthly inventory system for cleaning materials",
-        "fullDescription": "The school maintains a monthly inventory of cleaning supplies including tissue paper, hand soap, and cleaning agents. The admin staff tracks usage patterns and ensures timely restocking. This prevents shortages and maintains consistent facility cleanliness.",
-        "image": "/images/donations.jpg",
-        "category": "Management"
-      },
-      {
-        "id": 4,
-        "title": "Facility Maintenance Checklist",
-        "description": "Daily inspection and maintenance verification system",
-        "fullDescription": "Maintenance staff uses a detailed checklist covering all facility areas: functioning water supply, clean toilet bowls, adequate lighting, proper drainage, and ventilation. Issues are immediately reported to the administration for quick resolution.",
-        "image": "/images/checking water.jpg",
-        "category": "Maintenance"
-      },
-      {
-        "id": 5,
-        "title": "Parent-Teacher Collaboration",
-        "description": "Monthly meetings for facility maintenance planning",
-        "fullDescription": "The PTA actively participates in facility maintenance through monthly meetings where they discuss maintenance needs, contribute to supply procurement, and organize quarterly general cleaning activities involving parents and teachers.",
-        "image": "/images/ptc.jpg",
-        "category": "Community"
-      },
-      {
-        "id": 6,
-        "title": "Basic Repairs System",
-        "description": "Immediate response protocol for minor facility issues",
-        "fullDescription": "The school has a designated maintenance team that handles basic repairs like fixing leaky faucets, unclogging drains, and replacing broken fixtures. This quick-response system prevents small issues from becoming major problems.",
-        "image": "/images/building of station.jpg",
-        "category": "Management"
-      },
-      {
-        "id": 7,
-        "title": "Sanitation Awareness Campaign",
-        "description": "Educational programs promoting hygiene and cleanliness",
-        "fullDescription": "The school conducts monthly workshops and poster campaigns to educate students on proper hygiene practices, including handwashing techniques, waste segregation, and maintaining clean facilities. These initiatives foster a culture of cleanliness among students.",
-        "image": "/images/cleaning hands.jpg",
-        "category": "Education"
-      },
-      {
-        "id": 8,
-        "title": "Community Clean-up Drive",
-        "description": "Quarterly community-wide sanitation activities",
-        "fullDescription": "The school organizes quarterly clean-up drives involving students, teachers, parents, and local community members. These events focus on maintaining both school facilities and surrounding areas, promoting community engagement in sanitation efforts.",
-        "image": "/images/community cleaning.jpg",
-        "category": "Community"
-      },
-      {
-        "id": 9,
-        "title": "National Handwashing Day",
-        "description": "An annual event promoting proper hand hygiene",
-        "fullDescription": "The school conducts activities on National Handwashing Day, including workshops, demonstrations, and competitions to raise awareness about the importance of hand hygiene. This event engages students and parents in learning proper handwashing techniques.",
-        "image": "/images/national handwashing day.jpg",
-        "category": "Education"
-      },
-      {
-        "id": 10,
-        "title": "School Ground Maintenance",
-        "description": "Regular maintenance and beautification of school grounds",
-        "fullDescription": "The school implements a monthly schedule for maintaining school grounds, including landscaping, waste management, and recycling initiatives. This ensures a clean and pleasant environment for students and staff.",
-        "image": "/images/community cleaning 3.jpg",
-        "category": "Maintenance"
-      },
-      {
-        "id": 11,
-        "title": "Waste Management Materials",
-        "description": "Proper checking of waste taking materials",
-        "fullDescription": "Every month the school will check for the materials such as trashcan and trash bins in each rooms and around the school. Those that do not have any will receive their own an placed accordingly for everyone to use.",
-        "image": "/images/trashcan.jpg",
-        "category": "Management"
-      }
-    ],
-    "practiceVideos": [
-      {
-        "id": 1,
-        "title": "WHO: How to handwash?",
-        "description": "Learn the proper handwashing technique recommended by the World Health Organization",
-        "embedUrl": "https://www.youtube.com/embed/3PmVJQUCm4E",
-        "watchUrl": "https://www.youtube.com/watch?v=3PmVJQUCm4E",
-        "thumbnail": "/images/video-thumbnails/handwashing.jpg"
-      },
-      {
-        "id": 2,
-        "title": "UNICEF: Handwashing with Soap – a Lifesaving Act",
-        "description": "Understanding the importance of handwashing in schools and proper techniques",
-        "embedUrl": "https://www.youtube.com/embed/GYFWbwgf-2Q",
-        "watchUrl": "https://www.youtube.com/watch?v=GYFWbwgf-2Q",
-        "thumbnail": "/images/video-thumbnails/handwashing-soap.jpg"
-      },
-      {
-        "id": 3,
-        "title": "Clean Hands Save Lives",
-        "description": "Learn about the five critical times for handwashing in schools",
-        "embedUrl": "https://www.youtube.com/embed/DDjcJ-fSUgg",
-        "watchUrl": "https://www.youtube.com/watch?v=DDjcJ-fSUgg",
-        "thumbnail": "/images/video-thumbnails/clean-hands.jpg"
-      },
-      {
-        "id": 4,
-        "title": "School Sanitation and Hygiene",
-        "description": "Best practices for maintaining clean and hygienic school facilities",
-        "embedUrl": "https://www.youtube.com/embed/JIJB7cv97Dg",
-        "watchUrl": "https://www.youtube.com/watch?v=JIJB7cv97Dg",
-        "thumbnail": "/images/video-thumbnails/school-sanitation.jpg"
-      }
-    ]
-  }
+    {
+      "id": "4",
+      "title": "Facility Maintenance Checklist",
+      "description": "Daily inspection and maintenance verification system",
+      "fullDescription": "Maintenance staff uses a detailed checklist covering all facility areas: functioning water supply, clean toilet bowls, adequate lighting, proper drainage, and ventilation. Issues are immediately reported to the administration for quick resolution.",
+      "image": "/images/checking water.jpg",
+      "category": "Maintenance"
+    },
+    {
+      "id": "5",
+      "title": "Parent-Teacher Collaboration",
+      "description": "Monthly meetings for facility maintenance planning",
+      "fullDescription": "The PTA actively participates in facility maintenance through monthly meetings where they discuss maintenance needs, contribute to supply procurement, and organize quarterly general cleaning activities involving parents and teachers.",
+      "image": "/images/ptc.jpg",
+      "category": "Community"
+    },
+    {
+      "id": "6",
+      "title": "Basic Repairs System",
+      "description": "Immediate response protocol for minor facility issues",
+      "fullDescription": "The school has a designated maintenance team that handles basic repairs like fixing leaky faucets, unclogging drains, and replacing broken fixtures. This quick-response system prevents small issues from becoming major problems.",
+      "image": "/images/building of station.jpg",
+      "category": "Management"
+    },
+    {
+      "id": "7",
+      "title": "Sanitation Awareness Campaign",
+      "description": "Educational programs promoting hygiene and cleanliness",
+      "fullDescription": "The school conducts monthly workshops and poster campaigns to educate students on proper hygiene practices, including handwashing techniques, waste segregation, and maintaining clean facilities. These initiatives foster a culture of cleanliness among students.",
+      "image": "/images/cleaning hands.jpg",
+      "category": "Education"
+    },
+    {
+      "id": "8",
+      "title": "Community Clean-up Drive",
+      "description": "Quarterly community-wide sanitation activities",
+      "fullDescription": "The school organizes quarterly clean-up drives involving students, teachers, parents, and local community members. These events focus on maintaining both school facilities and surrounding areas, promoting community engagement in sanitation efforts.",
+      "image": "/images/community cleaning.jpg",
+      "category": "Community"
+    },
+    {
+      "id": "9",
+      "title": "National Handwashing Day",
+      "description": "An annual event promoting proper hand hygiene",
+      "fullDescription": "The school conducts activities on National Handwashing Day, including workshops, demonstrations, and competitions to raise awareness about the importance of hand hygiene. This event engages students and parents in learning proper handwashing techniques.",
+      "image": "/images/national handwashing day.jpg",
+      "category": "Education"
+    },
+    {
+      "id": "10",
+      "title": "School Ground Maintenance",
+      "description": "Regular maintenance and beautification of school grounds",
+      "fullDescription": "The school implements a monthly schedule for maintaining school grounds, including landscaping, waste management, and recycling initiatives. This ensures a clean and pleasant environment for students and staff.",
+      "image": "/images/community cleaning 3.jpg",
+      "category": "Maintenance"
+    },
+    {
+      "id": "11",
+      "title": "Waste Management Materials",
+      "description": "Proper checking of waste taking materials",
+      "fullDescription": "Every month the school will check for the materials such as trashcan and trash bins in each rooms and around the school. Those that do not have any will receive their own an placed accordingly for everyone to use.",
+      "image": "/images/trashcan.jpg",
+      "category": "Management"
+    },
+    {
+      "id": "07d3",
+      "title": "asdsadsa",
+      "description": "asdasdasdas",
+      "fullDescription": "asdasdasasdasdas",
+      "image": "",
+      "category": "Education"
+    },
+    {
+      "id": "c2a4",
+      "title": "sadasdas",
+      "description": "asdasdsaasdsa",
+      "fullDescription": "asdasdassda",
+      "category": "Management"
+    }
+  ],
+  "practiceVideos": [
+    {
+      "id": "1",
+      "title": "WHO: How to handwash?",
+      "description": "Learn the proper handwashing technique recommended by the World Health Organization",
+      "embedUrl": "https://www.youtube.com/embed/3PmVJQUCm4E",
+      "watchUrl": "https://www.youtube.com/watch?v=3PmVJQUCm4E",
+      "thumbnail": "/images/video-thumbnails/handwashing.jpg"
+    },
+    {
+      "id": "2",
+      "title": "UNICEF: Handwashing with Soap – a Lifesaving Act",
+      "description": "Understanding the importance of handwashing in schools and proper techniques",
+      "embedUrl": "https://www.youtube.com/embed/GYFWbwgf-2Q",
+      "watchUrl": "https://www.youtube.com/watch?v=GYFWbwgf-2Q",
+      "thumbnail": "/images/video-thumbnails/handwashing-soap.jpg"
+    },
+    {
+      "id": "3",
+      "title": "Clean Hands Save Lives",
+      "description": "Learn about the five critical times for handwashing in schools",
+      "embedUrl": "https://www.youtube.com/embed/DDjcJ-fSUgg",
+      "watchUrl": "https://www.youtube.com/watch?v=DDjcJ-fSUgg",
+      "thumbnail": "/images/video-thumbnails/clean-hands.jpg"
+    },
+    {
+      "id": "4",
+      "title": "School Sanitation and Hygiene",
+      "description": "Best practices for maintaining clean and hygienic school facilities",
+      "embedUrl": "https://www.youtube.com/embed/JIJB7cv97Dg",
+      "watchUrl": "https://www.youtube.com/watch?v=JIJB7cv97Dg",
+      "thumbnail": "/images/video-thumbnails/school-sanitation.jpg"
+    }
+  ]
+}

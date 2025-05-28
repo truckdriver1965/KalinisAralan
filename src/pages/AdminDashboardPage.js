@@ -25,6 +25,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
+import CollectionsIcon from '@mui/icons-material/Collections'; // Add this import
 
 function AdminDashboardPage() {
   const { user, logout } = useAuth();
@@ -122,6 +123,13 @@ function AdminDashboardPage() {
                   <VolunteerActivismIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary="Donations" />
+              </ListItem>
+              
+              <ListItem button component={Link} to="/admin/projects">
+                <ListItemIcon>
+                  <CollectionsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Manage Projects" />
               </ListItem>
               
               <Divider />

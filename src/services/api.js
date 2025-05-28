@@ -49,7 +49,10 @@ export const practicesApi = {
   getAll: () => api.get('/practices'),
   getVideos: () => api.get('/practiceVideos'),
   getByCategory: (category) => api.get(`/practices?category=${category}`),
-  getById: (id) => api.get(`/practices/${id}`)
+  getById: (id) => api.get(`/practices/${id}`),
+  create: (data) => api.post('/practices', data),
+  update: (id, data) => api.put(`/practices/${id}`, data),
+  delete: (id) => api.delete(`/practices/${id}`)
 };
 
 export default {
