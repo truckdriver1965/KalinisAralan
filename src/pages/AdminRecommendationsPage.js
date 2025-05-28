@@ -35,7 +35,6 @@ import {
   FilterList as FilterListIcon
 } from '@mui/icons-material';
 import axios from 'axios';
-import { Edit as EditIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 function AdminRecommendationsPage() {
@@ -49,15 +48,6 @@ function AdminRecommendationsPage() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [statusFilter, setStatusFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
-  // Add these state declarations
-  const [openEditDialog, setOpenEditDialog] = useState(false);
-  const [editFormData, setEditFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    phone: ''
-  });
   const [stats, setStats] = useState({
     total: 0,
     pending: 0,
@@ -65,88 +55,17 @@ function AdminRecommendationsPage() {
     rejected: 0
   });
 
-  // Add the handler functions right after the state declarations
-  const handleEditFormChange = (event) => {
-    const { name, value } = event.target;
-    setEditFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleOpenEditDialog = (recommendation) => {
-    setSelectedRecommendation(recommendation);
-    setEditFormData({
-      name: recommendation.name || '',
-      email: recommendation.email || '',
-      subject: recommendation.subject || recommendation.category || '',
-      message: recommendation.message || recommendation.recommendation || '',
-      phone: recommendation.phone || ''
-    });
-    setOpenEditDialog(true);
-  };
-
-  const handleCloseEditDialog = () => {
-    setOpenEditDialog(false);
-  };
-
-  const handleEdit = async () => {
-    try {
-      const id = selectedRecommendation._id || selectedRecommendation.id;
-      const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
-      const token = localStorage.getItem('token');
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      
-      const endpoints = [
-        `${baseURL}/api/contact/${id}`,
-        `${baseURL}/api/recommendations/${id}`,
-        `${baseURL}/api/contacts/${id}`
-      ];
-      
-      let success = false;
-      
-      for (const endpoint of endpoints) {
-        try {
-          const response = await axios.put(endpoint, editFormData, { headers });
-          console.log('Edit response:', response.data);
-          success = true;
-          break;
-        } catch (err) {
-          console.error(`Error editing at ${endpoint}:`, err);
-        }
-      }
-      
-      if (!success) {
-        throw new Error('All edit endpoints failed');
-      }
-      
-      setOpenEditDialog(false);
-      fetchRecommendations();
-      setError(null);
-    } catch (err) {
-      console.error('Error editing recommendation:', err);
-      let errorMessage = 'Failed to edit recommendation. Please try again.';
-      if (err.response?.data?.message) {
-        errorMessage = err.response.data.message;
-      }
-      setError(errorMessage);
-      setOpenEditDialog(false);
-    }
-  };
-
   // Fetch recommendations from the backend with fallback
   const fetchRecommendations = async () => {
     setLoading(true);
     let tried = false;
     
-    // Get the base URL from localStorage or use default
     const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
     
     const tryFetch = async (endpoint) => {
       try {
         console.log(`Trying to fetch from: ${endpoint}`);
         
-        // Get auth token if available
         const token = localStorage.getItem('token');
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         
@@ -157,13 +76,11 @@ function AdminRecommendationsPage() {
           throw new Error('Empty response received');
         }
         
-        // Handle both array responses and responses with a data property
         const responseData = Array.isArray(response.data) ? response.data : 
                             (response.data.data && Array.isArray(response.data.data)) ? response.data.data : [];
         
         setRecommendations(responseData);
         
-        // Calculate stats
         const total = responseData.length;
         const pending = responseData.filter(item => item.status === 'pending' || !item.status).length;
         const approved = responseData.filter(item => item.status === 'approved').length;
@@ -178,7 +95,6 @@ function AdminRecommendationsPage() {
       }
     };
     
-    // Try multiple endpoints with different URL patterns
     const endpoints = [
       `${baseURL}/api/contact`,
       `${baseURL}/api/recommendations`,
@@ -194,7 +110,6 @@ function AdminRecommendationsPage() {
       }
     }
     
-    // If all endpoints fail, try without the base URL (relative paths)
     const relativeEndpoints = [
       '/api/contact',
       '/api/recommendations',
@@ -209,7 +124,6 @@ function AdminRecommendationsPage() {
       }
     }
     
-    // If all attempts fail
     setError('Failed to load recommendations. Please check your network connection and ensure the backend server is running.');
     setLoading(false);
   };
@@ -223,14 +137,11 @@ function AdminRecommendationsPage() {
     try {
       console.log(`Updating recommendation ${id} to status: ${newStatus}`);
       
-      // Get the base URL from localStorage or use default
       const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
       
-      // Get auth token if available
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
-      // Try multiple endpoint patterns
       const endpoints = [
         `${baseURL}/api/contact/${id}`,
         `${baseURL}/api/recommendations/${id}`,
@@ -249,7 +160,6 @@ function AdminRecommendationsPage() {
           break;
         } catch (err) {
           console.error(`Error updating at ${endpoint}:`, err);
-          // Continue to next endpoint
         }
       }
       
@@ -276,14 +186,11 @@ function AdminRecommendationsPage() {
       const id = selectedRecommendation._id || selectedRecommendation.id;
       console.log('Deleting recommendation:', id);
       
-      // Get the base URL from localStorage or use default
       const baseURL = localStorage.getItem('apiBaseURL') || 'http://localhost:5000';
       
-      // Get auth token if available
       const token = localStorage.getItem('token');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       
-      // Try multiple endpoint patterns
       const endpoints = [
         `${baseURL}/api/contact/${id}`,
         `${baseURL}/api/recommendations/${id}`,
@@ -300,7 +207,6 @@ function AdminRecommendationsPage() {
           break;
         } catch (err) {
           console.error(`Error deleting at ${endpoint}:`, err);
-          // Continue to next endpoint
         }
       }
       
@@ -322,7 +228,7 @@ function AdminRecommendationsPage() {
     }
   };
 
-  // Filter recommendations based on selected filters - updated to handle contact form fields
+  // Filter recommendations based on selected filters
   const filteredRecommendations = recommendations.filter(item => {
     const itemStatus = item.status || 'pending'; // Default to pending if status is not set
     const matchesStatus = statusFilter === 'all' || itemStatus === statusFilter;
@@ -330,7 +236,7 @@ function AdminRecommendationsPage() {
     return matchesStatus && matchesCategory;
   });
 
-  // Get unique categories for filter dropdown - updated to use subject field
+  // Get unique categories for filter dropdown
   const categories = ['all', ...new Set(recommendations.map(item => item.subject).filter(Boolean))];
 
   // Handle pagination
@@ -555,14 +461,6 @@ function AdminRecommendationsPage() {
                             >
                               <VisibilityIcon />
                             </IconButton>
-                            {/* Add the Edit button here */}
-                            <IconButton 
-                              color="primary" 
-                              onClick={() => handleOpenEditDialog(recommendation)}
-                              size="small"
-                            >
-                              <EditIcon />
-                            </IconButton>
                             {(status === 'pending') && (
                               <>
                                 <IconButton 
@@ -708,67 +606,6 @@ function AdminRecommendationsPage() {
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
           <Button onClick={handleDelete} color="error">Delete</Button>
-        </DialogActions>
-      </Dialog>
-      
-      {/* Edit Dialog - Move this inside the return statement */}
-      <Dialog open={openEditDialog} onClose={handleCloseEditDialog} maxWidth="md" fullWidth>
-        <DialogTitle>Edit Recommendation</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2} sx={{ mt: 1 }}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Name"
-                name="name"
-                value={editFormData.name}
-                onChange={handleEditFormChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                type="email"
-                value={editFormData.email}
-                onChange={handleEditFormChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Subject"
-                name="subject"
-                value={editFormData.subject}
-                onChange={handleEditFormChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Phone"
-                name="phone"
-                value={editFormData.phone}
-                onChange={handleEditFormChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Message"
-                name="message"
-                multiline
-                rows={4}
-                value={editFormData.message}
-                onChange={handleEditFormChange}
-              />
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseEditDialog}>Cancel</Button>
-          <Button onClick={handleEdit} color="primary" variant="contained">Save Changes</Button>
         </DialogActions>
       </Dialog>
     </Container>
