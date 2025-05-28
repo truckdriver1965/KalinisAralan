@@ -14,11 +14,6 @@ import {
   Paper
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import SendIcon from '@mui/icons-material/Send';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -44,12 +39,6 @@ function Footer() {
         { name: 'Recommendations', path: '/contact' },
       ]
     }
-  ];
-
-  const socialLinks = [
-    { icon: <FacebookIcon />, url: 'https://facebook.com' },
-    { icon: <TwitterIcon />, url: 'https://twitter.com' },
-    { icon: <InstagramIcon />, url: 'https://instagram.com' },
   ];
 
   return (
@@ -98,28 +87,7 @@ function Footer() {
                 </Typography>
               </Box>
             </Box>
-            
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              {socialLinks.map((social, index) => (
-                <IconButton 
-                  key={index} 
-                  component="a" 
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  sx={{ 
-                    color: 'rgba(255,255,255,0.7)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      color: theme.palette.primary.main,
-                      transform: 'translateY(-3px)',
-                    }
-                  }}
-                >
-                  {social.icon}
-                </IconButton>
-              ))}
-            </Box>
+
           </Grid>
           
           {/* Quick Links */}
@@ -188,14 +156,6 @@ function Footer() {
           <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.5)', textAlign: { xs: 'center', sm: 'left' } }}>
             © {currentYear} KalinisAralan Foundation. All rights reserved.
           </Typography>
-          <Box sx={{ display: 'flex', gap: 3, mt: { xs: 2, sm: 0 } }}>
-            <Link href="/privacy" sx={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', '&:hover': { color: theme.palette.primary.main } }}>
-              Privacy Policy
-            </Link>
-            <Link href="/terms" sx={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', '&:hover': { color: theme.palette.primary.main } }}>
-              Terms of Service
-            </Link>
-          </Box>
         </Box>
       </Container>
     </Box>
