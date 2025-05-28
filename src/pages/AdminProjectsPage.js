@@ -358,6 +358,7 @@ function AdminProjectsPage() {
     }
   };
 
+
   const filteredPractices = practices.filter(practice => {
     return categoryFilter === 'all' || practice.category === categoryFilter;
   });
