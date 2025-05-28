@@ -72,31 +72,7 @@
     }
 
   },
-  {
-    "id": "1747797593593",
-    "timestamp": "2025-05-21T03:19:53.570Z",
-    "status": "completed",
-    "amount": "20500",
-    "donor": {
-      "firstName": "Mara ",
-      "lastName": "Cervantes",
-      "email": "mararoselycervantes@gmail.com",
-      "phone": "09151492704",
-      "address": "7-Eleven ALMANZA 0997",
-      "city": "Las Pinas City",
-      "country": "Philippines",
-      "postalCode": "1100"
-    },
-    "paymentMethod": "creditCard",
-    "paymentDetails": {
-      "cardNumber": "0910912091209123093093209230923",
-      "expiryDate": "1027",
-      "cvv": "222",
-      "gcashNumber": "",
-      "gcashName": "",
-      "referenceNumber": ""
-    }
-  },
+
   {
     "id": "1747807514123",
     "timestamp": "2025-05-21T06:05:14.101Z",

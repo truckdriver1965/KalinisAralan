@@ -13,7 +13,8 @@ import {
   ListItemText,
   useMediaQuery,
   useTheme,
-  Tooltip
+  Tooltip,
+  Chip
 } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -25,7 +26,7 @@ function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
   const navItems = [
@@ -72,6 +73,21 @@ function Header() {
           >
             KalinisAralan
           </Typography>
+
+          {/* Add admin indicator */}
+          {isAuthenticated && user && (
+            <Chip
+              label={`Welcome, ${user.username}`}
+              color="primary"
+              size="small"
+              sx={{ 
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                backgroundColor: 'primary.main',
+                color: 'white'
+              }}
+            />
+          )}
 
           {isMobile ? (
             <>

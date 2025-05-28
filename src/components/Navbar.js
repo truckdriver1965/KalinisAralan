@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import { useAuth } from '../contexts/AuthContext';
 
 const pages = [
   { title: 'Home', path: '/' },
@@ -29,6 +30,7 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { isAuthenticated, user } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -60,6 +62,20 @@ function Navbar() {
           >
             KalinisAralan
           </Typography>
+
+          {/* Add admin welcome message */}
+          {isAuthenticated && user && (
+            <Typography
+              variant="subtitle1"
+              sx={{
+                ml: 2,
+                color: 'inherit',
+                display: { xs: 'none', md: 'flex' }
+              }}
+            >
+              Welcome, {user.username}
+            </Typography>
+          )}
 
           {/* Mobile menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

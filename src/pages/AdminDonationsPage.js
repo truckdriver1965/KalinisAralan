@@ -164,7 +164,10 @@ function AdminDonationsPage() {
   
   // Calculate stats
   const totalDonations = donations.length;
-  const totalAmount = donations.reduce((sum, donation) => sum + Number(donation.amount), 0);
+  const totalAmount = donations.reduce((sum, donation) => {
+    const amount = parseFloat(donation.amount) || 0;
+    return sum + amount;
+  }, 0);
   const pendingDonations = donations.filter(d => d.status === 'pending').length;
   
   // Handle pagination
@@ -211,7 +214,6 @@ function AdminDonationsPage() {
     setSnackbar({ ...snackbar, open: false });
   };
   
-  // Update the table columns in the render section
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -319,15 +321,18 @@ function AdminDonationsPage() {
                   {filteredDonations
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((donation) => (
-                      // Update the table row in the TableBody section
                       <TableRow key={donation.id}>
                         <TableCell>{formatDate(donation.timestamp)}</TableCell>
-                        <TableCell>{`${donation.donor.firstName} ${donation.donor.lastName}`}</TableCell>
+                        <TableCell>
+                          {donation.donor 
+                            ? `${donation.donor.firstName} ${donation.donor.lastName}`
+                            : donation.name}
+                        </TableCell>
                         <TableCell>{formatCurrency(donation.amount)}</TableCell>
                         <TableCell>{donation.paymentMethod}</TableCell>
                         <TableCell>
                           <Chip 
-                            label={donation.status.charAt(0).toUpperCase() + donation.status.slice(1)} 
+                            label={donation.status ? (donation.status.charAt(0).toUpperCase() + donation.status.slice(1)) : 'Unknown'} 
                             color={donation.status === 'completed' ? 'success' : donation.status === 'pending' ? 'warning' : 'error'}
                             size="small"
                           />
@@ -360,26 +365,9 @@ function AdminDonationsPage() {
                               </IconButton>
                             </>
                           )}
-                          <IconButton 
-                            color="error" 
-                            onClick={() => handleOpenDeleteDialog(donation)}
-                            size="small"
-                            title="Delete"
-                          >
-                            <DeleteIcon />
-                          </IconButton>
                         </TableCell>
                       </TableRow>
                     ))}
-                  {filteredDonations.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={6} align="center">
-                        <Typography variant="body1" sx={{ py: 2 }}>
-                          No donations found
-                        </Typography>
-                      </TableCell>
-                    </TableRow>
-                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -395,77 +383,74 @@ function AdminDonationsPage() {
           </>
         )}
       </Paper>
-      
-      {/* View Donation Dialog */}
-      <Dialog open={openViewDialog} onClose={handleCloseViewDialog} maxWidth="md" fullWidth>
-        {selectedDonation && (
-          <>
-            <DialogTitle>Donation Details</DialogTitle>
-            <DialogContent>
-              <Box sx={{ pt: 2 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle2" color="text.secondary">Donor Information</Typography>
-                    <Typography variant="body1">
-                      {`${selectedDonation.donor.firstName} ${selectedDonation.donor.lastName}`}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Email: {selectedDonation.donor.email}<br />
-                      Phone: {selectedDonation.donor.phone || 'Not provided'}<br />
-                      Address: {selectedDonation.donor.address}, {selectedDonation.donor.city}, {selectedDonation.donor.country} {selectedDonation.donor.postalCode}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2">Date</Typography>
-                    <Typography variant="body1">{formatDate(selectedDonation.timestamp)}</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2">Amount</Typography>
-                    <Typography variant="body1" fontWeight="bold" color="success.main">
-                      {formatCurrency(selectedDonation.amount)}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2">Payment Method</Typography>
-                    <Typography variant="body1">
-                      {selectedDonation.paymentMethod}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle2">Message</Typography>
-                    <Typography variant="body1">
-                      {selectedDonation.message || 'No message provided'}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Box>
-            </DialogContent>
-          </>
-        )}
+
+      {/* View Dialog */}
+      <Dialog open={openViewDialog} onClose={handleCloseViewDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>Donation Details</DialogTitle>
+        <DialogContent>
+          {selectedDonation && (
+            <Box sx={{ pt: 2 }}>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Date:</strong> {formatDate(selectedDonation.timestamp)}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Donor:</strong> {selectedDonation.donor 
+                  ? `${selectedDonation.donor.firstName} ${selectedDonation.donor.lastName}`
+                  : selectedDonation.name}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Email:</strong> {selectedDonation.email}
+              </Typography>
+              {selectedDonation.phone && (
+                <Typography variant="body1" sx={{ mb: 1 }}>
+                  <strong>Phone:</strong> {selectedDonation.phone}
+                </Typography>
+              )}
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Amount:</strong> {formatCurrency(selectedDonation.amount)}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Payment Method:</strong> {selectedDonation.paymentMethod}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 1 }}>
+                <strong>Status:</strong> {selectedDonation.status}
+              </Typography>
+              {selectedDonation.message && (
+                <Typography variant="body1" sx={{ mb: 1 }}>
+                  <strong>Message:</strong> {selectedDonation.message}
+                </Typography>
+              )}
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseViewDialog}>Close</Button>
+        </DialogActions>
       </Dialog>
-      
+
       {/* Delete Confirmation Dialog */}
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete this donation record from {selectedDonation?.name}? This action cannot be undone.
+            Are you sure you want to delete this donation record? This action cannot be undone.
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDeleteDialog}>Cancel</Button>
-          <Button onClick={handleDelete} color="error">Delete</Button>
+          <Button onClick={handleDelete} color="error" variant="contained">
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
-      
+
       {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Alert onClose={handleSnackbarClose} severity={snackbar.severity} sx={{ width: '100%' }}>
+        <Alert onClose={handleSnackbarClose} severity={snackbar.severity}>
           {snackbar.message}
         </Alert>
       </Snackbar>

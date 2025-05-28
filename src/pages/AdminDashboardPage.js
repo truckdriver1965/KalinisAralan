@@ -187,40 +187,6 @@ function AdminDashboardPage() {
               </Card>
             </Grid>
           </Grid>
-          
-          <Card>
-            <CardContent>
-              <Typography variant="h5" gutterBottom>
-                Quick Actions
-              </Typography>
-              <Grid container spacing={2} sx={{ mt: 1 }}>
-                <Grid item xs={12} sm={6}>
-                  <Button 
-                    variant="outlined" 
-                    color="primary" 
-                    fullWidth 
-                    component={Link} 
-                    to="/admin/recommendations"
-                    sx={{ py: 1.5 }}
-                  >
-                    Manage Recommendations
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Button 
-                    variant="outlined" 
-                    color="secondary" 
-                    fullWidth 
-                    component={Link} 
-                    to="/admin/donations"
-                    sx={{ py: 1.5 }}
-                  >
-                    Manage Donations
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
         </Grid>
       </Grid>
 
