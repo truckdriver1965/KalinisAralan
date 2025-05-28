@@ -127,7 +127,7 @@ function AdminDashboardPage() {
               
               <ListItem button component={Link} to="/admin/projects">
                 <ListItemIcon>
-                  <CollectionsIcon />
+                  <CollectionsIcon color="primary"  />
                 </ListItemIcon>
                 <ListItemText primary="Manage Projects" />
               </ListItem>

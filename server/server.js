@@ -347,4 +347,3 @@ app.get('/api/all-recommendations', (req, res) => {
     res.status(500).json({ message: 'Error fetching combined recommendations' });
   }
 });
-

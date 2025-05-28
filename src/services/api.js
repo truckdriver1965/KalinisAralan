@@ -22,12 +22,10 @@ export const donationsApi = {
   getStats: () => api.get('/donations/stats')
 };
 
-// Contact form API
 export const contactApi = {
   sendMessage: (data) => api.post('/contact', data)
 };
 
-// Testimonials API
 export const testimonialsApi = {
   getAll: () => api.get('/testimonials'),
   getById: (id) => api.get(`/testimonials/${id}`)
@@ -59,5 +57,8 @@ export default {
   projectsApi,
   donationsApi,
   contactApi,
-  testimonialsApi
+  testimonialsApi,
+  homeApi,
+  aboutApi,
+  practicesApi
 };

@@ -1,16 +1,5 @@
 [
   {
-    "_id": "1747622510141",
-    "createdAt": "2025-05-19T02:41:50.141Z",
-    "status": "approved",
-    "name": "JADE LLOYD N DE LARA",
-    "email": "jadedelara25@gmail.com",
-    "phone": "09668559513",
-    "subject": "Sanitation Systems",
-    "message": "hehe sample ",
-    "relation": "Teacher"
-  },
-  {
     "_id": "1747711296403",
     "createdAt": "2025-05-20T03:21:36.403Z",
     "status": "rejected",
@@ -46,7 +35,7 @@
   {
     "_id": "1747812642538",
     "createdAt": "2025-05-21T07:30:42.538Z",
-    "status": "pending",
+    "status": "approved",
     "name": "Sean Kelly",
     "email": "seankelly@gmail.com",
     "phone": "09987654321",

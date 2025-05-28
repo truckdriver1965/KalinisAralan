@@ -50,36 +50,28 @@ const ImageUpload = ({ onImageSelect, currentImage, disabled = false }) => {
   const handleFileSelect = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
-    // Validate file type
+  
     if (!file.type.startsWith('image/')) {
       alert('Please select an image file');
       return;
     }
-
-    // Validate file size (5MB max)
+  
     if (file.size > 5 * 1024 * 1024) {
       alert('Image size should be less than 5MB');
       return;
     }
-
+  
     setUploading(true);
-    
-    try {
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e) => setPreview(e.target.result);
-      reader.readAsDataURL(file);
-
-      // Pass the file back to parent
-      onImageSelect(file, preview);
-      
-    } catch (error) {
-      console.error('Error processing image:', error);
-      alert('Failed to process image');
-    } finally {
-      setUploading(false);
-    }
+  
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target.result;
+      setPreview(base64);
+      onImageSelect(base64, base64); // <- base64 as image
+    };
+    reader.readAsDataURL(file);
+  
+    setUploading(false);
   };
 
   const handleRemoveImage = () => {
@@ -231,37 +223,23 @@ function AdminProjectsPage() {
 
   const handleAdd = async () => {
     if (submitLoading) return;
-    
+  
     setSubmitLoading(true);
     setError(null);
-    
+  
     try {
-      if (addFormData.image) {
-        // Create FormData for image upload
-        const formData = new FormData();
-        formData.append('title', addFormData.title);
-        formData.append('description', addFormData.description);
-        formData.append('fullDescription', addFormData.fullDescription);
-        formData.append('category', addFormData.category);
-        formData.append('image', addFormData.image);
-
-        await practicesApi.createWithImage(formData);
-      } else {
-        // Create without image
-        const data = {
-          title: addFormData.title,
-          description: addFormData.description,
-          fullDescription: addFormData.fullDescription,
-          category: addFormData.category
-        };
-        
-        await practicesApi.create(data);
-      }
-
+      const data = {
+        title: addFormData.title,
+        description: addFormData.description,
+        fullDescription: addFormData.fullDescription,
+        category: addFormData.category,
+        image: addFormData.image  // this is now base64
+      };
+  
+      await practicesApi.create(data);
+  
       await fetchPractices();
       setOpenAddDialog(false);
-      
-      // Reset form
       setAddFormData({
         title: '',
         description: '',
@@ -270,7 +248,7 @@ function AdminProjectsPage() {
         imagePreview: null,
         category: ''
       });
-      
+  
     } catch (err) {
       console.error('Error adding practice:', err);
       const errorMessage = err.response?.data?.message || err.message || 'Failed to add practice. Please try again.';
@@ -299,45 +277,33 @@ function AdminProjectsPage() {
   };
 
   const handleEdit = async () => {
-    if (submitLoading) return;
-    
-    setSubmitLoading(true);
-    setError(null);
-    
-    try {
-      if (editFormData.image) {
-        // Update with new image
-        const formData = new FormData();
-        formData.append('title', editFormData.title);
-        formData.append('description', editFormData.description);
-        formData.append('fullDescription', editFormData.fullDescription);
-        formData.append('category', editFormData.category);
-        formData.append('image', editFormData.image);
+  if (submitLoading) return;
 
-        await practicesApi.updateWithImage(selectedPractice.id, formData);
-      } else {
-        // Update without new image
-        const data = {
-          title: editFormData.title,
-          description: editFormData.description,
-          fullDescription: editFormData.fullDescription,
-          category: editFormData.category
-        };
-        
-        await practicesApi.update(selectedPractice.id, data);
-      }
+  setSubmitLoading(true);
+  setError(null);
 
-      await fetchPractices();
-      setOpenEditDialog(false);
-      
-    } catch (err) {
-      console.error('Error editing practice:', err);
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to edit practice. Please try again.';
-      setError(errorMessage);
-    } finally {
-      setSubmitLoading(false);
-    }
-  };
+  try {
+    const data = {
+      title: editFormData.title,
+      description: editFormData.description,
+      fullDescription: editFormData.fullDescription,
+      category: editFormData.category,
+      image: editFormData.image // now base64
+    };
+
+    await practicesApi.update(selectedPractice.id, data);
+
+    await fetchPractices();
+    setOpenEditDialog(false);
+
+  } catch (err) {
+    console.error('Error editing practice:', err);
+    const errorMessage = err.response?.data?.message || err.message || 'Failed to edit practice. Please try again.';
+    setError(errorMessage);
+  } finally {
+    setSubmitLoading(false);
+  }
+};
 
   const fetchPractices = async () => {
     setLoading(true);
@@ -348,7 +314,6 @@ function AdminProjectsPage() {
       const practicesData = response.data || [];
       setPractices(practicesData);
       
-      // Calculate stats
       const total = practicesData.length;
       const maintenance = practicesData.filter(item => item.category === 'Maintenance').length;
       const education = practicesData.filter(item => item.category === 'Education').length;
@@ -393,7 +358,6 @@ function AdminProjectsPage() {
     }
   };
 
-  // Filter practices based on selected category
   const filteredPractices = practices.filter(practice => {
     return categoryFilter === 'all' || practice.category === categoryFilter;
   });
@@ -411,7 +375,7 @@ function AdminProjectsPage() {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Manage Practices
+          Manage Projects
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
@@ -629,7 +593,7 @@ function AdminProjectsPage() {
         {selectedPractice && (
           <>
             <DialogTitle>
-              Practice Details
+              Project Details
               <Chip 
                 label={selectedPractice.category}
                 color="primary"
@@ -688,7 +652,7 @@ function AdminProjectsPage() {
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this practice? This action cannot be undone.
+            Are you sure you want to delete this project? This action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -699,7 +663,7 @@ function AdminProjectsPage() {
       
       {/* Edit Dialog */}
       <Dialog open={openEditDialog} onClose={handleCloseEditDialog} maxWidth="md" fullWidth>
-        <DialogTitle>Edit Practice</DialogTitle>
+        <DialogTitle>Edit Project</DialogTitle>
         <DialogContent>
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
@@ -785,7 +749,7 @@ function AdminProjectsPage() {
 
       {/* Add Dialog */}
       <Dialog open={openAddDialog} onClose={handleCloseAddDialog} maxWidth="md" fullWidth>
-        <DialogTitle>Add New Practice</DialogTitle>
+        <DialogTitle>Add New Project</DialogTitle>
         <DialogContent>
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
