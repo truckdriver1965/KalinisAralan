@@ -14,20 +14,24 @@ import {
   useMediaQuery,
   useTheme,
   Tooltip,
-  Chip
+  Chip,
+  Menu,
+  MenuItem,
 } from '@mui/material';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-import LockIcon from '@mui/icons-material/Lock';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import { useAuth } from '../contexts/AuthContext';
 
 function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorElAdminMenu, setAnchorElAdminMenu] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -49,6 +53,26 @@ function Header() {
       return;
     }
     setDrawerOpen(open);
+  };
+
+  // Admin menu handlers
+  const handleAdminMenuOpen = (event) => {
+    setAnchorElAdminMenu(event.currentTarget);
+  };
+
+  const handleAdminMenuClose = () => {
+    setAnchorElAdminMenu(null);
+  };
+
+  const handleAdminLoginClick = () => {
+    handleAdminMenuClose();
+    navigate('/admin/login');
+  };
+
+  const handleAdminLogoutClick = () => {
+    handleAdminMenuClose();
+    logout(); // Assuming logout function is provided by useAuth
+    navigate('/');
   };
 
   return (
@@ -153,22 +177,63 @@ function Header() {
             </Box>
           )}
 
+          {/* Admin Dashboard button for authenticated users */}
+          {isAuthenticated && (
+            <Button
+              component={RouterLink}
+              to="/admin"
+              variant="outlined"
+              color="primary"
+              sx={{ mx: 1 }}
+            >
+              Dashboard
+            </Button>
+          )}
+
+          {/* Admin Login/Logout icon button with hover menu */}
           {!isMobile && (
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Admin Login">
+              <Tooltip title={isAuthenticated ? 'Logout' : 'Login'}>
                 <IconButton 
                   color="primary" 
-                  component={RouterLink} 
-                  to="/admin/login"
+                  onClick={handleAdminMenuOpen}
                   size="small"
                   sx={{
                     opacity: isActive('/admin') ? 1 : 0.7,
                     bgcolor: isActive('/admin') ? 'primary.light' : 'transparent'
                   }}
+                  aria-controls={Boolean(anchorElAdminMenu) ? 'admin-login-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={Boolean(anchorElAdminMenu) ? 'true' : undefined}
                 >
-                  <LockIcon fontSize="small" />
+                  <AdminPanelSettingsIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
+
+              <Menu
+                id="admin-login-menu"
+                anchorEl={anchorElAdminMenu}
+                open={Boolean(anchorElAdminMenu)}
+                onClose={handleAdminMenuClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+              >
+                {!isAuthenticated && (
+                  <MenuItem onClick={handleAdminLoginClick}>Login</MenuItem>
+                )}
+                {isAuthenticated && (
+                  <MenuItem onClick={handleAdminLogoutClick} sx={{ color: 'error.main' }}>
+                    Logout
+                  </MenuItem>
+                )}
+              </Menu>
             </Box>
           )}
         </Toolbar>
@@ -178,3 +243,4 @@ function Header() {
 }
 
 export default Header;
+

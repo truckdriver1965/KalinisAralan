@@ -12,9 +12,13 @@ import {
   MenuItem,
   useMediaQuery,
   useTheme,
+  Tooltip,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import LoginIcon from '@mui/icons-material/Login';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { useAuth } from '../contexts/AuthContext';
 
 const pages = [
@@ -44,6 +48,7 @@ function Navbar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Desktop WaterDrop Logo */}
           <WaterDropIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -63,25 +68,25 @@ function Navbar() {
             KalinisAralan
           </Typography>
 
-          {/* Add admin welcome message */}
+          {/* Desktop welcome message */}
           {isAuthenticated && user && (
             <Typography
               variant="subtitle1"
               sx={{
                 ml: 2,
                 color: 'inherit',
-                display: { xs: 'none', md: 'flex' }
+                display: { xs: 'none', md: 'flex' },
               }}
             >
               Welcome, {user.username}
             </Typography>
           )}
 
-          {/* Mobile menu */}
+          {/* Mobile menu button */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="menu"
+              aria-label="open navigation menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -108,8 +113,8 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem 
-                  key={page.title} 
+                <MenuItem
+                  key={page.title}
                   onClick={handleCloseNavMenu}
                   component={RouterLink}
                   to={page.path}
@@ -117,6 +122,15 @@ function Navbar() {
                   <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
+              {isAuthenticated && (
+                <MenuItem
+                  onClick={handleCloseNavMenu}
+                  component={RouterLink}
+                  to="/admin/dashboard"
+                >
+                  <Typography textAlign="center">Dashboard</Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 
@@ -141,8 +155,16 @@ function Navbar() {
             KalinisAralan
           </Typography>
 
-          {/* Desktop menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
+          {/* Desktop menu and admin buttons */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+            }}
+          >
+            {/* Main pages */}
             {pages.map((page) => (
               <Button
                 key={page.title}
@@ -154,6 +176,34 @@ function Navbar() {
                 {page.title}
               </Button>
             ))}
+
+            {/* Dashboard button (visible to authenticated only) */}
+            {isAuthenticated && (
+              <Button
+                component={RouterLink}
+                to="/admin/dashboard"
+                startIcon={<DashboardIcon />}
+                variant="outlined"
+                color="inherit"
+                sx={{ my: 2, ml: 2, borderColor: 'white' }}
+              >
+                Dashboard
+              </Button>
+            )}
+
+            {/* Admin login / dashboard button */}
+            <Tooltip title={isAuthenticated ? 'Go to Dashboard' : 'Admin Login'}>
+              <Button
+                component={RouterLink}
+                to={isAuthenticated ? '/admin/dashboard' : '/admin/login'}
+                variant="contained"
+                color={isAuthenticated ? 'secondary' : 'primary'}
+                startIcon={<AdminPanelSettingsIcon />}
+                sx={{ my: 2, ml: 2, textTransform: 'none', fontWeight: 'bold' }}
+              >
+                {isAuthenticated ? 'Dashboard' : 'Admin Login'}
+              </Button>
+            </Tooltip>
           </Box>
         </Toolbar>
       </Container>
@@ -162,3 +212,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
