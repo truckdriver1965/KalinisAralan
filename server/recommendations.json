@@ -54,5 +54,15 @@
     "category": "Educational Resources",
     "message": "I recommend adding more projects and events for science related subjects to further enhance the knowledge of the students.",
     "phone": "09196206262"
+  },
+  {
+    "id": "1747812642538",
+    "timestamp": "2025-05-21T07:30:42.538Z",
+    "status": "pending",
+    "name": "Sean Kelly",
+    "email": "seankelly@gmail.com",
+    "category": "Other",
+    "message": "We need supplies",
+    "phone": "09987654321"
   }
 ]

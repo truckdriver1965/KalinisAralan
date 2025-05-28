@@ -13,7 +13,7 @@
   {
     "_id": "1747711296403",
     "createdAt": "2025-05-20T03:21:36.403Z",
-    "status": "pending",
+    "status": "rejected",
     "name": "Leigh De Lara",
     "email": "randy_mgb@yahoo.com",
     "phone": "09151492704",
@@ -24,7 +24,7 @@
   {
     "_id": "1747807560777",
     "createdAt": "2025-05-21T06:06:00.777Z",
-    "status": "pending",
+    "status": "approved",
     "name": "Rafael Villacorte",
     "email": "villacorterafael@gmail.com",
     "phone": "09196206262",
@@ -42,5 +42,16 @@
     "subject": "Educational Resources",
     "message": "I recommend adding more projects and events for science related subjects to further enhance the knowledge of the students.",
     "relation": "Teacher"
+  },
+  {
+    "_id": "1747812642538",
+    "createdAt": "2025-05-21T07:30:42.538Z",
+    "status": "pending",
+    "name": "Sean Kelly",
+    "email": "seankelly@gmail.com",
+    "phone": "09987654321",
+    "subject": "Other",
+    "message": "We need supplies",
+    "relation": "Other"
   }
 ]

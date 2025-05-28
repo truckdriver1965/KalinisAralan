@@ -12,6 +12,10 @@ import {
   Alert,
   useTheme,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
@@ -27,6 +31,8 @@ function ProjectsPage() {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,6 +71,16 @@ function ProjectsPage() {
     setCurrentVideoIndex((prevIndex) => 
       prevIndex === 0 ? videos.length - 1 : prevIndex - 1
     );
+  };
+
+  const handleOpenDialog = (practice) => {
+    setSelectedProject(practice);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedProject(null);
   };
 
   return (
@@ -156,10 +172,15 @@ function ProjectsPage() {
                       sx={{
                         height: 300,
                         objectFit: 'cover',
-                        width: '100%'
+                        width: '100%',
+                        cursor: 'pointer', // Add cursor pointer to indicate clickable
+                        '&:hover': {
+                          opacity: 0.9 // Add hover effect
+                        }
                       }}
                       image={practice.image}
                       alt={practice.title}
+                      onClick={() => handleOpenDialog(practice)} // Add click handler to image
                     />
                     <CardContent sx={{ 
                       flexGrow: 1,
@@ -216,7 +237,10 @@ function ProjectsPage() {
                         mt: 'auto', 
                         pt: 2, 
                         borderTop: '1px solid',
-                        borderColor: 'divider'
+                        borderColor: 'divider',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
                       }}>
                         <Typography variant="body2" sx={{
                           display: 'inline-block',
@@ -229,6 +253,13 @@ function ProjectsPage() {
                         }}>
                           {practice.category}
                         </Typography>
+                        <Button
+                          size="small"
+                          onClick={() => handleOpenDialog(practice)}
+                          sx={{ ml: 1 }}
+                        >
+                          See More
+                        </Button>
                       </Box>
                     </CardContent>
                   </Card>
@@ -353,6 +384,55 @@ function ProjectsPage() {
           </Container>
         </Box>
       )}
+      {/* Project Details Dialog */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        PaperProps={{
+          sx: {
+            maxWidth: 800,
+            maxHeight: '90vh',
+            borderRadius: 2
+          }
+        }}
+      >
+        {selectedProject && (
+          <>
+            <DialogTitle sx={{ 
+              pb: 1,
+              fontWeight: 'bold' 
+            }}>
+              {selectedProject.title}
+            </DialogTitle>
+            <DialogContent sx={{ p: 0 }}>
+              <Box sx={{ mb: 2 }}>
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '500px',
+                    objectFit: 'cover'
+                  }}
+                />
+              </Box>
+              <Box sx={{ px: 3, pb: 3 }}>
+                <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 500 }}>
+                  {selectedProject.description}
+                </Typography>
+                <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+                  {selectedProject.fullDescription}
+                </Typography>
+              </Box>
+            </DialogContent>
+            <DialogActions sx={{ p: 2 }}>
+              <Button onClick={handleCloseDialog}>Close</Button>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </Box>
   );
 }
